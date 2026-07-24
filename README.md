@@ -51,8 +51,8 @@ Each topic includes:
 
 # 🗂️ Learning Roadmap
 
-| Day | Topic | Progress |
-|------|-------|----------:|
+| Day | Topic 
+|------|-------
 | Day 1 | Array (Part 1) 
 | Day 2 | Array (Part 2) 
 | Day 3 | Array (Part 3)
