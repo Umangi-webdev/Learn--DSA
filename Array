@@ -1,0 +1,382 @@
+# 📚 Arrays
+
+> Arrays are one of the most fundamental data structures in computer science. They store multiple elements of the same data type in contiguous memory locations, enabling efficient access using an index.
+
+---
+
+# 📌 What is an Array?
+
+An **Array** is a linear data structure that stores a fixed-size collection of elements of the **same data type** in contiguous memory locations.
+
+Each element is identified by its **index**, starting from **0**.
+
+### Example
+
+```text
+Index :  0   1   2   3   4
+
+Value : 10  20  30  40  50
+```
+
+Accessing elements:
+
+```
+arr[0] = 10
+arr[2] = 30
+arr[4] = 50
+```
+
+---
+
+# 🎯 Characteristics of Arrays
+
+- Stores homogeneous (same type) elements.
+- Fixed size after creation.
+- Stored in contiguous memory.
+- Supports direct/random access.
+- Index starts from 0.
+- Efficient for traversal.
+
+---
+
+# 🏗️ How Arrays are Stored in Memory
+
+Arrays occupy **contiguous memory locations**.
+
+```text
+Address
+
+1000 → 10
+1004 → 20
+1008 → 30
+1012 → 40
+1016 → 50
+```
+
+Because memory is contiguous, the address of any element can be calculated in constant time.
+
+Formula:
+
+```
+Address = Base Address + (Index × Size of Element)
+```
+
+---
+
+# 📊 Time Complexity
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Access | O(1) |
+| Search (Unsorted) | O(n) |
+| Search (Sorted - Binary Search) | O(log n) |
+| Insert at End | O(1)* |
+| Insert at Beginning | O(n) |
+| Insert in Middle | O(n) |
+| Delete at End | O(1) |
+| Delete at Beginning | O(n) |
+| Delete from Middle | O(n) |
+| Traverse | O(n) |
+
+\*O(1) when sufficient space is available.
+
+---
+
+# 💾 Space Complexity
+
+| Case | Complexity |
+|------|------------|
+| Storage | O(n) |
+| Auxiliary Space | O(1) |
+
+---
+
+# ✅ Advantages
+
+- Constant-time random access.
+- Easy to traverse.
+- Cache-friendly because of contiguous memory.
+- Simple implementation.
+- Requires less memory overhead compared to linked structures.
+
+---
+
+# ❌ Disadvantages
+
+- Fixed size.
+- Insertion and deletion are costly.
+- Memory wastage if allocated size is larger than required.
+- Cannot efficiently grow or shrink.
+
+---
+
+# 🔄 Common Operations
+
+## Traversal
+
+Visit every element one by one.
+
+```
+10 → 20 → 30 → 40 → 50
+```
+
+Complexity:
+
+```
+O(n)
+```
+
+---
+
+## Access
+
+Access any element using its index.
+
+```
+arr[3]
+```
+
+Complexity:
+
+```
+O(1)
+```
+
+---
+
+## Searching
+
+### Linear Search
+
+Checks every element sequentially.
+
+```
+10 20 30 40 50
+         ↑
+```
+
+Complexity:
+
+```
+O(n)
+```
+
+---
+
+### Binary Search
+
+Works only on sorted arrays.
+
+```
+10 20 30 40 50 60 70
+          ↑
+```
+
+Complexity:
+
+```
+O(log n)
+```
+
+---
+
+## Insertion
+
+### Beginning
+
+```
+Before
+
+10 20 30 40
+
+After
+
+5 10 20 30 40
+```
+
+Requires shifting all elements.
+
+Complexity:
+
+```
+O(n)
+```
+
+---
+
+### Middle
+
+```
+10 20 40 50
+
+↓
+
+10 20 30 40 50
+```
+
+Complexity:
+
+```
+O(n)
+```
+
+---
+
+### End
+
+```
+10 20 30
+
+↓
+
+10 20 30 40
+```
+
+Complexity:
+
+```
+O(1)
+```
+
+---
+
+## Deletion
+
+### Beginning
+
+```
+10 20 30 40
+
+↓
+
+20 30 40
+```
+
+Complexity:
+
+```
+O(n)
+```
+
+---
+
+### Middle
+
+```
+10 20 30 40 50
+
+↓
+
+10 20 40 50
+```
+
+Complexity:
+
+```
+O(n)
+```
+
+---
+
+### End
+
+```
+10 20 30 40
+
+↓
+
+10 20 30
+```
+
+Complexity:
+
+```
+O(1)
+```
+
+---
+
+# 🌍 Real-Life Applications
+
+- Student marks storage
+- Employee records
+- Image processing (pixels)
+- Matrix representation
+- Game scoreboards
+- Browser history (internally combined with other structures)
+- Dynamic programming tables
+- Lookup tables
+
+---
+
+# 🔥 Common Interview Questions
+
+### Easy
+
+- Find the maximum element
+- Find the minimum element
+- Reverse an array
+- Rotate an array
+- Find duplicates
+- Remove duplicates
+- Merge two arrays
+- Find the second largest element
+
+---
+
+### Medium
+
+- Kadane's Algorithm
+- Product of Array Except Self
+- Two Sum
+- Three Sum
+- Container With Most Water
+- Majority Element
+- Merge Intervals
+- Next Permutation
+
+---
+
+### Hard
+
+- Trapping Rain Water
+- Median of Two Sorted Arrays
+- First Missing Positive
+- Sliding Window Maximum
+- Maximum Rectangle in Histogram
+
+---
+
+# 💡 Tips for Interviews
+
+- Understand indexing thoroughly.
+- Know the time complexity of every operation.
+- Master traversal and searching.
+- Practice in-place algorithms.
+- Learn two pointers, sliding window, prefix sums, and binary search on arrays.
+
+---
+
+# 📝 Summary
+
+| Feature | Details |
+|---------|---------|
+| Data Structure | Linear |
+| Memory | Contiguous |
+| Indexing | Starts from 0 |
+| Random Access | Yes |
+| Dynamic Size | No |
+| Best Access Time | O(1) |
+| Search | O(n) |
+| Insertion | O(n) |
+| Deletion | O(n) |
+
+---
+
+# 🚀 Key Takeaways
+
+- Arrays store elements in contiguous memory.
+- They provide constant-time random access.
+- Insertions and deletions are expensive because elements need to be shifted.
+- Arrays are the foundation of many advanced data structures and algorithms.
+- Strong understanding of arrays is essential for coding interviews and competitive programming.
