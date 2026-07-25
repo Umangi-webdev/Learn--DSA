@@ -1,0 +1,418 @@
+# 📚 Array (Part 2) - Basic Operations on Arrays
+
+## 📌 Introduction
+
+After understanding what an array is, the next step is learning the common operations that can be performed on it.
+
+These operations are the foundation of almost every array-based problem in Data Structures and Algorithms.
+
+---
+
+# 📋 Array Operations
+
+The most common operations on an array are:
+
+- Traversal
+- Access
+- Update
+- Searching
+- Insertion
+- Deletion
+
+---
+
+# 1️⃣ Traversal
+
+## 📖 Definition
+
+Traversal means visiting every element of an array exactly once.
+
+---
+
+### Example
+
+```text
+Array:
+
+10 20 30 40 50
+```
+
+Traversal Output
+
+```text
+10
+20
+30
+40
+50
+```
+
+---
+
+### C++ Code
+
+```cpp
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    int arr[] = {10,20,30,40,50};
+    int n = 5;
+
+    for(int i=0;i<n;i++)
+    {
+        cout<<arr[i]<<" ";
+    }
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 2️⃣ Accessing Elements
+
+## 📖 Definition
+
+Access means retrieving an element using its index.
+
+Since arrays provide direct memory access, retrieving an element is extremely fast.
+
+---
+
+### Example
+
+```text
+Array
+
+Index : 0 1 2 3 4
+
+Value : 10 20 30 40 50
+```
+
+Access
+
+```cpp
+arr[2]
+```
+
+Output
+
+```
+30
+```
+
+---
+
+### Time Complexity
+
+```
+O(1)
+```
+
+---
+
+# 3️⃣ Updating Elements
+
+## 📖 Definition
+
+Updating means replacing the value stored at a particular index.
+
+---
+
+### Example
+
+Before
+
+```text
+10 20 30 40 50
+```
+
+Update
+
+```cpp
+arr[2] = 99;
+```
+
+After
+
+```text
+10 20 99 40 50
+```
+
+---
+
+### Time Complexity
+
+```
+O(1)
+```
+
+---
+
+# 4️⃣ Searching
+
+Searching means finding whether a particular element exists in the array.
+
+There are two common searching techniques.
+
+## Linear Search
+
+Checks every element one by one.
+
+Example
+
+```text
+Find 40
+
+10 20 30 40 50
+```
+
+Found at index **3**
+
+---
+
+### Algorithm
+
+```
+Start from index 0
+
+Compare every element
+
+If found
+
+Return index
+
+Else
+
+Return -1
+```
+
+---
+
+### C++ Code
+
+```cpp
+int search(int arr[],int n,int key)
+{
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i]==key)
+            return i;
+    }
+
+    return -1;
+}
+```
+
+---
+
+### Time Complexity
+
+Best Case
+
+```
+O(1)
+```
+
+Worst Case
+
+```
+O(n)
+```
+
+---
+
+# 5️⃣ Insertion
+
+## 📖 Definition
+
+Insertion means adding a new element at a particular position.
+
+To insert an element, all elements after that position must shift one place to the right.
+
+---
+
+### Example
+
+Before
+
+```text
+10 20 40 50
+```
+
+Insert **30** at index **2**
+
+After
+
+```text
+10 20 30 40 50
+```
+
+---
+
+### Visualization
+
+```text
+10 20 40 50
+
+↓
+
+10 20 30 40 50
+```
+
+---
+
+### Time Complexity
+
+Beginning
+
+```
+O(n)
+```
+
+Middle
+
+```
+O(n)
+```
+
+End
+
+```
+O(1)
+```
+
+(Only if free space is available.)
+
+---
+
+# 6️⃣ Deletion
+
+## 📖 Definition
+
+Deletion means removing an element from the array.
+
+After deletion, remaining elements shift one position towards the left.
+
+---
+
+### Example
+
+Before
+
+```text
+10 20 30 40 50
+```
+
+Delete
+
+```
+30
+```
+
+After
+
+```text
+10 20 40 50
+```
+
+---
+
+### Visualization
+
+```text
+10 20 30 40 50
+
+↓
+
+10 20 40 50
+```
+
+---
+
+### Time Complexity
+
+Beginning
+
+```
+O(n)
+```
+
+Middle
+
+```
+O(n)
+```
+
+End
+
+```
+O(1)
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Access | O(1) |
+| Update | O(1) |
+| Traversal | O(n) |
+| Linear Search | O(n) |
+| Insertion | O(n) |
+| Deletion | O(n) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Accessing an element in an array is **O(1)** because arrays use index-based addressing.
+
+✅ Insertion and deletion are expensive because elements must be shifted.
+
+✅ Traversal always requires visiting every element.
+
+✅ Linear Search works on both sorted and unsorted arrays.
+
+✅ Binary Search cannot be applied to an unsorted array.
+
+---
+
+# 📝 Summary
+
+- Traversal visits every element once.
+- Access and Update are constant-time operations.
+- Searching finds an element in an array.
+- Insertion requires shifting elements to the right.
+- Deletion requires shifting elements to the left.
+- Understanding these operations is essential before solving array interview problems.
+
+---
+
+# 🚀 What's Next?
+
+In **Array (Part 3)**, we'll cover:
+
+- Maximum & Minimum Element
+- Largest and Second Largest Element
+- Reverse an Array
+- Check if Array is Sorted
+- Left Rotate an Array
+- Right Rotate an Array
+- Move Zeros to End
+- Remove Duplicates from Sorted Array
