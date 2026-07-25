@@ -1,0 +1,393 @@
+# 📚 Array (Part 3) - Fundamental Array Problems
+
+## 📌 Introduction
+
+After learning the basic operations on arrays, the next step is solving fundamental array problems. These problems frequently appear in coding interviews and competitive programming.
+
+Mastering these concepts builds a strong foundation for advanced array algorithms.
+
+---
+
+# 📋 Topics Covered
+
+- Find Maximum Element
+- Find Minimum Element
+- Find Largest & Second Largest Element
+- Reverse an Array
+- Check if Array is Sorted
+
+---
+
+# 1️⃣ Find Maximum Element
+
+## 📖 Definition
+
+The maximum element is the largest value present in an array.
+
+---
+
+### Example
+
+```text
+Array
+
+5 12 8 25 17
+
+Maximum = 25
+```
+
+---
+
+### Algorithm
+
+```
+Initialize max = first element
+
+Traverse the array
+
+If current element > max
+
+Update max
+
+Return max
+```
+
+---
+
+### C++ Code
+
+```cpp
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    int arr[] = {5,12,8,25,17};
+    int n = 5;
+
+    int maximum = arr[0];
+
+    for(int i=1;i<n;i++)
+    {
+        if(arr[i] > maximum)
+            maximum = arr[i];
+    }
+
+    cout<<"Maximum = "<<maximum;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 2️⃣ Find Minimum Element
+
+## 📖 Definition
+
+The minimum element is the smallest value in an array.
+
+---
+
+### Example
+
+```text
+Array
+
+5 12 8 25 17
+
+Minimum = 5
+```
+
+---
+
+### Algorithm
+
+```
+Initialize min = first element
+
+Traverse array
+
+Update min whenever a smaller value is found
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 3️⃣ Find Largest and Second Largest Element
+
+## 📖 Definition
+
+Find both the largest and the second largest distinct element.
+
+---
+
+### Example
+
+```text
+Array
+
+12 35 1 10 34 1
+
+Largest = 35
+
+Second Largest = 34
+```
+
+---
+
+### Approach
+
+Maintain two variables.
+
+```
+largest
+
+secondLargest
+```
+
+Update both while traversing the array only once.
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 4️⃣ Reverse an Array
+
+## 📖 Definition
+
+Reverse means arranging the elements in opposite order.
+
+---
+
+### Example
+
+Before
+
+```text
+1 2 3 4 5
+```
+
+After
+
+```text
+5 4 3 2 1
+```
+
+---
+
+### Two Pointer Approach
+
+```
+left = 0
+
+right = n-1
+
+Swap
+
+Move left++
+
+Move right--
+```
+
+---
+
+### C++ Code
+
+```cpp
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    int arr[] = {1,2,3,4,5};
+    int n = 5;
+
+    int left = 0;
+    int right = n-1;
+
+    while(left < right)
+    {
+        swap(arr[left],arr[right]);
+        left++;
+        right--;
+    }
+
+    for(int i=0;i<n;i++)
+        cout<<arr[i]<<" ";
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 5️⃣ Check if Array is Sorted
+
+## 📖 Definition
+
+Determine whether the elements are arranged in non-decreasing order.
+
+---
+
+### Example 1
+
+```text
+1 2 3 4 5
+
+Sorted
+```
+
+---
+
+### Example 2
+
+```text
+2 5 4 8 10
+
+Not Sorted
+```
+
+---
+
+### Algorithm
+
+```
+Traverse array
+
+If arr[i] > arr[i+1]
+
+Return false
+
+Otherwise
+
+Return true
+```
+
+---
+
+### C++ Code
+
+```cpp
+bool isSorted(int arr[],int n)
+{
+    for(int i=0;i<n-1;i++)
+    {
+        if(arr[i] > arr[i+1])
+            return false;
+    }
+
+    return true;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|------|-------|
+| Find Maximum | O(n) | O(1) |
+| Find Minimum | O(n) | O(1) |
+| Largest & Second Largest | O(n) | O(1) |
+| Reverse Array | O(n) | O(1) |
+| Check Sorted Array | O(n) | O(1) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Always solve these problems in **one traversal (O(n))** whenever possible.
+
+✅ Use the **Two Pointer Technique** for reversing an array.
+
+✅ Second Largest should be **distinct** from the largest element.
+
+✅ Checking whether an array is sorted is often the first step before applying **Binary Search**.
+
+---
+
+# 📝 Summary
+
+- Maximum and Minimum can be found in one traversal.
+- Largest and Second Largest should be solved efficiently using two variables.
+- Reverse an array using the Two Pointer approach.
+- Checking if an array is sorted is a common prerequisite for many algorithms.
+- All these problems can be solved in **O(n)** time with **O(1)** extra space.
+
+---
+
+# 🚀 What's Next?
+
+In **Array (Part 4)**, we'll cover:
+
+- Left Rotate Array by One Position
+- Left Rotate Array by K Positions
+- Right Rotate Array
+- Move All Zeros to End
+- Remove Duplicates from Sorted Array
+- Union of Two Sorted Arrays
+- Intersection of Two Sorted Arrays
