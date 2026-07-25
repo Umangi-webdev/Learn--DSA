@@ -1,0 +1,456 @@
+# 📚 Array (Part 5) - Advanced Interview Problems
+
+## 📌 Introduction
+
+This section covers some of the most frequently asked array interview questions. These problems introduce important techniques such as Hashing, Prefix Sum, Kadane's Algorithm, and Moore's Voting Algorithm.
+
+Mastering these concepts will significantly improve your problem-solving skills for coding interviews.
+
+---
+
+# 📋 Topics Covered
+
+- Union of Two Sorted Arrays
+- Intersection of Two Sorted Arrays
+- Find Missing Number
+- Maximum Consecutive Ones
+- Kadane's Algorithm
+- Best Time to Buy & Sell Stock
+- Majority Element
+
+---
+
+# 1️⃣ Union of Two Sorted Arrays
+
+## 📖 Definition
+
+The union of two arrays contains all unique elements present in either array.
+
+---
+
+### Example
+
+```text
+Array 1
+
+1 2 3 4
+
+Array 2
+
+2 3 5 6
+```
+
+Union
+
+```text
+1 2 3 4 5 6
+```
+
+---
+
+### Best Approach
+
+Use the **Two Pointer Technique**.
+
+Traverse both arrays simultaneously and avoid duplicate elements.
+
+---
+
+### Time Complexity
+
+```
+O(n + m)
+```
+
+### Space Complexity
+
+```
+O(n + m)
+```
+
+---
+
+# 2️⃣ Intersection of Two Sorted Arrays
+
+## 📖 Definition
+
+The intersection contains only the common elements present in both arrays.
+
+---
+
+### Example
+
+```text
+Array 1
+
+1 2 3 4
+
+Array 2
+
+2 3 5 6
+```
+
+Intersection
+
+```text
+2 3
+```
+
+---
+
+### Best Approach
+
+Use two pointers.
+
+Compare elements one by one.
+
+---
+
+### Time Complexity
+
+```
+O(n + m)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+(Excluding output array.)
+
+---
+
+# 3️⃣ Find Missing Number
+
+## 📖 Definition
+
+An array contains numbers from **1 to N**, but one number is missing.
+
+Find the missing number.
+
+---
+
+### Example
+
+```text
+1 2 4 5
+
+Missing Number
+
+3
+```
+
+---
+
+### Best Approaches
+
+✅ Sum Formula
+
+```
+Expected Sum - Actual Sum
+```
+
+OR
+
+✅ XOR Technique
+
+```
+XOR(1...N)
+
+XOR(Array)
+
+Answer = XOR Result
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 4️⃣ Maximum Consecutive Ones
+
+## 📖 Definition
+
+Find the longest sequence of consecutive **1s**.
+
+---
+
+### Example
+
+```text
+1 1 0 1 1 1 0 1
+```
+
+Output
+
+```
+3
+```
+
+---
+
+### Algorithm
+
+```
+Maintain
+
+count
+
+maximum
+
+Increase count while element is 1
+
+Reset count when 0 appears
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 5️⃣ Kadane's Algorithm (Maximum Subarray Sum)
+
+## 📖 Definition
+
+Find the contiguous subarray having the largest possible sum.
+
+---
+
+### Example
+
+```text
+-2 1 -3 4 -1 2 1 -5 4
+```
+
+Output
+
+```
+6
+```
+
+Subarray
+
+```text
+4 -1 2 1
+```
+
+---
+
+### Algorithm
+
+```
+Current Sum
+
+Maximum Sum
+
+If Current Sum becomes negative
+
+Reset Current Sum to 0
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+### Why Kadane's Algorithm?
+
+Instead of checking every possible subarray (**O(n²)**), Kadane's Algorithm solves the problem in **O(n)**.
+
+---
+
+# 6️⃣ Best Time to Buy & Sell Stock
+
+## 📖 Definition
+
+Given stock prices, maximize profit by buying once and selling once.
+
+---
+
+### Example
+
+```text
+7 1 5 3 6 4
+```
+
+Buy
+
+```
+1
+```
+
+Sell
+
+```
+6
+```
+
+Maximum Profit
+
+```
+5
+```
+
+---
+
+### Best Approach
+
+Maintain
+
+```
+Minimum Price
+
+Maximum Profit
+```
+
+Traverse the array once.
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 7️⃣ Majority Element
+
+## 📖 Definition
+
+Find the element that appears more than **n/2** times.
+
+---
+
+### Example
+
+```text
+2 2 1 1 2 2 2
+```
+
+Majority Element
+
+```
+2
+```
+
+---
+
+### Best Approach
+
+Use **Moore's Voting Algorithm**.
+
+It finds the majority element in a single traversal.
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Best Technique | Time | Space |
+|----------|---------------|------|-------|
+| Union of Arrays | Two Pointers | O(n+m) | O(n+m) |
+| Intersection | Two Pointers | O(n+m) | O(1) |
+| Missing Number | XOR / Sum Formula | O(n) | O(1) |
+| Maximum Consecutive Ones | Linear Traversal | O(n) | O(1) |
+| Kadane's Algorithm | Dynamic Programming | O(n) | O(1) |
+| Buy & Sell Stock | Greedy | O(n) | O(1) |
+| Majority Element | Moore's Voting | O(n) | O(1) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Two Pointer Technique is commonly used for sorted arrays.
+
+✅ XOR is a powerful technique for missing number problems.
+
+✅ Kadane's Algorithm is one of the most frequently asked array algorithms.
+
+✅ Always try to solve array problems in **O(n)** with **O(1)** extra space whenever possible.
+
+✅ Moore's Voting Algorithm works only when a majority element is guaranteed to exist.
+
+---
+
+# 📝 Summary
+
+- Use **Two Pointers** for Union and Intersection.
+- Use **XOR** or **Sum Formula** to find a missing number.
+- Count consecutive ones using a single traversal.
+- Apply **Kadane's Algorithm** to find the maximum subarray sum efficiently.
+- Track the minimum stock price to maximize profit.
+- Use **Moore's Voting Algorithm** to find the majority element in linear time.
+
+---
+
+# 🚀 Congratulations!
+
+You have completed the **Array** section of your DSA Notes. 🎉
+
+In the next section, we'll begin **Strings**, where you'll learn:
+
+- String Basics
+- Character Arrays
+- String Operations
+- Palindrome Check
+- Reverse String
+- Frequency Counting
+- Anagrams
+- Pattern Matching
+- String Interview Problems
