@@ -1,0 +1,403 @@
+# 📚 Array (Part 4) - Array Rotation & Manipulation
+
+## 📌 Introduction
+
+After learning the basic array problems, it's time to explore common array manipulation techniques. These problems are frequently asked in coding interviews and help improve problem-solving skills.
+
+---
+
+# 📋 Topics Covered
+
+- Left Rotate Array by One Position
+- Left Rotate Array by K Positions
+- Right Rotate Array by One Position
+- Move All Zeros to End
+- Remove Duplicates from Sorted Array
+
+---
+
+# 1️⃣ Left Rotate Array by One Position
+
+## 📖 Definition
+
+Left rotation shifts every element one position to the left.
+
+The first element moves to the last position.
+
+---
+
+### Example
+
+Before
+
+```text
+1 2 3 4 5
+```
+
+After
+
+```text
+2 3 4 5 1
+```
+
+---
+
+### Algorithm
+
+```
+Store first element
+
+Shift every element left
+
+Place stored element at last index
+```
+
+---
+
+### C++ Code
+
+```cpp
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    int arr[] = {1,2,3,4,5};
+    int n = 5;
+
+    int first = arr[0];
+
+    for(int i=0;i<n-1;i++)
+    {
+        arr[i] = arr[i+1];
+    }
+
+    arr[n-1] = first;
+
+    for(int i=0;i<n;i++)
+        cout<<arr[i]<<" ";
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 2️⃣ Left Rotate Array by K Positions
+
+## 📖 Definition
+
+Rotate the array left by K positions.
+
+---
+
+### Example
+
+Before
+
+```text
+1 2 3 4 5 6 7
+```
+
+Rotate by K = 2
+
+After
+
+```text
+3 4 5 6 7 1 2
+```
+
+---
+
+### Best Approach
+
+Use the **Reversal Algorithm**.
+
+Steps
+
+```
+Reverse first K elements
+
+Reverse remaining elements
+
+Reverse complete array
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 3️⃣ Right Rotate Array by One Position
+
+## 📖 Definition
+
+Every element shifts one position towards the right.
+
+The last element moves to the first position.
+
+---
+
+### Example
+
+Before
+
+```text
+1 2 3 4 5
+```
+
+After
+
+```text
+5 1 2 3 4
+```
+
+---
+
+### Algorithm
+
+```
+Store last element
+
+Shift remaining elements right
+
+Place last element at index 0
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 4️⃣ Move All Zeros to End
+
+## 📖 Definition
+
+Move every zero to the end while maintaining the relative order of non-zero elements.
+
+---
+
+### Example
+
+Before
+
+```text
+0 1 0 3 12
+```
+
+After
+
+```text
+1 3 12 0 0
+```
+
+---
+
+### Best Approach
+
+Use the **Two Pointer Technique**.
+
+One pointer tracks the next non-zero position.
+
+---
+
+### C++ Code
+
+```cpp
+void moveZeros(int arr[], int n)
+{
+    int j = 0;
+
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i]!=0)
+        {
+            swap(arr[i],arr[j]);
+            j++;
+        }
+    }
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 5️⃣ Remove Duplicates from Sorted Array
+
+## 📖 Definition
+
+Given a sorted array, remove duplicate elements without using extra space.
+
+---
+
+### Example
+
+Before
+
+```text
+1 1 2 2 3 4 4 5
+```
+
+After
+
+```text
+1 2 3 4 5
+```
+
+---
+
+### Best Approach
+
+Use the **Two Pointer Technique**.
+
+---
+
+### Algorithm
+
+```
+Initialize i = 0
+
+Traverse using j
+
+If arr[i] != arr[j]
+
+Increment i
+
+Copy arr[j]
+```
+
+---
+
+### C++ Code
+
+```cpp
+int removeDuplicates(int arr[], int n)
+{
+    int i = 0;
+
+    for(int j=1;j<n;j++)
+    {
+        if(arr[i]!=arr[j])
+        {
+            i++;
+            arr[i]=arr[j];
+        }
+    }
+
+    return i+1;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|------|-------|
+| Left Rotate by One | O(n) | O(1) |
+| Left Rotate by K | O(n) | O(1) |
+| Right Rotate by One | O(n) | O(1) |
+| Move Zeros to End | O(n) | O(1) |
+| Remove Duplicates | O(n) | O(1) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Rotation problems are commonly solved using the **Reversal Algorithm**.
+
+✅ The **Two Pointer Technique** is frequently used for:
+- Removing duplicates
+- Moving zeros
+- Partitioning arrays
+
+✅ Always check whether the array is **sorted** before applying duplicate-removal techniques.
+
+✅ Most array manipulation problems can be solved in **O(n)** time with **O(1)** extra space.
+
+---
+
+# 📝 Summary
+
+- Left and right rotations rearrange array elements efficiently.
+- The Reversal Algorithm is the optimal method for rotating by K positions.
+- Two Pointer Technique simplifies many array manipulation problems.
+- Removing duplicates requires a sorted array.
+- Moving zeros should preserve the order of non-zero elements.
+
+---
+
+# 🚀 What's Next?
+
+In **Array (Part 5)**, we'll cover:
+
+- Union of Two Sorted Arrays
+- Intersection of Two Sorted Arrays
+- Missing Number
+- Maximum Consecutive Ones
+- Kadane's Algorithm (Maximum Subarray Sum)
+- Best Time to Buy & Sell Stock
+- Majority Element (Moore's Voting Algorithm)
+
+These are some of the most frequently asked array interview problems in companies like Google, Amazon, Microsoft, and Flipkart.
