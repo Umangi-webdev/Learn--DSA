@@ -1,0 +1,454 @@
+# 📚 Strings (Part 2) - Basic String Problems
+
+## 📌 Introduction
+
+After understanding the fundamentals of strings, the next step is solving common string-based problems. These problems improve logical thinking and introduce techniques such as the Two Pointer approach, character frequency counting, and string manipulation.
+
+---
+
+# 📋 Topics Covered
+
+- Reverse a String
+- Check Palindrome
+- Count Vowels & Consonants
+- Character Frequency
+- Remove Spaces
+- Anagram Check
+- Reverse Words in a String
+
+---
+
+# 1️⃣ Reverse a String
+
+## 📖 Definition
+
+Reversing a string means arranging its characters in the opposite order.
+
+---
+
+### Example
+
+Before
+
+```text
+Hello
+```
+
+After
+
+```text
+olleH
+```
+
+---
+
+### Approach
+
+Use the **Two Pointer Technique**.
+
+```
+left = 0
+
+right = length - 1
+
+Swap characters
+
+Move left++
+
+Move right--
+```
+
+---
+
+### C++ Code
+
+```cpp
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    string str = "Hello";
+
+    int left = 0;
+    int right = str.length()-1;
+
+    while(left < right)
+    {
+        swap(str[left], str[right]);
+        left++;
+        right--;
+    }
+
+    cout<<str;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 2️⃣ Check Palindrome
+
+## 📖 Definition
+
+A palindrome is a string that reads the same from both directions.
+
+---
+
+### Examples
+
+```text
+madam ✔
+
+racecar ✔
+
+hello ✘
+```
+
+---
+
+### Algorithm
+
+```
+Compare first and last characters
+
+Move towards the center
+
+If mismatch occurs
+
+Not Palindrome
+```
+
+---
+
+### C++ Code
+
+```cpp
+bool isPalindrome(string str)
+{
+    int left = 0;
+    int right = str.length()-1;
+
+    while(left < right)
+    {
+        if(str[left] != str[right])
+            return false;
+
+        left++;
+        right--;
+    }
+
+    return true;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 3️⃣ Count Vowels & Consonants
+
+## 📖 Definition
+
+Count the number of vowels and consonants in a string.
+
+---
+
+### Example
+
+```text
+String
+
+Education
+
+Vowels = 5
+
+Consonants = 4
+```
+
+---
+
+### Vowels
+
+```
+a e i o u
+
+A E I O U
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 4️⃣ Character Frequency
+
+## 📖 Definition
+
+Count how many times each character appears in a string.
+
+---
+
+### Example
+
+```text
+banana
+```
+
+Output
+
+```text
+b → 1
+
+a → 3
+
+n → 2
+```
+
+---
+
+### Best Approach
+
+Use
+
+```
+Frequency Array
+
+or
+
+Hash Map
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+### Space Complexity
+
+```
+O(26)
+
+(for lowercase alphabets)
+```
+
+---
+
+# 5️⃣ Remove Spaces
+
+## 📖 Definition
+
+Remove every space from the given string.
+
+---
+
+### Example
+
+Before
+
+```text
+Hello World DSA
+```
+
+After
+
+```text
+HelloWorldDSA
+```
+
+---
+
+### C++ Code
+
+```cpp
+string result = "";
+
+for(char ch : str)
+{
+    if(ch != ' ')
+        result += ch;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 6️⃣ Check Anagram
+
+## 📖 Definition
+
+Two strings are anagrams if they contain the same characters with the same frequency.
+
+---
+
+### Example
+
+```text
+listen
+
+silent
+```
+
+Output
+
+```
+Anagram
+```
+
+---
+
+### Best Approach
+
+Count the frequency of each character.
+
+Compare both frequency arrays.
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(26)
+```
+
+---
+
+# 7️⃣ Reverse Words in a String
+
+## 📖 Definition
+
+Reverse the order of words while keeping each word unchanged.
+
+---
+
+### Example
+
+Before
+
+```text
+I Love Coding
+```
+
+After
+
+```text
+Coding Love I
+```
+
+---
+
+### Applications
+
+- Text Processing
+- NLP
+- Interview Problems
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|------|-------|
+| Reverse String | O(n) | O(1) |
+| Palindrome Check | O(n) | O(1) |
+| Count Vowels | O(n) | O(1) |
+| Character Frequency | O(n) | O(26) |
+| Remove Spaces | O(n) | O(n) |
+| Anagram Check | O(n) | O(26) |
+| Reverse Words | O(n) | O(n) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Reverse String and Palindrome are classic **Two Pointer** problems.
+
+✅ Character Frequency is the foundation for many hashing problems.
+
+✅ Anagrams always have the same character frequency.
+
+✅ Strings are immutable in some languages (like Java), but mutable in C++ using `std::string`.
+
+✅ Most string interview questions involve traversal, frequency counting, or two pointers.
+
+---
+
+# 📝 Summary
+
+- Reverse strings using the Two Pointer approach.
+- Check palindromes by comparing characters from both ends.
+- Count vowels and consonants with a single traversal.
+- Use frequency arrays or hash maps for character counting.
+- Remove spaces by building a new string.
+- Check anagrams using character frequencies.
+- Reverse words efficiently using string manipulation techniques.
+
+---
+
+# 🚀 What's Next?
+
+In **Binary Search**, you'll learn:
+
+- Binary Search Fundamentals
+- Iterative & Recursive Binary Search
+- Lower Bound & Upper Bound
+- First & Last Occurrence
+- Search Insert Position
+- Binary Search on Answers
+- Interview Problems
