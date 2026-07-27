@@ -1,0 +1,453 @@
+# 📚 Strings (Part 1) - Introduction & Fundamentals
+
+## 📌 Introduction
+
+A **String** is a sequence of characters used to represent text. Strings are one of the most commonly used data structures in programming and play an important role in problem-solving, competitive programming, and software development.
+
+Unlike arrays that can store any data type, strings specifically store characters.
+
+---
+
+# 📋 Topics Covered
+
+- What is a String?
+- Character vs String
+- Declaration & Initialization
+- Input & Output
+- Common String Operations
+- String Traversal
+- Character Functions
+
+---
+
+# 1️⃣ What is a String?
+
+## 📖 Definition
+
+A **String** is a collection of characters enclosed within double quotation marks (`"`).
+
+Each character is stored sequentially in memory.
+
+---
+
+### Example
+
+```text
+"Hello"
+
+Characters:
+
+H e l l o
+```
+
+---
+
+### Memory Representation
+
+```text
+Index
+
+0   1   2   3   4
+
+H   e   l   l   o
+```
+
+---
+
+# 2️⃣ Character vs String
+
+| Character | String |
+|------------|---------|
+| Stores a single character | Stores multiple characters |
+| Written inside single quotes (' ') | Written inside double quotes (" ") |
+| Example: 'A' | Example: "Apple" |
+
+---
+
+### Example
+
+```cpp
+char ch = 'A';
+
+string name = "Umangi";
+```
+
+---
+
+# 3️⃣ Declaration & Initialization
+
+## 📖 Syntax
+
+```cpp
+string variableName;
+```
+
+---
+
+### Example
+
+```cpp
+#include<iostream>
+#include<string>
+using namespace std;
+
+int main()
+{
+    string city = "Ahmedabad";
+
+    cout<<city;
+}
+```
+
+---
+
+# 4️⃣ Input & Output
+
+### Using cin
+
+```cpp
+string name;
+
+cin>>name;
+```
+
+Input
+
+```text
+Umangi
+```
+
+Output
+
+```text
+Umangi
+```
+
+---
+
+### Problem with cin
+
+```cpp
+cin
+```
+
+reads only one word.
+
+Example
+
+Input
+
+```text
+Umangi Patel
+```
+
+Output
+
+```text
+Umangi
+```
+
+---
+
+### Using getline()
+
+```cpp
+string name;
+
+getline(cin,name);
+```
+
+Input
+
+```text
+Umangi Patel
+```
+
+Output
+
+```text
+Umangi Patel
+```
+
+---
+
+# 5️⃣ String Traversal
+
+Traversal means visiting every character of a string.
+
+---
+
+### Example
+
+```cpp
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    string str = "Hello";
+
+    for(int i=0;i<str.length();i++)
+    {
+        cout<<str[i]<<" ";
+    }
+}
+```
+
+Output
+
+```text
+H e l l o
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 6️⃣ Common String Functions
+
+## length()
+
+Returns the total number of characters.
+
+```cpp
+string str = "Coding";
+
+cout<<str.length();
+```
+
+Output
+
+```
+6
+```
+
+---
+
+## size()
+
+Works exactly like `length()`.
+
+```cpp
+cout<<str.size();
+```
+
+Output
+
+```
+6
+```
+
+---
+
+## empty()
+
+Checks whether the string is empty.
+
+```cpp
+string str = "";
+
+cout<<str.empty();
+```
+
+Output
+
+```
+1
+```
+
+---
+
+## clear()
+
+Removes every character.
+
+```cpp
+string str = "Hello";
+
+str.clear();
+```
+
+Output
+
+```
+""
+```
+
+---
+
+# 7️⃣ Access Characters
+
+Characters can be accessed using their index.
+
+```cpp
+string str = "Apple";
+
+cout<<str[0];
+```
+
+Output
+
+```
+A
+```
+
+---
+
+### Last Character
+
+```cpp
+cout<<str[str.length()-1];
+```
+
+Output
+
+```
+e
+```
+
+---
+
+# 8️⃣ String Comparison
+
+Two strings can be compared using `==`.
+
+```cpp
+string a = "Hello";
+
+string b = "Hello";
+
+if(a==b)
+
+cout<<"Equal";
+```
+
+Output
+
+```
+Equal
+```
+
+---
+
+# 9️⃣ String Concatenation
+
+Concatenation means joining two strings.
+
+```cpp
+string first = "Hello";
+
+string second = "World";
+
+cout<<first + " " + second;
+```
+
+Output
+
+```
+Hello World
+```
+
+---
+
+# 🔟 Character Functions
+
+```cpp
+toupper(ch)
+```
+
+Converts character into uppercase.
+
+Example
+
+```
+a → A
+```
+
+---
+
+```cpp
+tolower(ch)
+```
+
+Converts character into lowercase.
+
+Example
+
+```
+A → a
+```
+
+---
+
+```cpp
+isdigit(ch)
+```
+
+Checks whether a character is a digit.
+
+---
+
+```cpp
+isalpha(ch)
+```
+
+Checks whether a character is an alphabet.
+
+---
+
+# 📊 Complexity Summary
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Access Character | O(1) |
+| Traverse String | O(n) |
+| length() | O(1) |
+| size() | O(1) |
+| Comparison | O(n) |
+| Concatenation | O(n) |
+
+---
+
+# 💡 Interview Tips
+
+✅ A string is essentially a character array with additional built-in functions.
+
+✅ `getline()` is preferred when input contains spaces.
+
+✅ `length()` and `size()` return the same value.
+
+✅ Characters are accessed using indexing like arrays.
+
+✅ String comparison is case-sensitive.
+
+---
+
+# 📝 Summary
+
+- Strings store sequences of characters.
+- Use `getline()` to read complete sentences.
+- Traverse strings using loops.
+- Built-in functions simplify string operations.
+- Understanding string basics is essential before solving interview problems.
+
+---
+
+# 🚀 What's Next?
+
+In **Strings (Part 2)**, we'll cover:
+
+- Reverse a String
+- Palindrome Check
+- Character Frequency
+- Count Vowels & Consonants
+- Anagram Check
+- Remove Spaces
+- Reverse Words in a String
+- Most Frequently Asked String Interview Problems
