@@ -1,0 +1,375 @@
+# 📚 Binary Search (Part 1) - Introduction & Fundamentals
+
+## 📌 Introduction
+
+**Binary Search** is an efficient searching algorithm used to find an element in a **sorted array**. Unlike Linear Search, which checks every element one by one, Binary Search repeatedly divides the search space into two halves, making it much faster for large datasets.
+
+It follows the **Divide and Conquer** technique.
+
+---
+
+# 📋 Topics Covered
+
+- What is Binary Search?
+- Prerequisites
+- How Binary Search Works
+- Iterative Binary Search
+- Recursive Binary Search
+- Advantages & Disadvantages
+- Time & Space Complexity
+
+---
+
+# 1️⃣ What is Binary Search?
+
+## 📖 Definition
+
+Binary Search is a searching algorithm that finds the position of a target element in a **sorted array** by repeatedly dividing the search interval into half.
+
+---
+
+### Example
+
+```text
+Array
+
+2 5 8 12 16 23 38 45 56
+
+Target = 23
+```
+
+Binary Search finds the element without checking every value.
+
+---
+
+# 2️⃣ Prerequisites
+
+Before applying Binary Search:
+
+✅ Array must be **sorted**
+
+❌ Binary Search does **not** work correctly on an unsorted array.
+
+Example
+
+```text
+Sorted
+
+2 5 8 12 16 23 38
+```
+
+```text
+Not Sorted
+
+12 5 38 2 16
+```
+
+---
+
+# 3️⃣ How Binary Search Works
+
+Suppose we have
+
+```text
+Index
+
+0 1 2 3 4 5 6 7
+
+Array
+
+2 5 8 12 16 23 38 45
+
+Target = 23
+```
+
+---
+
+### Step 1
+
+```
+Low = 0
+
+High = 7
+```
+
+Calculate
+
+```
+Mid = (Low + High) / 2
+```
+
+```
+Mid = 3
+```
+
+Element
+
+```
+12
+```
+
+Since
+
+```
+23 > 12
+```
+
+Search the **right half**.
+
+---
+
+### Step 2
+
+```
+Low = 4
+
+High = 7
+```
+
+```
+Mid = 5
+```
+
+Element
+
+```
+23
+```
+
+Element Found ✅
+
+---
+
+# 4️⃣ Algorithm
+
+```
+Start
+
+Low = 0
+
+High = n-1
+
+while(low <= high)
+
+    mid = low + (high-low)/2
+
+    if(arr[mid] == target)
+
+        return mid
+
+    else if(target > arr[mid])
+
+        low = mid + 1
+
+    else
+
+        high = mid - 1
+
+If not found
+
+return -1
+```
+
+---
+
+# 5️⃣ Iterative Binary Search
+
+### C++ Code
+
+```cpp
+#include<iostream>
+using namespace std;
+
+int binarySearch(int arr[], int n, int target)
+{
+    int low = 0;
+    int high = n - 1;
+
+    while(low <= high)
+    {
+        int mid = low + (high - low) / 2;
+
+        if(arr[mid] == target)
+            return mid;
+
+        else if(arr[mid] < target)
+            low = mid + 1;
+
+        else
+            high = mid - 1;
+    }
+
+    return -1;
+}
+
+int main()
+{
+    int arr[] = {2,5,8,12,16,23,38,45};
+    int n = 8;
+
+    int target = 23;
+
+    int index = binarySearch(arr, n, target);
+
+    if(index != -1)
+        cout<<"Element Found at Index "<<index;
+    else
+        cout<<"Element Not Found";
+}
+```
+
+---
+
+# 6️⃣ Recursive Binary Search
+
+### C++ Code
+
+```cpp
+int binarySearch(int arr[], int low, int high, int target)
+{
+    if(low > high)
+        return -1;
+
+    int mid = low + (high-low)/2;
+
+    if(arr[mid] == target)
+        return mid;
+
+    if(arr[mid] < target)
+        return binarySearch(arr, mid+1, high, target);
+
+    return binarySearch(arr, low, mid-1, target);
+}
+```
+
+---
+
+# 7️⃣ Why use
+
+```cpp
+mid = low + (high-low)/2;
+```
+
+instead of
+
+```cpp
+mid = (low + high)/2;
+```
+
+Because
+
+```cpp
+low + high
+```
+
+may cause **Integer Overflow** when the values become very large.
+
+The safer formula is
+
+```cpp
+mid = low + (high-low)/2;
+```
+
+This is the preferred approach in coding interviews and production code.
+
+---
+
+# 8️⃣ Advantages
+
+✅ Faster than Linear Search
+
+✅ Works in O(log n)
+
+✅ Efficient for large datasets
+
+✅ Reduces search space by half after every comparison
+
+---
+
+# 9️⃣ Limitations
+
+❌ Array must be sorted
+
+❌ Not suitable for linked lists
+
+❌ Sorting may take additional time if data is initially unsorted
+
+---
+
+# 📊 Complexity Analysis
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Best Case | O(1) |
+| Average Case | O(log n) |
+| Worst Case | O(log n) |
+
+---
+
+### Space Complexity
+
+Iterative
+
+```
+O(1)
+```
+
+Recursive
+
+```
+O(log n)
+```
+
+---
+
+# 📈 Binary Search vs Linear Search
+
+| Feature | Linear Search | Binary Search |
+|----------|--------------|---------------|
+| Data Requirement | Sorted or Unsorted | Sorted Only |
+| Best Case | O(1) | O(1) |
+| Average Case | O(n) | O(log n) |
+| Worst Case | O(n) | O(log n) |
+| Technique | Sequential Search | Divide & Conquer |
+
+---
+
+# 💡 Interview Tips
+
+✅ Binary Search works **only on sorted data**.
+
+✅ Always use
+
+```cpp
+mid = low + (high-low)/2;
+```
+
+to avoid integer overflow.
+
+✅ Iterative Binary Search is preferred because it uses **constant space**.
+
+✅ Recursive Binary Search is easier to understand but uses additional stack memory.
+
+---
+
+# 📝 Summary
+
+- Binary Search is an efficient searching algorithm.
+- It repeatedly divides the search space into two halves.
+- The array must be sorted.
+- Iterative implementation uses O(1) space.
+- Binary Search reduces the search space after every comparison, making it much faster than Linear Search.
+
+---
+
+# 🚀 What's Next?
+
+In **Binary Search (Part 2)**, we'll cover:
+
+- Lower Bound
+- Upper Bound
+- Floor & Ceil
+- Search Insert Position
+- First Occurrence
+- Last Occurrence
+- Count Occurrences
