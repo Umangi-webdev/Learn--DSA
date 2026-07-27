@@ -1,0 +1,339 @@
+# 📚 Binary Search (Part 3) - First & Last Occurrence, Count Occurrences & Peak Element
+
+## 📌 Introduction
+
+In many interview problems, simply finding an element is not enough. We often need to determine the **first occurrence**, **last occurrence**, or **total number of occurrences** of an element. This section also introduces searching in an **Infinite Sorted Array** and finding a **Peak Element**.
+
+---
+
+# 📋 Topics Covered
+
+- First Occurrence
+- Last Occurrence
+- Count Occurrences
+- Search in Infinite Sorted Array
+- Find Peak Element
+
+---
+
+# 1️⃣ First Occurrence
+
+## 📖 Definition
+
+Find the **first index** where the target element appears.
+
+---
+
+### Example
+
+```text
+Array
+
+2 4 6 6 6 8 10
+
+Target = 6
+```
+
+Output
+
+```
+2
+```
+
+---
+
+### Algorithm
+
+```
+Initialize answer = -1
+
+While(low <= high)
+
+    mid = low + (high-low)/2
+
+    If arr[mid] == target
+
+        answer = mid
+
+        high = mid - 1
+
+    Else If arr[mid] < target
+
+        low = mid + 1
+
+    Else
+
+        high = mid - 1
+```
+
+---
+
+### Time Complexity
+
+```
+O(log n)
+```
+
+---
+
+# 2️⃣ Last Occurrence
+
+## 📖 Definition
+
+Find the **last index** where the target element appears.
+
+---
+
+### Example
+
+```text
+Array
+
+2 4 6 6 6 8 10
+
+Target = 6
+```
+
+Output
+
+```
+4
+```
+
+---
+
+### Algorithm
+
+```
+Initialize answer = -1
+
+While(low <= high)
+
+    mid = low + (high-low)/2
+
+    If arr[mid] == target
+
+        answer = mid
+
+        low = mid + 1
+
+    Else If arr[mid] < target
+
+        low = mid + 1
+
+    Else
+
+        high = mid - 1
+```
+
+---
+
+### Time Complexity
+
+```
+O(log n)
+```
+
+---
+
+# 3️⃣ Count Occurrences
+
+## 📖 Definition
+
+Find how many times a target element appears in a sorted array.
+
+---
+
+### Formula
+
+```
+Count = Last Occurrence - First Occurrence + 1
+```
+
+---
+
+### Example
+
+```text
+Array
+
+2 4 6 6 6 8 10
+
+Target = 6
+```
+
+Output
+
+```
+3
+```
+
+---
+
+### Time Complexity
+
+```
+O(log n)
+```
+
+---
+
+# 4️⃣ Search in Infinite Sorted Array
+
+## 📖 Definition
+
+When the array size is unknown, first expand the search range, then apply Binary Search.
+
+---
+
+### Example
+
+```text
+Array
+
+2 4 6 8 10 15 20 25 30 ...
+
+Target = 20
+```
+
+---
+
+### Approach
+
+```
+Start
+
+low = 0
+
+high = 1
+
+While(arr[high] < target)
+
+    low = high
+
+    high = high * 2
+
+Apply Binary Search
+```
+
+---
+
+### Time Complexity
+
+```
+O(log n)
+```
+
+---
+
+# 5️⃣ Find Peak Element
+
+## 📖 Definition
+
+A **Peak Element** is an element that is greater than or equal to its adjacent elements.
+
+---
+
+### Example
+
+```text
+Array
+
+1 3 20 4 1
+```
+
+Peak
+
+```
+20
+```
+
+---
+
+### Another Example
+
+```text
+1 2 3 1
+```
+
+Peak
+
+```
+3
+```
+
+---
+
+### Binary Search Approach
+
+```
+If mid < mid+1
+
+Move Right
+
+Else
+
+Move Left
+```
+
+---
+
+### Time Complexity
+
+```
+O(log n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|------|-------|
+| First Occurrence | O(log n) | O(1) |
+| Last Occurrence | O(log n) | O(1) |
+| Count Occurrences | O(log n) | O(1) |
+| Infinite Sorted Array | O(log n) | O(1) |
+| Peak Element | O(log n) | O(1) |
+
+---
+
+# 💡 Interview Tips
+
+✅ First Occurrence → Move **Left** after finding the target.
+
+✅ Last Occurrence → Move **Right** after finding the target.
+
+✅ Count = Last Index − First Index + 1.
+
+✅ For an Infinite Sorted Array, first **expand the search range exponentially**, then perform Binary Search.
+
+✅ Peak Element problems are solved using Binary Search without checking every element.
+
+---
+
+# 📝 Summary
+
+- Use Binary Search to find the **first** and **last** occurrence of an element.
+- Count occurrences using the first and last occurrence indices.
+- For infinite arrays, first identify a valid search range.
+- Peak Element can be found efficiently using Binary Search.
+- All these problems have **O(log n)** time complexity.
+
+---
+
+# 🚀 What's Next?
+
+In **Binary Search (Part 4)**, we'll cover:
+
+- Search in Rotated Sorted Array
+- Search in Rotated Sorted Array II (Duplicates)
+- Find Minimum in Rotated Sorted Array
+- Rotation Count
+- Single Element in a Sorted Array
