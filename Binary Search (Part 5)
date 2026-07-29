@@ -1,0 +1,500 @@
+# 📚 Binary Search (Part 5) - Binary Search on Answers
+
+## 📌 Introduction
+
+Not every Binary Search problem involves finding an element in an array. Some problems require finding the **minimum** or **maximum possible answer** that satisfies a condition.
+
+This technique is called **Binary Search on Answers**.
+
+Instead of searching an array, we search within a range of possible answers.
+
+---
+
+# 📋 Topics Covered
+
+- What is Binary Search on Answers?
+- Square Root of a Number
+- Nth Root of a Number
+- Koko Eating Bananas
+- Minimum Days to Make Bouquets
+- Capacity to Ship Packages Within D Days
+- Aggressive Cows
+- Allocate Minimum Pages
+- Painter's Partition Problem
+
+---
+
+# 1️⃣ What is Binary Search on Answers?
+
+## 📖 Definition
+
+Binary Search on Answers is used when the answer lies within a range of values and can be validated using a condition.
+
+Instead of searching an array,
+
+we search the answer space.
+
+---
+
+### Example
+
+```text
+Minimum Speed
+
+Maximum Distance
+
+Minimum Time
+
+Maximum Capacity
+
+Minimum Cost
+```
+
+---
+
+### General Algorithm
+
+```
+low = minimum possible answer
+
+high = maximum possible answer
+
+while(low <= high)
+
+    mid = low + (high-low)/2
+
+    if(mid is a valid answer)
+
+        store answer
+
+        move left
+
+    else
+
+        move right
+```
+
+---
+
+# 2️⃣ Square Root of a Number
+
+## 📖 Problem
+
+Find the integer square root of a number.
+
+---
+
+### Example
+
+```text
+Input
+
+36
+
+Output
+
+6
+```
+
+---
+
+### Example
+
+```text
+Input
+
+28
+
+Output
+
+5
+```
+
+Because
+
+```
+5² = 25
+
+6² = 36
+```
+
+---
+
+### Approach
+
+Binary Search between
+
+```
+1
+
+to
+
+N
+```
+
+---
+
+### Time Complexity
+
+```
+O(log N)
+```
+
+---
+
+# 3️⃣ Nth Root of a Number
+
+## 📖 Problem
+
+Find the integer Nth root of a number.
+
+---
+
+### Example
+
+```text
+N = 3
+
+M = 27
+```
+
+Output
+
+```
+3
+```
+
+Because
+
+```
+3³ = 27
+```
+
+---
+
+### Approach
+
+Binary Search over possible roots.
+
+---
+
+### Time Complexity
+
+```
+O(log M)
+```
+
+---
+
+# 4️⃣ Koko Eating Bananas
+
+## 📖 Problem
+
+Find the minimum eating speed so that Koko finishes all bananas within H hours.
+
+---
+
+### Example
+
+```text
+Piles
+
+3 6 7 11
+
+Hours
+
+8
+```
+
+Output
+
+```
+4
+```
+
+---
+
+### Observation
+
+Higher eating speed
+
+↓
+
+Less time required
+
+The condition is monotonic.
+
+Perfect for Binary Search.
+
+---
+
+### Time Complexity
+
+```
+O(N log M)
+```
+
+where
+
+```
+M = Maximum pile
+```
+
+---
+
+# 5️⃣ Minimum Days to Make Bouquets
+
+## 📖 Problem
+
+Flowers bloom on different days.
+
+Find the minimum day required to make M bouquets.
+
+---
+
+### Example
+
+```text
+Bloom Days
+
+1 10 3 10 2
+
+Bouquets
+
+3
+
+Flowers per Bouquet
+
+1
+```
+
+Output
+
+```
+3
+```
+
+---
+
+### Observation
+
+As the number of days increases,
+
+more flowers bloom.
+
+The answer is monotonic.
+
+---
+
+### Time Complexity
+
+```
+O(N log M)
+```
+
+---
+
+# 6️⃣ Capacity to Ship Packages Within D Days
+
+## 📖 Problem
+
+Find the minimum ship capacity required to deliver all packages within D days.
+
+---
+
+### Example
+
+```text
+Weights
+
+1 2 3 4 5 6 7 8 9 10
+
+Days
+
+5
+```
+
+---
+
+### Observation
+
+Higher ship capacity
+
+↓
+
+Fewer days required
+
+Binary Search on capacity.
+
+---
+
+### Time Complexity
+
+```
+O(N log Sum)
+```
+
+---
+
+# 7️⃣ Aggressive Cows
+
+## 📖 Problem
+
+Place K cows in stalls such that the minimum distance between any two cows is maximum.
+
+---
+
+### Example
+
+```text
+Stalls
+
+1 2 4 8 9
+
+Cows
+
+3
+```
+
+Output
+
+```
+3
+```
+
+---
+
+### Observation
+
+Check whether cows can be placed with a minimum distance.
+
+If yes,
+
+try increasing the distance.
+
+---
+
+### Time Complexity
+
+```
+O(N log Range)
+```
+
+---
+
+# 8️⃣ Allocate Minimum Pages
+
+## 📖 Problem
+
+Distribute books among students so that the maximum pages assigned to a student is minimum.
+
+---
+
+### Example
+
+```text
+Books
+
+12 34 67 90
+
+Students
+
+2
+```
+
+Output
+
+```
+113
+```
+
+---
+
+### Observation
+
+Search the minimum possible maximum pages.
+
+---
+
+### Time Complexity
+
+```
+O(N log Sum)
+```
+
+---
+
+# 9️⃣ Painter's Partition Problem
+
+## 📖 Problem
+
+Assign boards to painters such that the maximum painting time is minimized.
+
+---
+
+### Observation
+
+Same approach as
+
+Allocate Minimum Pages.
+
+---
+
+### Time Complexity
+
+```
+O(N log Sum)
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time Complexity |
+|----------|-----------------|
+| Square Root | O(log N) |
+| Nth Root | O(log N) |
+| Koko Eating Bananas | O(N log M) |
+| Minimum Days to Make Bouquets | O(N log M) |
+| Ship Packages | O(N log Sum) |
+| Aggressive Cows | O(N log Range) |
+| Allocate Minimum Pages | O(N log Sum) |
+| Painter's Partition | O(N log Sum) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Binary Search on Answers is used when the answer lies in a **range**, not in an array.
+
+✅ Look for **monotonic conditions** (once a condition becomes true, it remains true).
+
+✅ Always identify:
+
+- Minimum possible answer
+- Maximum possible answer
+- Validation function
+
+✅ These problems are among the most frequently asked in product-based company interviews.
+
+---
+
+# 📝 Summary
+
+- Binary Search can be applied to answer spaces.
+- Monotonic conditions make Binary Search possible.
+- Use a validation function to check whether a candidate answer is feasible.
+- Many optimization problems follow this pattern.
+- Binary Search on Answers reduces brute-force solutions from **O(N²)** to **O(N log N)** in many cases.
+
+---
+
+# 🚀 What's Next?
+
+In **Binary Search (Part 6)**, we'll cover:
+
+- Search in a 2D Matrix
+- Search in a Row & Column Wise Sorted Matrix
+- Find Peak Element in 2D Matrix
+- Median in a Row-wise Sorted Matrix
+- Kth Smallest Element in a Sorted Matrix
