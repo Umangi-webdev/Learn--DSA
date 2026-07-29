@@ -1,0 +1,393 @@
+# 📚 Binary Search (Part 4) - Rotated Sorted Array
+
+## 📌 Introduction
+
+A **Rotated Sorted Array** is a sorted array that has been rotated around an unknown pivot. Although the array is no longer completely sorted, Binary Search can still be applied by identifying which half is sorted during each iteration.
+
+These problems are among the most frequently asked in coding interviews.
+
+---
+
+# 📋 Topics Covered
+
+- What is a Rotated Sorted Array?
+- Search in Rotated Sorted Array
+- Search in Rotated Sorted Array II (Duplicates)
+- Find Minimum in Rotated Sorted Array
+- Rotation Count
+- Single Element in a Sorted Array
+
+---
+
+# 1️⃣ What is a Rotated Sorted Array?
+
+## 📖 Definition
+
+A rotated sorted array is obtained by rotating a sorted array one or more times.
+
+---
+
+### Example
+
+Original Array
+
+```text
+1 2 3 4 5 6 7
+```
+
+After Rotation
+
+```text
+4 5 6 7 1 2 3
+```
+
+The array is still partially sorted.
+
+---
+
+# 2️⃣ Search in Rotated Sorted Array
+
+## 📖 Problem
+
+Find the target element in a rotated sorted array.
+
+---
+
+### Example
+
+```text
+Array
+
+4 5 6 7 0 1 2
+
+Target = 0
+```
+
+Output
+
+```
+4
+```
+
+---
+
+### Approach
+
+At every step,
+
+- Find the middle element.
+- Check which half is sorted.
+- Decide whether the target lies in that half.
+- Ignore the other half.
+
+---
+
+### Algorithm
+
+```
+Find mid
+
+If target == arr[mid]
+
+Return mid
+
+If left half is sorted
+
+    Check if target lies in left half
+
+Else
+
+    Right half is sorted
+
+    Check if target lies in right half
+```
+
+---
+
+### Time Complexity
+
+```
+O(log n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 3️⃣ Search in Rotated Sorted Array II
+
+## 📖 Problem
+
+The array may contain duplicate elements.
+
+---
+
+### Example
+
+```text
+Array
+
+2 5 6 0 0 1 2
+
+Target = 0
+```
+
+Output
+
+```
+True
+```
+
+---
+
+### Challenge
+
+Duplicates make it difficult to determine which half is sorted.
+
+---
+
+### Solution
+
+When
+
+```
+arr[low] == arr[mid] == arr[high]
+```
+
+Shrink the search space.
+
+```
+low++
+
+high--
+```
+
+Continue Binary Search.
+
+---
+
+### Time Complexity
+
+Average
+
+```
+O(log n)
+```
+
+Worst Case
+
+```
+O(n)
+```
+
+---
+
+# 4️⃣ Find Minimum in Rotated Sorted Array
+
+## 📖 Problem
+
+Find the smallest element.
+
+---
+
+### Example
+
+```text
+Array
+
+4 5 6 7 0 1 2
+```
+
+Output
+
+```
+0
+```
+
+---
+
+### Observation
+
+The minimum element is always located in the unsorted half.
+
+---
+
+### Algorithm
+
+```
+If left half is sorted
+
+Move right
+
+Else
+
+Move left
+```
+
+Keep updating the minimum value.
+
+---
+
+### Time Complexity
+
+```
+O(log n)
+```
+
+---
+
+# 5️⃣ Rotation Count
+
+## 📖 Definition
+
+The number of rotations equals the index of the minimum element.
+
+---
+
+### Example
+
+```text
+Array
+
+4 5 6 7 1 2 3
+```
+
+Minimum Element
+
+```
+1
+```
+
+Index
+
+```
+4
+```
+
+Rotation Count
+
+```
+4
+```
+
+---
+
+### Time Complexity
+
+```
+O(log n)
+```
+
+---
+
+# 6️⃣ Single Element in a Sorted Array
+
+## 📖 Problem
+
+Every element appears twice except one element.
+
+Find the single element.
+
+---
+
+### Example
+
+```text
+Array
+
+1 1 2 2 3 4 4 5 5
+```
+
+Output
+
+```
+3
+```
+
+---
+
+### Observation
+
+Before the single element,
+
+```
+First occurrence → Even Index
+
+Second occurrence → Odd Index
+```
+
+After the single element,
+
+the pattern reverses.
+
+Binary Search can identify the unique element efficiently.
+
+---
+
+### Time Complexity
+
+```
+O(log n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|------|-------|
+| Search Rotated Array | O(log n) | O(1) |
+| Search Rotated Array II | O(log n) Average |
+| Find Minimum | O(log n) | O(1) |
+| Rotation Count | O(log n) | O(1) |
+| Single Element | O(log n) | O(1) |
+
+---
+
+# 💡 Interview Tips
+
+✅ One half of a rotated sorted array is always sorted.
+
+✅ First identify the sorted half.
+
+✅ Duplicates may require shrinking the search space.
+
+✅ Rotation Count = Index of Minimum Element.
+
+✅ Single Element problems rely on the even-odd index property.
+
+---
+
+# 📝 Summary
+
+- Rotated sorted arrays are solved using Binary Search.
+- Identify the sorted half at every iteration.
+- Minimum element determines the number of rotations.
+- Duplicates make Binary Search slightly more complex.
+- Single Element problems can be solved without linear traversal.
+
+---
+
+# 🚀 What's Next?
+
+In **Binary Search (Part 5)**, we'll cover:
+
+- Binary Search on Answers
+- Square Root of a Number
+- Nth Root of a Number
+- Koko Eating Bananas
+- Minimum Days to Make Bouquets
+- Capacity to Ship Packages Within D Days
+- Aggressive Cows
+- Allocate Minimum Pages
+- Painter's Partition Problem
