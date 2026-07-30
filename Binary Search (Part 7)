@@ -1,0 +1,411 @@
+# 📚 Binary Search (Part 7) - Advanced Interview Problems & Cheat Sheet
+
+## 📌 Introduction
+
+This chapter covers some of the most advanced Binary Search problems frequently asked in technical interviews. These problems require identifying the correct Binary Search pattern rather than directly applying the algorithm.
+
+By mastering these patterns, you'll be able to solve a wide range of interview questions efficiently.
+
+---
+
+# 📋 Topics Covered
+
+- Median of Two Sorted Arrays
+- Kth Element of Two Sorted Arrays
+- Split Array Largest Sum
+- Minimize Maximum Distance to Gas Station
+- Binary Search Pattern Recognition
+- Common Interview Mistakes
+- Binary Search Cheat Sheet
+
+---
+
+# 1️⃣ Median of Two Sorted Arrays
+
+## 📖 Problem
+
+Given two sorted arrays, find the median of the combined sorted array.
+
+---
+
+### Example
+
+```text
+Array 1
+
+1 3
+
+Array 2
+
+2
+```
+
+Merged Array
+
+```text
+1 2 3
+```
+
+Median
+
+```
+2
+```
+
+---
+
+### Best Approach
+
+Instead of merging the arrays,
+
+partition both arrays using Binary Search.
+
+---
+
+### Time Complexity
+
+```
+O(log(min(n,m)))
+```
+
+---
+
+# 2️⃣ Kth Element of Two Sorted Arrays
+
+## 📖 Problem
+
+Find the Kth smallest element from two sorted arrays.
+
+---
+
+### Example
+
+```text
+Array 1
+
+2 3 6 7 9
+
+Array 2
+
+1 4 8 10
+
+K = 5
+```
+
+Output
+
+```
+6
+```
+
+---
+
+### Best Approach
+
+Use Binary Search on the smaller array to determine the correct partition.
+
+---
+
+### Time Complexity
+
+```
+O(log(min(n,m)))
+```
+
+---
+
+# 3️⃣ Split Array Largest Sum
+
+## 📖 Problem
+
+Split an array into **K** subarrays such that the largest subarray sum is minimized.
+
+---
+
+### Example
+
+```text
+Array
+
+7 2 5 10 8
+
+K = 2
+```
+
+Output
+
+```
+18
+```
+
+---
+
+### Observation
+
+Search for the minimum possible maximum subarray sum.
+
+Use Binary Search on the answer.
+
+---
+
+### Time Complexity
+
+```
+O(N log(Sum))
+```
+
+---
+
+# 4️⃣ Minimize Maximum Distance to Gas Station
+
+## 📖 Problem
+
+Place **K** new gas stations so that the maximum distance between adjacent stations is minimized.
+
+---
+
+### Observation
+
+The answer lies in a continuous range.
+
+Binary Search on the answer.
+
+---
+
+### Time Complexity
+
+```
+O(N log(Range))
+```
+
+---
+
+# 5️⃣ Binary Search Pattern Recognition
+
+## 📖 When Should You Use Binary Search?
+
+Apply Binary Search if:
+
+✅ The data is sorted.
+
+OR
+
+✅ The answer lies within a range.
+
+AND
+
+✅ The condition is monotonic.
+
+---
+
+### Monotonic Property
+
+```text
+False False False True True True
+```
+
+or
+
+```text
+True True True False False
+```
+
+Whenever this pattern exists,
+
+Binary Search is usually applicable.
+
+---
+
+# 6️⃣ Common Binary Search Mistakes
+
+### ❌ Forgetting to Sort
+
+Binary Search works only on sorted data.
+
+---
+
+### ❌ Infinite Loop
+
+Always update
+
+```cpp
+low = mid + 1
+
+or
+
+high = mid - 1
+```
+
+---
+
+### ❌ Integer Overflow
+
+Never write
+
+```cpp
+mid = (low + high)/2;
+```
+
+Instead use
+
+```cpp
+mid = low + (high-low)/2;
+```
+
+---
+
+### ❌ Wrong Search Space
+
+Clearly identify
+
+```
+Minimum Answer
+
+Maximum Answer
+```
+
+before applying Binary Search on Answers.
+
+---
+
+### ❌ Ignoring Edge Cases
+
+Always test:
+
+- Empty array
+- Single element
+- Target not present
+- Duplicate elements
+- First and last index
+
+---
+
+# 7️⃣ Binary Search Cheat Sheet
+
+| Problem Type | Best Technique |
+|--------------|----------------|
+| Search Element | Binary Search |
+| Lower Bound | Binary Search |
+| Upper Bound | Binary Search |
+| Floor & Ceil | Binary Search |
+| First/Last Occurrence | Binary Search |
+| Count Occurrences | Binary Search |
+| Rotated Array | Modified Binary Search |
+| Peak Element | Binary Search |
+| Square Root | Binary Search on Answer |
+| Nth Root | Binary Search on Answer |
+| Koko Eating Bananas | Binary Search on Answer |
+| Ship Packages | Binary Search on Answer |
+| Allocate Pages | Binary Search on Answer |
+| Aggressive Cows | Binary Search on Answer |
+| Matrix Search | Binary Search |
+| Matrix Median | Binary Search on Answer |
+| Median of Two Arrays | Partition Binary Search |
+| Kth Element | Partition Binary Search |
+
+---
+
+# 📊 Overall Complexity
+
+| Operation | Time |
+|------------|------|
+| Standard Binary Search | O(log n) |
+| Lower/Upper Bound | O(log n) |
+| Rotated Array Search | O(log n) |
+| Binary Search on Answer | O(N log Range) |
+| Matrix Binary Search | O(log(n×m)) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Always check if the input is sorted.
+
+✅ Binary Search is not limited to arrays—it also works on answer ranges.
+
+✅ Learn to recognize monotonic conditions.
+
+✅ Practice partition-based Binary Search for advanced interview questions.
+
+✅ Binary Search is one of the most frequently tested topics in coding interviews.
+
+---
+
+# 📝 Complete Binary Search Summary
+
+✔ Binary Search Fundamentals
+
+✔ Lower Bound & Upper Bound
+
+✔ Floor & Ceil
+
+✔ First & Last Occurrence
+
+✔ Count Occurrences
+
+✔ Rotated Sorted Array
+
+✔ Peak Element
+
+✔ Binary Search on Answers
+
+✔ Matrix Binary Search
+
+✔ Advanced Partition Problems
+
+---
+
+# 🎯 Recommended Practice Problems
+
+## Easy
+
+- Binary Search
+- Search Insert Position
+- Guess Number Higher or Lower
+- Sqrt(x)
+
+---
+
+## Medium
+
+- Search in Rotated Sorted Array
+- Find Peak Element
+- Koko Eating Bananas
+- Capacity to Ship Packages Within D Days
+- Split Array Largest Sum
+
+---
+
+## Hard
+
+- Median of Two Sorted Arrays
+- Kth Element of Two Sorted Arrays
+- Median in Row-wise Sorted Matrix
+- Minimize Maximum Distance to Gas Station
+- Aggressive Cows (Classic)
+
+---
+
+# 🎉 Congratulations!
+
+You have successfully completed the **Binary Search** section.
+
+By mastering these concepts, you'll be able to solve most Binary Search problems asked in coding interviews and competitive programming.
+
+---
+
+# 🚀 What's Next?
+
+The next topic in your DSA roadmap is:
+
+## 🌳 Recursion & Backtracking (Part 1)
+
+You'll learn:
+
+- Introduction to Recursion
+- Base Case
+- Recursive Tree
+- Stack Memory
+- Tail & Head Recursion
+- Types of Recursion
+- Dry Run Techniques
