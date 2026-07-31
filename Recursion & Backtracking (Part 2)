@@ -1,0 +1,372 @@
+# 📚 Recursion & Backtracking (Part 2) - Types of Recursion
+
+## 📌 Introduction
+
+Not all recursive functions behave the same way. Based on **where** and **how** the recursive call is made, recursion is classified into different types.
+
+Understanding these types helps in solving complex recursive and backtracking problems efficiently.
+
+---
+
+# 📋 Topics Covered
+
+- Types of Recursion
+- Direct Recursion
+- Indirect Recursion
+- Head Recursion
+- Tail Recursion
+- Tree Recursion
+- Nested Recursion
+
+---
+
+# 1️⃣ Types of Recursion
+
+There are six major types of recursion:
+
+- Direct Recursion
+- Indirect Recursion
+- Head Recursion
+- Tail Recursion
+- Tree Recursion
+- Nested Recursion
+
+---
+
+# 2️⃣ Direct Recursion
+
+## 📖 Definition
+
+A function directly calls itself.
+
+---
+
+### Example
+
+```cpp
+#include<iostream>
+using namespace std;
+
+void fun(int n)
+{
+    if(n==0)
+        return;
+
+    cout<<n<<" ";
+
+    fun(n-1);
+}
+
+int main()
+{
+    fun(5);
+}
+```
+
+---
+
+### Output
+
+```
+5 4 3 2 1
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 3️⃣ Indirect Recursion
+
+## 📖 Definition
+
+A function calls another function, and that function eventually calls the first function.
+
+---
+
+### Example
+
+```cpp
+void funA(int n);
+
+void funB(int n)
+{
+    if(n<=0)
+        return;
+
+    cout<<"B ";
+
+    funA(n-1);
+}
+
+void funA(int n)
+{
+    if(n<=0)
+        return;
+
+    cout<<"A ";
+
+    funB(n-1);
+}
+```
+
+---
+
+### Call Sequence
+
+```
+funA()
+
+↓
+
+funB()
+
+↓
+
+funA()
+
+↓
+
+funB()
+```
+
+---
+
+# 4️⃣ Head Recursion
+
+## 📖 Definition
+
+The recursive call is made **before** performing any operation.
+
+---
+
+### Example
+
+```cpp
+void print(int n)
+{
+    if(n==0)
+        return;
+
+    print(n-1);
+
+    cout<<n<<" ";
+}
+```
+
+---
+
+### Output
+
+```
+1 2 3 4 5
+```
+
+---
+
+### Execution
+
+```
+Calls
+
+5
+
+↓
+
+4
+
+↓
+
+3
+
+↓
+
+2
+
+↓
+
+1
+
+↓
+
+Return
+
+↓
+
+Print
+```
+
+---
+
+# 5️⃣ Tail Recursion
+
+## 📖 Definition
+
+The recursive call is the **last statement** in the function.
+
+---
+
+### Example
+
+```cpp
+void print(int n)
+{
+    if(n==0)
+        return;
+
+    cout<<n<<" ";
+
+    print(n-1);
+}
+```
+
+---
+
+### Output
+
+```
+5 4 3 2 1
+```
+
+---
+
+### Advantage
+
+Tail recursion can be optimized into iteration by some compilers.
+
+---
+
+# 6️⃣ Tree Recursion
+
+## 📖 Definition
+
+A function makes **multiple recursive calls**.
+
+---
+
+### Example
+
+```cpp
+void fun(int n)
+{
+    if(n==0)
+        return;
+
+    cout<<n<<" ";
+
+    fun(n-1);
+
+    fun(n-1);
+}
+```
+
+---
+
+### Recursive Tree
+
+```
+fun(3)
+
+      3
+
+    /   \
+
+   2     2
+
+  / \   / \
+
+ 1  1  1  1
+```
+
+---
+
+### Time Complexity
+
+```
+O(2ⁿ)
+```
+
+---
+
+# 7️⃣ Nested Recursion
+
+## 📖 Definition
+
+A recursive call is passed as an argument to another recursive call.
+
+---
+
+### Example
+
+```cpp
+int fun(int n)
+{
+    if(n>100)
+        return n-10;
+
+    return fun(fun(n+11));
+}
+```
+
+---
+
+### Observation
+
+Nested recursion is uncommon but useful for understanding recursion depth.
+
+---
+
+# 📊 Comparison Table
+
+| Type | Recursive Call Position | Example |
+|------|--------------------------|---------|
+| Direct | Calls itself directly | `fun()` |
+| Indirect | Calls another recursive function | `A → B → A` |
+| Head | Before processing | `fun(); cout<<n;` |
+| Tail | After processing | `cout<<n; fun();` |
+| Tree | Multiple recursive calls | Fibonacci |
+| Nested | Recursive call inside another | `fun(fun())` |
+
+---
+
+# 💡 Interview Tips
+
+✅ Head Recursion prints output while returning.
+
+✅ Tail Recursion prints output while going deeper.
+
+✅ Tree Recursion creates multiple recursive branches.
+
+✅ Tail Recursion is generally more memory-efficient.
+
+✅ Always identify the Base Case before analyzing recursion.
+
+---
+
+# 📝 Summary
+
+- Direct Recursion → Function calls itself.
+- Indirect Recursion → Two or more functions call each other.
+- Head Recursion → Recursive call first, work later.
+- Tail Recursion → Work first, recursive call later.
+- Tree Recursion → Multiple recursive calls.
+- Nested Recursion → Recursive call used as a parameter.
+
+---
+
+# 🚀 What's Next?
+
+In **Recursion & Backtracking (Part 3)**, we'll cover:
+
+- Print Numbers (1 to N & N to 1)
+- Sum of First N Numbers
+- Factorial
+- Fibonacci Series
+- Power Function
+- Reverse an Array using Recursion
+- Check Palindrome using Recursion
