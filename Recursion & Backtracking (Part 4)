@@ -1,0 +1,417 @@
+# 📚 Recursion & Backtracking (Part 4) - Advanced Recursion Concepts
+
+## 📌 Introduction
+
+After learning the basics of recursion, it's important to understand advanced recursion techniques. These concepts help solve more complex problems efficiently and form the foundation of **Backtracking**, **Divide & Conquer**, and **Dynamic Programming**.
+
+---
+
+# 📋 Topics Covered
+
+- Parameterized Recursion
+- Functional Recursion
+- Multiple Recursion
+- Recursion Tree
+- Divide & Conquer
+- Tail Recursion Optimization
+- Memoization (Introduction)
+
+---
+
+# 1️⃣ Parameterized Recursion
+
+## 📖 Definition
+
+Parameterized Recursion carries the answer through function parameters instead of returning it.
+
+---
+
+### Example
+
+Find the sum of the first N natural numbers.
+
+```cpp
+#include<iostream>
+using namespace std;
+
+void sum(int n, int ans)
+{
+    if(n == 0)
+    {
+        cout << ans;
+        return;
+    }
+
+    sum(n - 1, ans + n);
+}
+
+int main()
+{
+    sum(5, 0);
+}
+```
+
+---
+
+### Output
+
+```
+15
+```
+
+---
+
+### Characteristics
+
+✅ Uses extra parameters
+
+✅ No return value required
+
+✅ Builds the answer during recursive calls
+
+---
+
+# 2️⃣ Functional Recursion
+
+## 📖 Definition
+
+Functional Recursion returns the computed result from each recursive call.
+
+---
+
+### Example
+
+```cpp
+#include<iostream>
+using namespace std;
+
+int sum(int n)
+{
+    if(n == 0)
+        return 0;
+
+    return n + sum(n - 1);
+}
+
+int main()
+{
+    cout << sum(5);
+}
+```
+
+---
+
+### Output
+
+```
+15
+```
+
+---
+
+### Characteristics
+
+✅ Returns a value
+
+✅ Cleaner implementation
+
+✅ Easier to combine recursive results
+
+---
+
+# 3️⃣ Multiple Recursion
+
+## 📖 Definition
+
+A recursive function makes more than one recursive call.
+
+---
+
+### Example
+
+Fibonacci Series
+
+```cpp
+int fibonacci(int n)
+{
+    if(n <= 1)
+        return n;
+
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+```
+
+---
+
+### Recursive Tree
+
+```
+                 Fib(5)
+               /       \
+           Fib(4)      Fib(3)
+          /     \      /     \
+      Fib(3) Fib(2) Fib(2) Fib(1)
+```
+
+---
+
+### Time Complexity
+
+```
+O(2ⁿ)
+```
+
+---
+
+### Space Complexity
+
+```
+O(n)
+```
+
+---
+
+# 4️⃣ Recursion Tree
+
+## 📖 Definition
+
+A Recursion Tree is a graphical representation of recursive function calls.
+
+---
+
+### Example
+
+Factorial
+
+```
+factorial(4)
+
+↓
+
+4 × factorial(3)
+
+↓
+
+3 × factorial(2)
+
+↓
+
+2 × factorial(1)
+
+↓
+
+1
+```
+
+---
+
+### Advantages
+
+✅ Helps visualize recursive execution
+
+✅ Makes complexity analysis easier
+
+✅ Useful in Dynamic Programming
+
+---
+
+# 5️⃣ Divide & Conquer
+
+## 📖 Definition
+
+Divide the problem into smaller subproblems, solve each recursively, and combine their results.
+
+---
+
+### Examples
+
+- Merge Sort
+- Quick Sort
+- Binary Search
+
+---
+
+### Steps
+
+```
+Problem
+
+↓
+
+Divide
+
+↓
+
+Solve Smaller Problems
+
+↓
+
+Combine Results
+```
+
+---
+
+### Advantages
+
+✅ Efficient for large datasets
+
+✅ Reduces problem complexity
+
+---
+
+# 6️⃣ Tail Recursion Optimization
+
+Some compilers optimize Tail Recursion by converting it into loops.
+
+---
+
+### Example
+
+```cpp
+void print(int n)
+{
+    if(n == 0)
+        return;
+
+    cout << n << " ";
+
+    print(n - 1);
+}
+```
+
+---
+
+### Advantages
+
+- Less stack memory
+- Better performance
+- Similar to iterative solutions
+
+---
+
+# 7️⃣ Memoization (Introduction)
+
+## 📖 Definition
+
+Memoization stores the results of previously solved recursive subproblems to avoid repeated calculations.
+
+---
+
+### Without Memoization
+
+```
+Fib(5)
+
+↓
+
+Fib(4)
+
+↓
+
+Fib(3)
+
+↓
+
+Fib(2)
+
+↓
+
+Fib(1)
+
+Fib(2) again
+
+Fib(3) again
+```
+
+Many calculations repeat.
+
+---
+
+### With Memoization
+
+```
+Fib(3)
+
+↓
+
+Store Answer
+
+↓
+
+Reuse Whenever Needed
+```
+
+---
+
+### Advantages
+
+✅ Eliminates repeated computations
+
+✅ Greatly improves performance
+
+✅ Foundation of Dynamic Programming
+
+---
+
+# 📊 Complexity Comparison
+
+| Concept | Time | Space |
+|----------|------|--------|
+| Parameterized Recursion | O(n) | O(n) |
+| Functional Recursion | O(n) | O(n) |
+| Multiple Recursion | O(2ⁿ) | O(n) |
+| Divide & Conquer | Depends on Problem | Depends |
+| Memoization | O(n) (Problem Dependent) | O(n) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Use Functional Recursion when a value needs to be returned.
+
+✅ Use Parameterized Recursion when passing accumulated results.
+
+✅ Draw a Recursion Tree to understand execution flow.
+
+✅ Avoid repeated recursive calls whenever possible.
+
+✅ Memoization converts many exponential recursive solutions into polynomial time.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Forgetting the Base Case
+
+❌ Infinite Recursion
+
+❌ Stack Overflow
+
+❌ Recomputing the same subproblem
+
+❌ Returning incorrect values
+
+---
+
+# 📝 Summary
+
+- Parameterized Recursion carries the answer as a parameter.
+- Functional Recursion returns the answer.
+- Multiple Recursion creates multiple recursive branches.
+- Recursion Trees help visualize recursive execution.
+- Divide & Conquer recursively solves independent subproblems.
+- Tail Recursion can be optimized into iteration.
+- Memoization avoids repeated calculations and improves efficiency.
+
+---
+
+# 🚀 What's Next?
+
+In **Recursion & Backtracking (Part 5)**, we'll cover:
+
+- Introduction to Backtracking
+- Backtracking vs Recursion
+- Decision Tree
+- State Space Tree
+- Choose → Explore → Undo Technique
+- Applications of Backtracking
