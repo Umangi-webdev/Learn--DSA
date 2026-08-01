@@ -1,0 +1,511 @@
+# 📚 Recursion & Backtracking (Part 3) - Basic Recursion Problems
+
+## 📌 Introduction
+
+Once you understand how recursion works, the next step is solving basic recursive problems. These problems help you build confidence in writing recursive functions and understanding recursive calls.
+
+These are among the most commonly asked beginner-level recursion interview questions.
+
+---
+
+# 📋 Topics Covered
+
+- Print Numbers from 1 to N
+- Print Numbers from N to 1
+- Sum of First N Numbers
+- Factorial of a Number
+- Fibonacci Series
+- Power of a Number
+- Reverse an Array
+- Check Palindrome
+
+---
+
+# 1️⃣ Print Numbers from 1 to N
+
+## 📖 Problem
+
+Print numbers from **1 to N** using recursion.
+
+---
+
+### Example
+
+```text
+Input
+
+5
+```
+
+Output
+
+```text
+1 2 3 4 5
+```
+
+---
+
+### C++ Code
+
+```cpp
+void print(int n)
+{
+    if(n == 0)
+        return;
+
+    print(n - 1);
+
+    cout << n << " ";
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(n)
+```
+
+---
+
+# 2️⃣ Print Numbers from N to 1
+
+## 📖 Problem
+
+Print numbers from **N to 1**.
+
+---
+
+### Example
+
+```text
+Input
+
+5
+```
+
+Output
+
+```text
+5 4 3 2 1
+```
+
+---
+
+### C++ Code
+
+```cpp
+void print(int n)
+{
+    if(n == 0)
+        return;
+
+    cout << n << " ";
+
+    print(n - 1);
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 3️⃣ Sum of First N Numbers
+
+## 📖 Problem
+
+Find the sum of first N natural numbers.
+
+---
+
+### Example
+
+```text
+Input
+
+5
+```
+
+Output
+
+```text
+15
+```
+
+---
+
+### C++ Code
+
+```cpp
+int sum(int n)
+{
+    if(n == 0)
+        return 0;
+
+    return n + sum(n - 1);
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 4️⃣ Factorial of a Number
+
+## 📖 Problem
+
+Find the factorial of a number.
+
+---
+
+### Formula
+
+```text
+n! = n × (n-1)!
+```
+
+---
+
+### Example
+
+```text
+Input
+
+5
+```
+
+Output
+
+```text
+120
+```
+
+---
+
+### C++ Code
+
+```cpp
+int factorial(int n)
+{
+    if(n == 0 || n == 1)
+        return 1;
+
+    return n * factorial(n - 1);
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 5️⃣ Fibonacci Series
+
+## 📖 Problem
+
+Find the Nth Fibonacci number.
+
+---
+
+### Formula
+
+```text
+F(n) = F(n-1) + F(n-2)
+```
+
+---
+
+### Example
+
+```text
+Input
+
+6
+```
+
+Output
+
+```text
+8
+```
+
+---
+
+### C++ Code
+
+```cpp
+int fib(int n)
+{
+    if(n <= 1)
+        return n;
+
+    return fib(n - 1) + fib(n - 2);
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(2ⁿ)
+```
+
+### Space Complexity
+
+```
+O(n)
+```
+
+---
+
+# 6️⃣ Power of a Number
+
+## 📖 Problem
+
+Calculate
+
+```text
+a^b
+```
+
+using recursion.
+
+---
+
+### Example
+
+```text
+Input
+
+2 5
+```
+
+Output
+
+```text
+32
+```
+
+---
+
+### C++ Code
+
+```cpp
+int power(int a, int b)
+{
+    if(b == 0)
+        return 1;
+
+    return a * power(a, b - 1);
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(b)
+```
+
+---
+
+# 7️⃣ Reverse an Array
+
+## 📖 Problem
+
+Reverse an array using recursion.
+
+---
+
+### Example
+
+```text
+Input
+
+1 2 3 4 5
+```
+
+Output
+
+```text
+5 4 3 2 1
+```
+
+---
+
+### Approach
+
+Swap
+
+```text
+Left ↔ Right
+```
+
+Move both pointers toward the center.
+
+---
+
+### C++ Code
+
+```cpp
+void reverse(int arr[], int left, int right)
+{
+    if(left >= right)
+        return;
+
+    swap(arr[left], arr[right]);
+
+    reverse(arr, left + 1, right - 1);
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 8️⃣ Check Palindrome
+
+## 📖 Problem
+
+Determine whether a string is a palindrome.
+
+---
+
+### Example
+
+```text
+Input
+
+MADAM
+```
+
+Output
+
+```text
+True
+```
+
+---
+
+### Example
+
+```text
+Input
+
+HELLO
+```
+
+Output
+
+```text
+False
+```
+
+---
+
+### C++ Code
+
+```cpp
+bool palindrome(string s, int left, int right)
+{
+    if(left >= right)
+        return true;
+
+    if(s[left] != s[right])
+        return false;
+
+    return palindrome(s, left + 1, right - 1);
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|------|--------|
+| Print 1 to N | O(n) | O(n) |
+| Print N to 1 | O(n) | O(n) |
+| Sum of N Numbers | O(n) | O(n) |
+| Factorial | O(n) | O(n) |
+| Fibonacci | O(2ⁿ) | O(n) |
+| Power | O(b) | O(b) |
+| Reverse Array | O(n) | O(n) |
+| Palindrome | O(n) | O(n) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Always identify the Base Case first.
+
+✅ Every recursive call should reduce the problem size.
+
+✅ Trace recursive calls using a recursion tree.
+
+✅ Avoid repeated calculations (like Fibonacci); use Dynamic Programming for optimization.
+
+✅ Think about whether the function should **return a value** or simply **perform an action**.
+
+---
+
+# 📝 Summary
+
+- Print numbers using Head and Tail Recursion.
+- Factorial and Sum are examples of Functional Recursion.
+- Fibonacci demonstrates Multiple Recursion.
+- Reverse Array and Palindrome use two recursive pointers.
+- Mastering these problems builds a strong foundation for advanced recursion and backtracking.
+
+---
+
+# 🚀 What's Next?
+
+In **Recursion & Backtracking (Part 4)**, we'll cover:
+
+- Parameterized Recursion
+- Functional Recursion
+- Multiple Recursion
+- Recursion Tree
+- Divide & Conquer
+- Tail Recursion Optimization
