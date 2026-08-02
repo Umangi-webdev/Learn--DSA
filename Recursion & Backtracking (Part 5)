@@ -1,0 +1,508 @@
+# 📚 Recursion & Backtracking (Part 5) - Introduction to Backtracking
+
+## 📌 Introduction
+
+**Backtracking** is an advanced algorithmic technique used to solve problems by exploring all possible solutions. It builds a solution step by step and **backtracks** whenever a choice leads to an invalid or unwanted solution.
+
+Unlike simple recursion, backtracking allows us to **undo previous choices** and explore alternative paths.
+
+It is widely used in:
+
+- N-Queens Problem
+- Sudoku Solver
+- Rat in a Maze
+- Word Search
+- Permutations
+- Combinations
+- Graph Coloring
+- Knight's Tour
+
+---
+
+# 📋 Topics Covered
+
+- What is Backtracking?
+- How Backtracking Works
+- Backtracking vs Recursion
+- Decision Tree
+- State Space Tree
+- Choose → Explore → Undo
+- Applications of Backtracking
+
+---
+
+# 1️⃣ What is Backtracking?
+
+## 📖 Definition
+
+Backtracking is a recursive algorithm that tries every possible solution by making choices one by one.
+
+If a choice does not lead to the correct solution, it **undoes** that choice and tries another.
+
+---
+
+### Basic Idea
+
+```
+Choose
+
+↓
+
+Explore
+
+↓
+
+Wrong Choice?
+
+↓
+
+Undo
+
+↓
+
+Try Next Choice
+```
+
+---
+
+### Example
+
+Suppose you are finding all paths in a maze.
+
+```
+Start
+
+↓
+
+Move Right
+
+↓
+
+Blocked
+
+↓
+
+Go Back
+
+↓
+
+Move Down
+
+↓
+
+Continue
+```
+
+This process of returning and trying another path is called **Backtracking**.
+
+---
+
+# 2️⃣ How Backtracking Works
+
+Every Backtracking algorithm follows four steps.
+
+```
+Choose
+
+↓
+
+Explore
+
+↓
+
+Undo
+
+↓
+
+Repeat
+```
+
+---
+
+### General Algorithm
+
+```
+Backtrack(State)
+
+{
+
+    if(solution found)
+
+        save solution
+
+    for(each possible choice)
+
+    {
+
+        Choose
+
+        Backtrack(next state)
+
+        Undo Choice
+
+    }
+
+}
+```
+
+---
+
+# 3️⃣ Backtracking vs Recursion
+
+| Feature | Recursion | Backtracking |
+|----------|-----------|--------------|
+| Function Calls | ✅ | ✅ |
+| Undo Choices | ❌ | ✅ |
+| Explores All Solutions | ❌ | ✅ |
+| State Modification | Limited | Frequent |
+| Used For | Simple Problems | Search Problems |
+
+---
+
+### Example
+
+Recursion
+
+```
+5
+
+↓
+
+4
+
+↓
+
+3
+
+↓
+
+2
+
+↓
+
+1
+```
+
+Only one path.
+
+---
+
+Backtracking
+
+```
+Start
+
+├── Choice A
+
+├── Choice B
+
+├── Choice C
+
+└── Choice D
+```
+
+Explores every possible path.
+
+---
+
+# 4️⃣ Decision Tree
+
+## 📖 Definition
+
+A Decision Tree represents every possible choice at each step.
+
+---
+
+### Example
+
+Generate all binary strings of length 3.
+
+```
+            ""
+
+          /     \
+
+        0         1
+
+      /  \      /  \
+
+     0    1    0    1
+
+    /\    /\   /\   /\
+
+```
+
+Every branch represents a possible decision.
+
+---
+
+### Importance
+
+✅ Visualizes recursion
+
+✅ Helps understand branching
+
+✅ Useful for complexity analysis
+
+---
+
+# 5️⃣ State Space Tree
+
+## 📖 Definition
+
+A State Space Tree represents all possible states generated during Backtracking.
+
+---
+
+### Example
+
+Permutations of
+
+```
+1 2 3
+```
+
+```
+           {}
+
+     /      |      \
+
+    1       2       3
+
+  /   \    / \     / \
+
+12   13 21 23   31 32
+```
+
+Each node represents one state.
+
+---
+
+# 6️⃣ Choose → Explore → Undo
+
+This is the core principle of Backtracking.
+
+---
+
+### Step 1
+
+Choose
+
+```
+Add an element
+```
+
+↓
+
+### Step 2
+
+Explore
+
+```
+Call recursion
+```
+
+↓
+
+### Step 3
+
+Undo
+
+```
+Remove element
+```
+
+↓
+
+### Step 4
+
+Try another choice
+
+---
+
+### Example
+
+```
+Current
+
+[1]
+
+↓
+
+Choose 2
+
+[1,2]
+
+↓
+
+Explore
+
+↓
+
+Undo
+
+[1]
+
+↓
+
+Choose 3
+
+[1,3]
+```
+
+---
+
+# 7️⃣ Applications of Backtracking
+
+Backtracking is used in solving:
+
+### ✔ Combinations
+
+Choose K elements.
+
+---
+
+### ✔ Permutations
+
+Arrange elements.
+
+---
+
+### ✔ Subsets
+
+Generate all subsets.
+
+---
+
+### ✔ Sudoku Solver
+
+Fill every empty cell.
+
+---
+
+### ✔ N-Queens
+
+Place queens safely.
+
+---
+
+### ✔ Rat in a Maze
+
+Find all possible paths.
+
+---
+
+### ✔ Word Search
+
+Search words in a grid.
+
+---
+
+### ✔ Graph Coloring
+
+Assign colors without conflicts.
+
+---
+
+# 📊 Complexity
+
+Backtracking generally explores all possibilities.
+
+Worst Case
+
+```
+O(b^d)
+```
+
+Where
+
+```
+b = Branching Factor
+
+d = Depth
+```
+
+---
+
+### Space Complexity
+
+```
+O(d)
+```
+
+(Call Stack)
+
+---
+
+# 💡 Interview Tips
+
+✅ Backtracking always follows
+
+```
+Choose
+
+↓
+
+Explore
+
+↓
+
+Undo
+```
+
+---
+
+✅ Every Backtracking problem uses Recursion.
+
+---
+
+✅ Backtracking explores **all possible solutions**.
+
+---
+
+✅ Undoing the previous choice is the most important step.
+
+---
+
+✅ Decision Trees help visualize recursive branching.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Forgetting to undo changes.
+
+❌ Missing the Base Case.
+
+❌ Modifying shared data incorrectly.
+
+❌ Not copying the current solution before storing it.
+
+❌ Forgetting to mark and unmark visited nodes.
+
+---
+
+# 📝 Summary
+
+- Backtracking is an extension of Recursion.
+- It explores all possible solutions.
+- Invalid choices are undone.
+- Every algorithm follows **Choose → Explore → Undo**.
+- Decision Trees and State Space Trees help visualize execution.
+- Backtracking is widely used in interview problems like N-Queens, Sudoku, Rat in a Maze, and Permutations.
+
+---
+
+# 🚀 What's Next?
+
+In **Recursion & Backtracking (Part 6)**, we'll cover:
+
+- Subsets
+- Subsequences
+- Permutations
+- Combination Sum
+- N-Queens
+- Rat in a Maze
+- Sudoku Solver
+- Word Search
+- Palindrome Partitioning
