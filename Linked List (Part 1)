@@ -1,0 +1,318 @@
+# 📚 Linked List (Part 1) - Introduction to Linked Lists
+
+## 📌 Introduction
+
+A **Linked List** is a linear data structure in which elements are stored in separate memory locations and connected using pointers (or references).
+
+Unlike arrays, linked lists do **not require contiguous memory**, making insertion and deletion operations much more efficient.
+
+Linked Lists are widely used in:
+
+- Dynamic Memory Allocation
+- Stacks & Queues
+- Graphs
+- Hash Tables
+- Browser History
+- Music Playlists
+- Operating Systems
+
+---
+
+# 📋 Topics Covered
+
+- What is a Linked List?
+- Node Structure
+- Memory Representation
+- Types of Linked Lists
+- Advantages
+- Disadvantages
+- Array vs Linked List
+
+---
+
+# 1️⃣ What is a Linked List?
+
+## 📖 Definition
+
+A Linked List is a collection of nodes where each node contains:
+
+- Data
+- Address (Pointer) to the next node
+
+Unlike arrays, nodes are not stored continuously in memory.
+
+---
+
+### Visualization
+
+```
++------+-------+     +------+-------+     +------+-------+
+|  10  |   ●───|---->|  20  |   ●───|---->|  30  | NULL  |
++------+-------+     +------+-------+     +------+-------+
+```
+
+---
+
+# 2️⃣ Structure of a Node
+
+Each node contains two parts.
+
+```
+-------------------
+| Data | Next Ptr |
+-------------------
+```
+
+---
+
+### C++ Structure
+
+```cpp
+struct Node
+{
+    int data;
+    Node* next;
+};
+```
+
+---
+
+# 3️⃣ Memory Representation
+
+Unlike arrays,
+
+```
+Array
+
+10 20 30 40
+```
+
+are stored continuously.
+
+But Linked Lists are stored anywhere in memory.
+
+Example
+
+```
+Address
+
+100 → 10
+
+500 → 20
+
+230 → 30
+
+890 → 40
+```
+
+Pointers connect these nodes.
+
+```
+100 → 500 → 230 → 890 → NULL
+```
+
+---
+
+# 4️⃣ Types of Linked Lists
+
+### 1. Singly Linked List
+
+Each node stores
+
+```
+Data + Next Pointer
+```
+
+Example
+
+```
+10 → 20 → 30 → NULL
+```
+
+---
+
+### 2. Doubly Linked List
+
+Each node stores
+
+```
+Previous Pointer
+
+Data
+
+Next Pointer
+```
+
+Example
+
+```
+NULL ← 10 ⇄ 20 ⇄ 30 → NULL
+```
+
+---
+
+### 3. Circular Linked List
+
+Last node points to the first node.
+
+```
+10 → 20 → 30
+↑          |
+|__________|
+```
+
+---
+
+### 4. Circular Doubly Linked List
+
+Both next and previous pointers form a circle.
+
+---
+
+# 5️⃣ Head Pointer
+
+The first node is called the **Head**.
+
+```
+Head
+
+↓
+
+10 → 20 → 30 → NULL
+```
+
+Without the Head pointer,
+
+the entire list becomes inaccessible.
+
+---
+
+# 6️⃣ Advantages of Linked List
+
+✅ Dynamic Size
+
+No fixed size.
+
+---
+
+✅ Efficient Insertion
+
+```
+O(1)
+```
+
+(at beginning)
+
+---
+
+✅ Efficient Deletion
+
+No shifting required.
+
+---
+
+✅ Better Memory Utilization
+
+Memory is allocated only when needed.
+
+---
+
+# 7️⃣ Disadvantages of Linked List
+
+❌ Extra memory required for pointers.
+
+---
+
+❌ No Random Access.
+
+Cannot directly access the 5th element.
+
+---
+
+❌ Sequential Traversal
+
+Must traverse from the Head.
+
+---
+
+❌ Cache performance is slower than arrays.
+
+---
+
+# 8️⃣ Array vs Linked List
+
+| Feature | Array | Linked List |
+|----------|-------|-------------|
+| Memory | Contiguous | Non-Contiguous |
+| Size | Fixed | Dynamic |
+| Random Access | O(1) | O(n) |
+| Insertion | O(n) | O(1)* |
+| Deletion | O(n) | O(1)* |
+| Extra Memory | No | Yes (Pointers) |
+
+*Insertion/Deletion at the beginning or when the node is already known.
+
+---
+
+# 📊 Complexity Overview
+
+| Operation | Array | Linked List |
+|------------|-------|-------------|
+| Access | O(1) | O(n) |
+| Search | O(n) | O(n) |
+| Insert at Beginning | O(n) | O(1) |
+| Insert at End | O(1)* | O(n) |
+| Delete at Beginning | O(n) | O(1) |
+| Delete at End | O(1)* | O(n) |
+
+*Assuming sufficient space or a maintained tail pointer.
+
+---
+
+# 💡 Interview Tips
+
+✅ A Linked List stores nodes in **non-contiguous memory**.
+
+✅ Every node contains **data** and a **pointer**.
+
+✅ The **Head** pointer is the starting point of the list.
+
+✅ Linked Lists are preferred when frequent insertion and deletion are required.
+
+✅ Arrays are preferred when fast random access is needed.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Forgetting to update pointers after insertion or deletion.
+
+❌ Losing the Head pointer.
+
+❌ Dereferencing a NULL pointer.
+
+❌ Creating cycles unintentionally.
+
+---
+
+# 📝 Summary
+
+- A Linked List is a dynamic linear data structure.
+- Each node stores data and the address of the next node.
+- Nodes are stored in non-contiguous memory.
+- Linked Lists allow efficient insertion and deletion.
+- The Head pointer is essential to access the list.
+- There are four main types of Linked Lists.
+
+---
+
+# 🚀 What's Next?
+
+In **Linked List (Part 2)**, we'll cover:
+
+- Traversing a Linked List
+- Searching in a Linked List
+- Insertion at Beginning
+- Insertion at End
+- Insertion at Any Position
+- Deletion Operations
