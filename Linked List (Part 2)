@@ -1,0 +1,579 @@
+# 📚 Linked List (Part 2) - Basic Operations
+
+## 📌 Introduction
+
+After understanding the structure of a Linked List, the next step is learning how to perform basic operations.
+
+Every Linked List interview question is built upon these fundamental operations.
+
+---
+
+# 📋 Topics Covered
+
+- Traversing a Linked List
+- Searching in a Linked List
+- Insertion Operations
+- Deletion Operations
+- Length of Linked List
+- Complexity Analysis
+
+---
+
+# 1️⃣ Traversing a Linked List
+
+## 📖 Definition
+
+Traversal means visiting every node of the Linked List exactly once.
+
+---
+
+### Visualization
+
+```
+Head
+
+↓
+
+10 → 20 → 30 → 40 → NULL
+```
+
+Traversal Output
+
+```
+10 20 30 40
+```
+
+---
+
+### C++ Code
+
+```cpp
+void display(Node* head)
+{
+    Node* temp = head;
+
+    while(temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 2️⃣ Searching in a Linked List
+
+## 📖 Definition
+
+Searching means finding whether a particular value exists in the list.
+
+---
+
+### Example
+
+```
+10 → 20 → 30 → 40 → NULL
+
+Search = 30
+```
+
+Output
+
+```
+Found
+```
+
+---
+
+### C++ Code
+
+```cpp
+bool search(Node* head, int key)
+{
+    while(head != NULL)
+    {
+        if(head->data == key)
+            return true;
+
+        head = head->next;
+    }
+
+    return false;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 3️⃣ Insertion at Beginning
+
+## 📖 Steps
+
+Step 1
+
+Create new node.
+
+↓
+
+Step 2
+
+Point new node to Head.
+
+↓
+
+Step 3
+
+Move Head to new node.
+
+---
+
+### Visualization
+
+Before
+
+```
+Head
+
+↓
+
+20 → 30 → NULL
+```
+
+Insert
+
+```
+10
+```
+
+After
+
+```
+Head
+
+↓
+
+10 → 20 → 30 → NULL
+```
+
+---
+
+### C++ Code
+
+```cpp
+void insertAtBeginning(Node* &head, int value)
+{
+    Node* newNode = new Node();
+
+    newNode->data = value;
+
+    newNode->next = head;
+
+    head = newNode;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(1)
+```
+
+---
+
+# 4️⃣ Insertion at End
+
+## 📖 Steps
+
+Move to the last node.
+
+↓
+
+Create new node.
+
+↓
+
+Last node points to new node.
+
+---
+
+### Visualization
+
+Before
+
+```
+10 → 20 → NULL
+```
+
+Insert
+
+```
+30
+```
+
+After
+
+```
+10 → 20 → 30 → NULL
+```
+
+---
+
+### C++ Code
+
+```cpp
+void insertAtEnd(Node* &head, int value)
+{
+    Node* newNode = new Node();
+
+    newNode->data = value;
+
+    newNode->next = NULL;
+
+    if(head == NULL)
+    {
+        head = newNode;
+        return;
+    }
+
+    Node* temp = head;
+
+    while(temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 5️⃣ Insertion at Any Position
+
+## 📖 Example
+
+Insert
+
+```
+25
+```
+
+at position
+
+```
+3
+```
+
+Before
+
+```
+10 → 20 → 30 → 40
+```
+
+After
+
+```
+10 → 20 → 25 → 30 → 40
+```
+
+---
+
+### Steps
+
+Find previous node.
+
+↓
+
+Connect new node.
+
+↓
+
+Reconnect remaining list.
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 6️⃣ Deletion from Beginning
+
+## 📖 Steps
+
+Move Head to second node.
+
+↓
+
+Delete first node.
+
+---
+
+### Visualization
+
+Before
+
+```
+10 → 20 → 30
+```
+
+After
+
+```
+20 → 30
+```
+
+---
+
+### C++ Code
+
+```cpp
+void deleteBeginning(Node* &head)
+{
+    if(head == NULL)
+        return;
+
+    Node* temp = head;
+
+    head = head->next;
+
+    delete temp;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(1)
+```
+
+---
+
+# 7️⃣ Deletion from End
+
+## 📖 Steps
+
+Move to second-last node.
+
+↓
+
+Delete last node.
+
+↓
+
+Set next pointer to NULL.
+
+---
+
+### Visualization
+
+Before
+
+```
+10 → 20 → 30
+```
+
+After
+
+```
+10 → 20
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 8️⃣ Deletion at Any Position
+
+## 📖 Example
+
+Delete node at position
+
+```
+3
+```
+
+Before
+
+```
+10 → 20 → 30 → 40
+```
+
+After
+
+```
+10 → 20 → 40
+```
+
+---
+
+### Steps
+
+Find previous node.
+
+↓
+
+Skip target node.
+
+↓
+
+Delete target node.
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 9️⃣ Length of Linked List
+
+## 📖 Definition
+
+Count the total number of nodes.
+
+---
+
+### Example
+
+```
+10 → 20 → 30 → 40
+```
+
+Length
+
+```
+4
+```
+
+---
+
+### C++ Code
+
+```cpp
+int length(Node* head)
+{
+    int count = 0;
+
+    while(head != NULL)
+    {
+        count++;
+
+        head = head->next;
+    }
+
+    return count;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Operation | Time Complexity |
+|------------|-----------------|
+| Traversal | O(n) |
+| Search | O(n) |
+| Insert at Beginning | O(1) |
+| Insert at End | O(n) |
+| Insert at Position | O(n) |
+| Delete at Beginning | O(1) |
+| Delete at End | O(n) |
+| Delete at Position | O(n) |
+| Length | O(n) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Traversal always starts from the Head.
+
+✅ Keep track of the previous node during insertion and deletion.
+
+✅ Handle edge cases like an empty list and a single-node list.
+
+✅ Update the Head pointer when modifying the first node.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Forgetting to update pointers.
+
+❌ Memory leaks due to missing `delete`.
+
+❌ Dereferencing NULL pointers.
+
+❌ Incorrect position handling.
+
+❌ Losing the Head pointer.
+
+---
+
+# 📝 Summary
+
+- Traversal visits every node.
+- Searching requires sequential traversal.
+- Insertion can be performed at the beginning, end, or any position.
+- Deletion requires careful pointer updates.
+- Most Linked List operations have **O(n)** complexity, except insertion and deletion at the beginning.
+
+---
+
+# 🚀 What's Next?
+
+In **Linked List (Part 3)**, we'll cover:
+
+- Reverse a Linked List
+- Find the Middle Node
+- Detect a Cycle
+- Remove a Cycle
+- Merge Two Sorted Lists
+- Remove Duplicates
+- Two Pointer Technique
