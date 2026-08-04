@@ -1,0 +1,557 @@
+# 📚 Linked List (Part 3) - Important Interview Problems
+
+## 📌 Introduction
+
+After learning the basic operations of a Linked List, it's time to solve some of the most frequently asked interview problems.
+
+These problems introduce important techniques like the **Two Pointer (Fast & Slow Pointer)** method, **in-place reversal**, and **cycle detection**, which are widely used in coding interviews.
+
+---
+
+# 📋 Topics Covered
+
+- Reverse a Linked List
+- Find the Middle Node
+- Detect a Cycle
+- Remove a Cycle
+- Merge Two Sorted Linked Lists
+- Remove Duplicates
+- Fast & Slow Pointer Technique
+
+---
+
+# 1️⃣ Reverse a Linked List
+
+## 📖 Problem
+
+Reverse the given Linked List.
+
+---
+
+### Example
+
+Before
+
+```
+10 → 20 → 30 → 40 → NULL
+```
+
+After
+
+```
+40 → 30 → 20 → 10 → NULL
+```
+
+---
+
+### Approach
+
+Maintain three pointers.
+
+```
+Previous
+
+Current
+
+Next
+```
+
+Move each pointer one step ahead.
+
+---
+
+### Visualization
+
+```
+NULL ← 10 ← 20 ← 30 ← 40
+```
+
+---
+
+### C++ Code
+
+```cpp
+Node* reverse(Node* head)
+{
+    Node* prev = NULL;
+    Node* curr = head;
+
+    while(curr != NULL)
+    {
+        Node* next = curr->next;
+
+        curr->next = prev;
+
+        prev = curr;
+
+        curr = next;
+    }
+
+    return prev;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 2️⃣ Find the Middle Node
+
+## 📖 Problem
+
+Find the middle node of a Linked List.
+
+---
+
+### Example
+
+```
+10 → 20 → 30 → 40 → 50
+```
+
+Middle
+
+```
+30
+```
+
+---
+
+### Best Approach
+
+Use two pointers.
+
+```
+Slow → moves one step
+
+Fast → moves two steps
+```
+
+When Fast reaches the end,
+
+Slow will be at the middle.
+
+---
+
+### Visualization
+
+```
+S
+
+↓
+
+10 → 20 → 30 → 40 → 50
+
+↓
+
+F
+```
+
+---
+
+### C++ Code
+
+```cpp
+Node* middle(Node* head)
+{
+    Node* slow = head;
+    Node* fast = head;
+
+    while(fast && fast->next)
+    {
+        slow = slow->next;
+
+        fast = fast->next->next;
+    }
+
+    return slow;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 3️⃣ Detect a Cycle
+
+## 📖 Problem
+
+Determine whether a Linked List contains a cycle.
+
+---
+
+### Example
+
+```
+10 → 20 → 30 → 40
+
+      ↑       |
+
+      |_______|
+```
+
+---
+
+### Best Approach
+
+Use Floyd's Cycle Detection Algorithm.
+
+Also called
+
+```
+Tortoise and Hare Algorithm
+```
+
+---
+
+### Logic
+
+```
+Slow → 1 step
+
+Fast → 2 steps
+```
+
+If they meet,
+
+Cycle exists.
+
+---
+
+### C++ Code
+
+```cpp
+bool hasCycle(Node* head)
+{
+    Node* slow = head;
+    Node* fast = head;
+
+    while(fast && fast->next)
+    {
+        slow = slow->next;
+
+        fast = fast->next->next;
+
+        if(slow == fast)
+            return true;
+    }
+
+    return false;
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 4️⃣ Remove a Cycle
+
+## 📖 Problem
+
+Remove the loop from the Linked List.
+
+---
+
+### Steps
+
+```
+Detect Cycle
+
+↓
+
+Find Starting Node
+
+↓
+
+Break the Loop
+```
+
+---
+
+### Visualization
+
+Before
+
+```
+10 → 20 → 30 → 40
+
+      ↑       |
+
+      |_______|
+```
+
+After
+
+```
+10 → 20 → 30 → 40 → NULL
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 5️⃣ Merge Two Sorted Linked Lists
+
+## 📖 Problem
+
+Merge two sorted Linked Lists into one sorted list.
+
+---
+
+### Example
+
+List 1
+
+```
+1 → 3 → 5
+```
+
+List 2
+
+```
+2 → 4 → 6
+```
+
+Output
+
+```
+1 → 2 → 3 → 4 → 5 → 6
+```
+
+---
+
+### Approach
+
+Compare both nodes.
+
+Take the smaller node.
+
+Move ahead.
+
+Repeat.
+
+---
+
+### Time Complexity
+
+```
+O(n + m)
+```
+
+---
+
+# 6️⃣ Remove Duplicates
+
+## 📖 Problem
+
+Remove duplicate elements from a sorted Linked List.
+
+---
+
+### Example
+
+Before
+
+```
+10 → 10 → 20 → 20 → 30
+```
+
+After
+
+```
+10 → 20 → 30
+```
+
+---
+
+### Approach
+
+Compare current node with next node.
+
+If equal,
+
+Skip the duplicate node.
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 7️⃣ Fast & Slow Pointer Technique
+
+## 📖 Definition
+
+The Fast & Slow Pointer Technique is one of the most useful Linked List concepts.
+
+---
+
+### Applications
+
+✅ Find Middle Node
+
+✅ Detect Cycle
+
+✅ Find Starting Point of Cycle
+
+✅ Check Palindrome
+
+✅ Happy Number
+
+---
+
+### Visualization
+
+```
+Slow
+
+↓
+
+10 → 20 → 30 → 40 → 50
+
+↓
+
+Fast
+```
+
+Fast moves
+
+```
+2 Steps
+```
+
+Slow moves
+
+```
+1 Step
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|------|--------|
+| Reverse Linked List | O(n) | O(1) |
+| Middle Node | O(n) | O(1) |
+| Detect Cycle | O(n) | O(1) |
+| Remove Cycle | O(n) | O(1) |
+| Merge Sorted Lists | O(n+m) | O(1) |
+| Remove Duplicates | O(n) | O(1) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Reverse Linked List is one of the most frequently asked interview questions.
+
+✅ Floyd's Algorithm detects cycles without extra memory.
+
+✅ Fast & Slow Pointer technique appears in many coding problems.
+
+✅ Always draw pointer diagrams before coding.
+
+✅ Be careful while updating pointers to avoid losing nodes.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Forgetting to store the next pointer before changing links.
+
+❌ Updating pointers in the wrong order.
+
+❌ Dereferencing NULL pointers.
+
+❌ Infinite loops due to cycles.
+
+❌ Not handling empty or single-node lists.
+
+---
+
+# 📝 Summary
+
+- Reverse a Linked List using three pointers.
+- Find the middle node using the Fast & Slow Pointer technique.
+- Detect cycles using Floyd's Cycle Detection Algorithm.
+- Remove cycles by finding the loop's starting node.
+- Merge two sorted lists efficiently.
+- Remove duplicates from sorted Linked Lists.
+- Mastering pointer manipulation is essential for interview success.
+
+---
+
+# 🎯 Recommended Practice Problems
+
+## Easy
+
+- Reverse Linked List
+- Middle of the Linked List
+- Merge Two Sorted Lists
+- Remove Duplicates from Sorted List
+
+---
+
+## Medium
+
+- Linked List Cycle
+- Linked List Cycle II
+- Remove Nth Node From End
+- Odd Even Linked List
+- Reorder List
+
+---
+
+## Hard
+
+- Reverse Nodes in k-Group
+- Merge k Sorted Lists
+- Copy List with Random Pointer
+- LRU Cache (Linked List + HashMap)
+
+---
+
+# 🚀 What's Next?
+
+In **Linked List (Part 4)**, we'll cover:
+
+- Doubly Linked List
+- Structure of Doubly Linked List
+- Insertion Operations
+- Deletion Operations
+- Advantages over Singly Linked List
+- Real-world Applications
