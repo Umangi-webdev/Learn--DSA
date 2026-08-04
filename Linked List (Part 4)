@@ -1,0 +1,578 @@
+# 📚 Linked List (Part 4) - Doubly Linked List
+
+## 📌 Introduction
+
+A **Doubly Linked List (DLL)** is a type of Linked List where each node contains **three parts**:
+
+- Previous Pointer (prev)
+- Data
+- Next Pointer (next)
+
+Unlike a Singly Linked List, a Doubly Linked List allows traversal in **both forward and backward directions**, making insertion and deletion operations more flexible.
+
+It is widely used in:
+
+- Browser History
+- Undo/Redo Functionality
+- Music & Video Playlists
+- LRU Cache
+- Navigation Systems
+
+---
+
+# 📋 Topics Covered
+
+- What is a Doubly Linked List?
+- Node Structure
+- Memory Representation
+- Traversal
+- Insertion Operations
+- Deletion Operations
+- Advantages & Disadvantages
+
+---
+
+# 1️⃣ What is a Doubly Linked List?
+
+## 📖 Definition
+
+A Doubly Linked List is a linear data structure where each node stores:
+
+- Previous Node Address
+- Data
+- Next Node Address
+
+---
+
+### Visualization
+
+```
+NULL ← [10] ⇄ [20] ⇄ [30] ⇄ [40] → NULL
+```
+
+Each node can move:
+
+```
+Forward →
+
+Backward ←
+```
+
+---
+
+# 2️⃣ Structure of a Node
+
+### C++ Structure
+
+```cpp
+struct Node
+{
+    int data;
+    Node* prev;
+    Node* next;
+};
+```
+
+---
+
+### Memory Layout
+
+```
+---------------------------
+| Prev | Data | Next |
+---------------------------
+```
+
+---
+
+# 3️⃣ Traversing a Doubly Linked List
+
+Traversal can be performed in both directions.
+
+---
+
+### Forward Traversal
+
+```
+Head
+
+↓
+
+10 ⇄ 20 ⇄ 30 ⇄ 40
+```
+
+Output
+
+```
+10 20 30 40
+```
+
+---
+
+### C++ Code
+
+```cpp
+void display(Node* head)
+{
+    while(head != NULL)
+    {
+        cout << head->data << " ";
+        head = head->next;
+    }
+}
+```
+
+---
+
+### Backward Traversal
+
+```
+Tail
+
+↓
+
+40 ⇄ 30 ⇄ 20 ⇄ 10
+```
+
+Output
+
+```
+40 30 20 10
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 4️⃣ Insertion at Beginning
+
+## 📖 Steps
+
+Create new node
+
+↓
+
+Set next pointer to Head
+
+↓
+
+Update Head's previous pointer
+
+↓
+
+Move Head to new node
+
+---
+
+### Visualization
+
+Before
+
+```
+20 ⇄ 30 ⇄ NULL
+```
+
+Insert
+
+```
+10
+```
+
+After
+
+```
+10 ⇄ 20 ⇄ 30
+```
+
+---
+
+### Time Complexity
+
+```
+O(1)
+```
+
+---
+
+# 5️⃣ Insertion at End
+
+## 📖 Steps
+
+Move to last node
+
+↓
+
+Create new node
+
+↓
+
+Connect previous and next pointers
+
+---
+
+### Example
+
+Before
+
+```
+10 ⇄ 20
+```
+
+After
+
+```
+10 ⇄ 20 ⇄ 30
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 6️⃣ Insertion at Any Position
+
+## 📖 Example
+
+Insert
+
+```
+25
+```
+
+at position 3
+
+Before
+
+```
+10 ⇄ 20 ⇄ 30 ⇄ 40
+```
+
+After
+
+```
+10 ⇄ 20 ⇄ 25 ⇄ 30 ⇄ 40
+```
+
+---
+
+### Steps
+
+Find the target position
+
+↓
+
+Update four pointers
+
+```
+prev
+
+next
+
+new->prev
+
+new->next
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 7️⃣ Deletion at Beginning
+
+## 📖 Steps
+
+Move Head to second node
+
+↓
+
+Set previous pointer to NULL
+
+↓
+
+Delete first node
+
+---
+
+### Example
+
+Before
+
+```
+10 ⇄ 20 ⇄ 30
+```
+
+After
+
+```
+20 ⇄ 30
+```
+
+---
+
+### Time Complexity
+
+```
+O(1)
+```
+
+---
+
+# 8️⃣ Deletion at End
+
+## 📖 Steps
+
+Move to last node
+
+↓
+
+Move to previous node
+
+↓
+
+Set next pointer to NULL
+
+↓
+
+Delete last node
+
+---
+
+### Example
+
+Before
+
+```
+10 ⇄ 20 ⇄ 30
+```
+
+After
+
+```
+10 ⇄ 20
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 9️⃣ Deletion at Any Position
+
+## 📖 Example
+
+Delete
+
+```
+30
+```
+
+Before
+
+```
+10 ⇄ 20 ⇄ 30 ⇄ 40
+```
+
+After
+
+```
+10 ⇄ 20 ⇄ 40
+```
+
+---
+
+### Steps
+
+Locate the node
+
+↓
+
+Reconnect previous and next nodes
+
+↓
+
+Delete current node
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 🔟 Singly vs Doubly Linked List
+
+| Feature | Singly LL | Doubly LL |
+|----------|-----------|-----------|
+| Pointers | One | Two |
+| Forward Traversal | ✅ | ✅ |
+| Backward Traversal | ❌ | ✅ |
+| Memory Usage | Less | More |
+| Insertion/Deletion | Moderate | Easier |
+| Implementation | Simple | Slightly Complex |
+
+---
+
+# 1️⃣1️⃣ Advantages
+
+✅ Bidirectional traversal
+
+✅ Easy deletion without searching previous node
+
+✅ Better navigation
+
+✅ Efficient implementation of LRU Cache
+
+✅ Supports Undo/Redo operations
+
+---
+
+# 1️⃣2️⃣ Disadvantages
+
+❌ Extra memory for previous pointer
+
+❌ More pointer updates
+
+❌ More complex implementation
+
+---
+
+# 📊 Complexity Summary
+
+| Operation | Time Complexity |
+|------------|-----------------|
+| Traversal | O(n) |
+| Search | O(n) |
+| Insert at Beginning | O(1) |
+| Insert at End | O(n) |
+| Insert at Position | O(n) |
+| Delete at Beginning | O(1) |
+| Delete at End | O(n) |
+| Delete at Position | O(n) |
+
+---
+
+# 🌍 Real-World Applications
+
+### Browser Navigation
+
+```
+Previous Page
+
+↓
+
+Current Page
+
+↓
+
+Next Page
+```
+
+---
+
+### Music Player
+
+```
+Previous Song
+
+↓
+
+Current Song
+
+↓
+
+Next Song
+```
+
+---
+
+### Undo / Redo
+
+```
+Undo
+
+↓
+
+Current State
+
+↓
+
+Redo
+```
+
+---
+
+### LRU Cache
+
+Used in operating systems and web browsers for memory management.
+
+---
+
+# 💡 Interview Tips
+
+✅ Doubly Linked Lists allow traversal in both directions.
+
+✅ Every insertion/deletion requires updating **both previous and next pointers**.
+
+✅ Always check for NULL before accessing pointers.
+
+✅ Doubly Linked Lists are preferred when backward traversal is required.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Forgetting to update the previous pointer.
+
+❌ Losing the Head or Tail pointer.
+
+❌ Incorrect pointer order during insertion.
+
+❌ Memory leaks after deletion.
+
+---
+
+# 📝 Summary
+
+- A Doubly Linked List stores previous and next pointers.
+- It supports forward and backward traversal.
+- Insertion and deletion are more flexible than in Singly Linked Lists.
+- It requires extra memory due to the additional pointer.
+- Widely used in browser history, playlists, and LRU Cache implementations.
+
+---
+
+# 🚀 What's Next?
+
+In **Linked List (Part 5)**, we'll cover:
+
+- Circular Linked List
+- Circular Doubly Linked List
+- Insertion & Deletion
+- Applications
+- Advantages
+- Interview Questions
