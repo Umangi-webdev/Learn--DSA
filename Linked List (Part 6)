@@ -1,0 +1,542 @@
+# 📚 Linked List (Part 6) - Advanced Interview Problems
+
+## 📌 Introduction
+
+After mastering the fundamentals of Linked Lists, the final step is solving advanced interview problems.
+
+These problems combine multiple concepts such as pointer manipulation, hashing, recursion, and fast & slow pointer techniques.
+
+Many FAANG interviews include at least one problem from this chapter.
+
+---
+
+# 📋 Topics Covered
+
+- Remove Nth Node From End
+- Intersection of Two Linked Lists
+- Reverse Nodes in K-Group
+- Clone Linked List with Random Pointer
+- Flatten a Multilevel Linked List
+- LRU Cache
+- Important Linked List Patterns
+
+---
+
+# 1️⃣ Remove Nth Node From End
+
+## 📖 Problem
+
+Remove the Nth node from the end of the Linked List.
+
+---
+
+### Example
+
+Before
+
+```
+1 → 2 → 3 → 4 → 5
+```
+
+N = 2
+
+After
+
+```
+1 → 2 → 3 → 5
+```
+
+---
+
+### Best Approach
+
+Use two pointers.
+
+```
+Fast
+
+↓
+
+Move N steps
+
+↓
+
+Slow
+
+↓
+
+Move Together
+
+↓
+
+Delete Node
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 2️⃣ Intersection of Two Linked Lists
+
+## 📖 Problem
+
+Find the first common node where two Linked Lists intersect.
+
+---
+
+### Example
+
+```
+List A
+
+1 → 2 → 8 → 10
+
+          ↑
+
+List B
+
+5 → 6 ────┘
+```
+
+Output
+
+```
+8
+```
+
+---
+
+### Best Approach
+
+Two Pointer Technique
+
+```
+A reaches NULL
+
+↓
+
+Start from B
+
+B reaches NULL
+
+↓
+
+Start from A
+```
+
+Eventually,
+
+Both pointers meet at the intersection.
+
+---
+
+### Time Complexity
+
+```
+O(n + m)
+```
+
+---
+
+# 3️⃣ Reverse Nodes in K-Group
+
+## 📖 Problem
+
+Reverse every K nodes.
+
+---
+
+### Example
+
+Before
+
+```
+1 → 2 → 3 → 4 → 5 → 6
+```
+
+K = 2
+
+After
+
+```
+2 → 1 → 4 → 3 → 6 → 5
+```
+
+---
+
+### Approach
+
+```
+Count K Nodes
+
+↓
+
+Reverse
+
+↓
+
+Connect
+
+↓
+
+Repeat
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 4️⃣ Clone Linked List with Random Pointer
+
+## 📖 Problem
+
+Each node contains
+
+```
+Next Pointer
+
+Random Pointer
+```
+
+Create a deep copy.
+
+---
+
+### Example
+
+```
+10
+
+↓
+
+20
+
+↓
+
+30
+
+Random Links
+
+10 → 30
+
+20 → 10
+
+30 → 20
+```
+
+---
+
+### Best Approach
+
+Interleave copied nodes.
+
+Assign random pointers.
+
+Separate both lists.
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# 5️⃣ Flatten a Multilevel Linked List
+
+## 📖 Problem
+
+Flatten all child Linked Lists into one list.
+
+---
+
+### Example
+
+```
+1 → 2 → 3
+
+    |
+
+    7 → 8
+```
+
+Output
+
+```
+1 → 2 → 7 → 8 → 3
+```
+
+---
+
+### Approach
+
+DFS
+
+or
+
+Recursion
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 6️⃣ LRU Cache
+
+## 📖 Problem
+
+Implement an LRU (Least Recently Used) Cache.
+
+---
+
+### Data Structures Used
+
+```
+Hash Map
+
++
+
+Doubly Linked List
+```
+
+---
+
+### Operations
+
+```
+get()
+
+put()
+```
+
+Both should work in
+
+```
+O(1)
+```
+
+---
+
+### Why Doubly Linked List?
+
+Because insertion and deletion are efficient.
+
+---
+
+# 7️⃣ Important Linked List Patterns
+
+---
+
+## Fast & Slow Pointer
+
+Used for
+
+✅ Middle Node
+
+✅ Cycle Detection
+
+✅ Palindrome
+
+---
+
+## Two Pointer Technique
+
+Used for
+
+✅ Remove Nth Node
+
+✅ Intersection
+
+---
+
+## Dummy Node
+
+Used for
+
+✅ Simplifying insertion
+
+✅ Simplifying deletion
+
+---
+
+## Reversal Pattern
+
+Used for
+
+✅ Reverse List
+
+✅ Reverse K Group
+
+---
+
+## Merge Pattern
+
+Used for
+
+✅ Merge Two Lists
+
+✅ Merge K Lists
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|------|--------|
+| Remove Nth Node | O(n) | O(1) |
+| Intersection | O(n+m) | O(1) |
+| Reverse K Group | O(n) | O(1) |
+| Clone Random Pointer | O(n) | O(1) |
+| Flatten List | O(n) | O(1) |
+| LRU Cache | O(1) | O(n) |
+
+---
+
+# 🎯 Most Asked Interview Questions
+
+⭐ Reverse Linked List
+
+⭐ Middle Node
+
+⭐ Detect Cycle
+
+⭐ Remove Nth Node
+
+⭐ Merge Two Sorted Lists
+
+⭐ Reverse K Group
+
+⭐ Intersection of Lists
+
+⭐ Clone Random Pointer
+
+⭐ LRU Cache
+
+⭐ Flatten Linked List
+
+---
+
+# 💡 Interview Tips
+
+✅ Learn Dummy Node Technique.
+
+---
+
+✅ Master Fast & Slow Pointer.
+
+---
+
+✅ Draw pointer diagrams before coding.
+
+---
+
+✅ Update pointers carefully.
+
+---
+
+✅ Handle edge cases:
+
+- Empty List
+- One Node
+- Two Nodes
+- Cycle Present
+- K > Length
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Forgetting NULL checks.
+
+❌ Losing node references.
+
+❌ Incorrect pointer order.
+
+❌ Memory leaks.
+
+❌ Infinite loops.
+
+---
+
+# 📝 Linked List Cheat Sheet
+
+| Pattern | Used In |
+|----------|----------|
+| Fast & Slow Pointer | Middle, Cycle |
+| Two Pointer | Remove Nth Node |
+| Dummy Node | Insert/Delete |
+| Reverse Pattern | Reverse List |
+| Merge Pattern | Merge Lists |
+| Hash Map | Clone, LRU |
+| Recursion | Reverse, Flatten |
+
+---
+
+# 🎉 Congratulations!
+
+You have successfully completed the **Linked List** section.
+
+You now understand:
+
+✔ Singly Linked List
+
+✔ Doubly Linked List
+
+✔ Circular Linked List
+
+✔ Pointer Manipulation
+
+✔ Fast & Slow Pointer
+
+✔ Cycle Detection
+
+✔ Advanced Interview Problems
+
+✔ Linked List Design Patterns
+
+---
+
+# 🚀 What's Next?
+
+According to your DSA roadmap, the next topic is:
+
+## 📚 Stacks & Queues (Part 1)
+
+You'll learn:
+
+- Introduction to Stack
+- Stack Operations
+- Stack Implementation
+- Applications of Stack
+- Time Complexity
