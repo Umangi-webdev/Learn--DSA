@@ -1,0 +1,522 @@
+# 📚 Linked List (Part 5) - Circular Linked List
+
+## 📌 Introduction
+
+A **Circular Linked List (CLL)** is a variation of the Linked List where the **last node points back to the first node (Head)** instead of pointing to `NULL`.
+
+This creates a circular structure, allowing continuous traversal without reaching the end of the list.
+
+Circular Linked Lists are widely used in:
+
+- Round Robin Scheduling
+- Multiplayer Games
+- Music & Video Playlists
+- CPU Scheduling
+- Circular Queues
+- Token Ring Networks
+
+---
+
+# 📋 Topics Covered
+
+- What is a Circular Linked List?
+- Types of Circular Linked Lists
+- Traversal
+- Insertion Operations
+- Deletion Operations
+- Advantages & Disadvantages
+- Real-World Applications
+
+---
+
+# 1️⃣ What is a Circular Linked List?
+
+## 📖 Definition
+
+A Circular Linked List is a Linked List in which the **last node points back to the Head**, forming a loop.
+
+Unlike a Singly Linked List, there is **no NULL pointer** at the end.
+
+---
+
+### Visualization
+
+```
+        ┌─────────────────────┐
+        │                     │
+        ▼                     │
+Head → 10 → 20 → 30 → 40 ─────┘
+```
+
+---
+
+# 2️⃣ Types of Circular Linked Lists
+
+## 1. Circular Singly Linked List
+
+Each node contains:
+
+```
+Data
+
+Next Pointer
+```
+
+Last node points to Head.
+
+---
+
+### Example
+
+```
+1 → 2 → 3 → 4
+↑           │
+└───────────┘
+```
+
+---
+
+## 2. Circular Doubly Linked List
+
+Each node contains:
+
+```
+Previous Pointer
+
+Data
+
+Next Pointer
+```
+
+The first and last nodes are connected in both directions.
+
+---
+
+### Example
+
+```
+      ⇦──────────────⇨
+10 ⇄ 20 ⇄ 30 ⇄ 40
+```
+
+---
+
+# 3️⃣ Traversing a Circular Linked List
+
+Unlike a normal Linked List, traversal stops when we reach the Head again.
+
+---
+
+### Example
+
+```
+Head
+
+↓
+
+10 → 20 → 30 → 40
+
+↑             │
+
+└─────────────┘
+```
+
+Output
+
+```
+10 20 30 40
+```
+
+---
+
+### C++ Code
+
+```cpp
+void display(Node* head)
+{
+    if(head == NULL)
+        return;
+
+    Node* temp = head;
+
+    do
+    {
+        cout << temp->data << " ";
+
+        temp = temp->next;
+
+    } while(temp != head);
+}
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 4️⃣ Insertion at Beginning
+
+## 📖 Steps
+
+Create new node
+
+↓
+
+New node points to Head
+
+↓
+
+Last node points to new node
+
+↓
+
+Update Head
+
+---
+
+### Visualization
+
+Before
+
+```
+20 → 30 → 40
+↑         │
+└─────────┘
+```
+
+Insert
+
+```
+10
+```
+
+After
+
+```
+10 → 20 → 30 → 40
+↑              │
+└──────────────┘
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 5️⃣ Insertion at End
+
+## 📖 Steps
+
+Traverse to last node
+
+↓
+
+Create new node
+
+↓
+
+New node points to Head
+
+↓
+
+Last node points to new node
+
+---
+
+### Example
+
+Before
+
+```
+10 → 20 → 30
+↑         │
+└─────────┘
+```
+
+After
+
+```
+10 → 20 → 30 → 40
+↑              │
+└──────────────┘
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 6️⃣ Deletion at Beginning
+
+## 📖 Steps
+
+Find last node
+
+↓
+
+Last node points to second node
+
+↓
+
+Move Head
+
+↓
+
+Delete old Head
+
+---
+
+### Example
+
+Before
+
+```
+10 → 20 → 30
+↑         │
+└─────────┘
+```
+
+After
+
+```
+20 → 30
+↑     │
+└─────┘
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 7️⃣ Deletion at End
+
+## 📖 Steps
+
+Find second-last node
+
+↓
+
+Delete last node
+
+↓
+
+Connect second-last node to Head
+
+---
+
+### Example
+
+Before
+
+```
+10 → 20 → 30 → 40
+↑              │
+└──────────────┘
+```
+
+After
+
+```
+10 → 20 → 30
+↑         │
+└─────────┘
+```
+
+---
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+# 8️⃣ Circular Linked List vs Singly Linked List
+
+| Feature | Singly LL | Circular LL |
+|----------|-----------|-------------|
+| Last Node | Points to NULL | Points to Head |
+| Traversal | Ends at NULL | Ends at Head |
+| Continuous Traversal | ❌ | ✅ |
+| Memory | Same | Same |
+| Implementation | Easier | Slightly Complex |
+
+---
+
+# 9️⃣ Advantages
+
+✅ Continuous traversal
+
+✅ No NULL pointer at the end
+
+✅ Efficient implementation of Circular Queues
+
+✅ Useful in Round Robin Scheduling
+
+✅ Easy cycling through elements
+
+---
+
+# 🔟 Disadvantages
+
+❌ Traversal is more complex
+
+❌ Risk of infinite loops
+
+❌ More difficult debugging
+
+❌ Extra care required while updating pointers
+
+---
+
+# 📊 Complexity Summary
+
+| Operation | Time Complexity |
+|------------|-----------------|
+| Traversal | O(n) |
+| Search | O(n) |
+| Insert at Beginning | O(n) |
+| Insert at End | O(n) |
+| Delete at Beginning | O(n) |
+| Delete at End | O(n) |
+
+---
+
+# 🌍 Real-World Applications
+
+### CPU Round Robin Scheduling
+
+```
+P1 → P2 → P3 → P4
+↑             │
+└─────────────┘
+```
+
+---
+
+### Music Playlist
+
+```
+Song1
+
+↓
+
+Song2
+
+↓
+
+Song3
+
+↓
+
+Song1
+```
+
+---
+
+### Multiplayer Games
+
+```
+Player1
+
+↓
+
+Player2
+
+↓
+
+Player3
+
+↓
+
+Player1
+```
+
+---
+
+### Circular Queue
+
+```
+Front
+
+↓
+
+Elements
+
+↓
+
+Rear
+
+↓
+
+Front
+```
+
+---
+
+# 💡 Interview Tips
+
+✅ The last node always points to the Head.
+
+✅ Use a **do-while loop** for traversal.
+
+✅ Always stop traversal when you return to the Head.
+
+✅ Handle the single-node list separately.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Infinite loops during traversal.
+
+❌ Forgetting to reconnect the last node.
+
+❌ Losing the Head pointer.
+
+❌ Incorrect handling of one-node lists.
+
+---
+
+# 📝 Summary
+
+- A Circular Linked List has no NULL at the end.
+- The last node points back to the Head.
+- Traversal stops when the Head is reached again.
+- It is useful in scheduling, circular queues, and playlists.
+- Special care is required to avoid infinite loops.
+
+---
+
+# 🚀 What's Next?
+
+In **Linked List (Part 6)**, we'll cover:
+
+- Reverse Linked List in Groups (K-Group)
+- Clone Linked List with Random Pointer
+- Flatten a Linked List
+- LRU Cache
+- Intersection of Two Linked Lists
+- Linked List Interview Patterns
