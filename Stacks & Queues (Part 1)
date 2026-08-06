@@ -1,0 +1,669 @@
+# 📚 Stacks & Queues (Part 1) - Introduction to Stack
+
+## 📌 Introduction
+
+A **Stack** is a linear data structure that follows the **LIFO (Last In, First Out)** principle.
+
+This means the **last element inserted is the first one to be removed.**
+
+Think of a stack of books:
+
+- You place a new book on the top.
+- You remove the top book first.
+
+Stacks are one of the most frequently used data structures in programming and interviews.
+
+---
+
+# 📋 Topics Covered
+
+- What is Stack?
+- LIFO Principle
+- Basic Operations
+- Stack Representation
+- Implementation Methods
+- Applications
+- Advantages & Disadvantages
+
+---
+
+# 1️⃣ What is a Stack?
+
+## 📖 Definition
+
+A Stack is a linear data structure in which insertion and deletion occur **only from one end**, called the **Top**.
+
+It follows:
+
+```
+LIFO
+
+Last In
+
+↓
+
+First Out
+```
+
+---
+
+### Visualization
+
+```
+        TOP
+         ↓
+    +-------+
+    |   40  |
+    +-------+
+    |   30  |
+    +-------+
+    |   20  |
+    +-------+
+    |   10  |
+    +-------+
+```
+
+---
+
+# 2️⃣ LIFO Principle
+
+## Example
+
+Insert
+
+```
+10
+
+20
+
+30
+
+40
+```
+
+Remove
+
+```
+40
+
+30
+
+20
+
+10
+```
+
+The last inserted element is removed first.
+
+---
+
+# 3️⃣ Basic Stack Operations
+
+### Push
+
+Insert an element.
+
+```
+Push(50)
+```
+
+```
+Before
+
+30
+
+20
+
+10
+
+↓
+
+After
+
+50
+
+30
+
+20
+
+10
+```
+
+---
+
+### Pop
+
+Remove the top element.
+
+```
+Pop()
+```
+
+```
+Before
+
+40
+
+30
+
+20
+
+↓
+
+After
+
+30
+
+20
+```
+
+---
+
+### Peek / Top
+
+Returns the top element without removing it.
+
+Example
+
+```
+Top = 40
+```
+
+---
+
+### isEmpty()
+
+Checks whether the stack contains any elements.
+
+Output
+
+```
+True
+
+or
+
+False
+```
+
+---
+
+### Size()
+
+Returns the total number of elements.
+
+Example
+
+```
+Stack
+
+10
+
+20
+
+30
+
+Size = 3
+```
+
+---
+
+# 4️⃣ Stack Representation
+
+A Stack can be represented in two ways.
+
+---
+
+### Using Array
+
+```
+TOP
+
+↓
+
+40
+
+30
+
+20
+
+10
+```
+
+Advantages
+
+✅ Fast access
+
+✅ Easy implementation
+
+---
+
+### Using Linked List
+
+```
+TOP
+
+↓
+
+40
+
+↓
+
+30
+
+↓
+
+20
+
+↓
+
+10
+```
+
+Advantages
+
+✅ Dynamic size
+
+✅ No overflow due to fixed array size
+
+---
+
+# 5️⃣ Push Operation
+
+### Steps
+
+```
+Check Overflow
+
+↓
+
+Increment Top
+
+↓
+
+Insert Element
+```
+
+---
+
+### Example
+
+```
+Before
+
+TOP
+
+↓
+
+30
+
+20
+
+10
+```
+
+Push
+
+```
+40
+```
+
+After
+
+```
+TOP
+
+↓
+
+40
+
+30
+
+20
+
+10
+```
+
+---
+
+### Time Complexity
+
+```
+O(1)
+```
+
+---
+
+# 6️⃣ Pop Operation
+
+### Steps
+
+```
+Check Underflow
+
+↓
+
+Remove Top Element
+
+↓
+
+Decrease Top
+```
+
+---
+
+### Example
+
+```
+Before
+
+40
+
+30
+
+20
+```
+
+After Pop
+
+```
+30
+
+20
+```
+
+---
+
+### Time Complexity
+
+```
+O(1)
+```
+
+---
+
+# 7️⃣ Peek Operation
+
+Returns the top element without deleting it.
+
+Example
+
+```
+Stack
+
+40
+
+30
+
+20
+```
+
+Peek
+
+```
+40
+```
+
+---
+
+### Time Complexity
+
+```
+O(1)
+```
+
+---
+
+# 8️⃣ Overflow & Underflow
+
+## Overflow
+
+Occurs when trying to insert into a full stack.
+
+```
+Stack Full
+
+Cannot Push
+```
+
+---
+
+## Underflow
+
+Occurs when trying to remove from an empty stack.
+
+```
+Stack Empty
+
+Cannot Pop
+```
+
+---
+
+# 9️⃣ Applications of Stack
+
+### Function Calls
+
+```
+main()
+
+↓
+
+funcA()
+
+↓
+
+funcB()
+```
+
+---
+
+### Undo / Redo
+
+```
+Current Action
+
+↓
+
+Undo
+
+↓
+
+Redo
+```
+
+---
+
+### Browser History
+
+```
+Page1
+
+↓
+
+Page2
+
+↓
+
+Page3
+```
+
+Back button uses a stack.
+
+---
+
+### Expression Evaluation
+
+Used for:
+
+- Prefix
+- Infix
+- Postfix
+
+---
+
+### Parentheses Matching
+
+Example
+
+```
+((()))
+
+Balanced
+```
+
+---
+
+### DFS (Depth First Search)
+
+Stacks are used to traverse graphs and trees.
+
+---
+
+# 🔟 Advantages
+
+✅ Easy implementation
+
+✅ Fast insertion and deletion
+
+✅ Useful in recursion
+
+✅ Efficient memory management
+
+---
+
+# 1️⃣1️⃣ Disadvantages
+
+❌ Limited access (Top only)
+
+❌ No random access
+
+❌ Array implementation has fixed size
+
+---
+
+# 📊 Complexity Summary
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Push | O(1) |
+| Pop | O(1) |
+| Peek | O(1) |
+| isEmpty | O(1) |
+| Size | O(1) |
+
+---
+
+# 🌍 Real-World Applications
+
+### Browser Back Button
+
+```
+Google
+
+↓
+
+YouTube
+
+↓
+
+GitHub
+
+↓
+
+Back
+```
+
+---
+
+### Undo Feature
+
+```
+Write
+
+↓
+
+Delete
+
+↓
+
+Undo
+```
+
+---
+
+### Function Call Stack
+
+```
+main()
+
+↓
+
+A()
+
+↓
+
+B()
+
+↓
+
+Return
+```
+
+---
+
+### Expression Parsing
+
+```
+(a+b)*c
+```
+
+Compilers use stacks to evaluate expressions.
+
+---
+
+# 💡 Interview Tips
+
+✅ Stack follows the **LIFO** principle.
+
+✅ All operations occur only at the **Top**.
+
+✅ Push inserts an element.
+
+✅ Pop removes the top element.
+
+✅ Peek returns the top element without removing it.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Popping from an empty stack.
+
+❌ Pushing into a full array-based stack.
+
+❌ Forgetting to update the Top pointer.
+
+❌ Confusing Stack (LIFO) with Queue (FIFO).
+
+---
+
+# 📝 Summary
+
+- A Stack is a linear data structure based on the LIFO principle.
+- Insertion and deletion happen only at the Top.
+- Push, Pop, and Peek all work in **O(1)** time.
+- Stacks are widely used in recursion, browser history, expression evaluation, and DFS.
+- They can be implemented using arrays or linked lists.
+
+---
+
+# 🚀 What's Next?
+
+In **Stacks & Queues (Part 2)**, we'll cover:
+
+- Stack Implementation using Arrays
+- Stack Implementation using Linked List
+- C++ STL Stack
+- Valid Parentheses Problem
+- Next Greater Element
+- Monotonic Stack
