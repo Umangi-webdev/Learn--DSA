@@ -1,0 +1,530 @@
+# 📚 Stacks & Queues (Part 3) - Introduction to Queue
+
+## 📌 Introduction
+
+A **Queue** is a linear data structure that follows the **FIFO (First In, First Out)** principle.
+
+This means the **first element inserted is the first one to be removed.**
+
+Think of people standing in a queue at a ticket counter:
+
+- The first person to join the line gets served first.
+- New people always join at the end.
+
+Queues are widely used in operating systems, networking, scheduling algorithms, and graph traversal.
+
+---
+
+# 📋 Topics Covered
+
+- What is Queue?
+- FIFO Principle
+- Queue Terminology
+- Basic Operations
+- Queue Representation
+- Queue Implementation
+- Applications
+- Advantages & Disadvantages
+
+---
+
+# 1️⃣ What is a Queue?
+
+## 📖 Definition
+
+A Queue is a linear data structure in which:
+
+- Insertion happens at the **Rear**
+- Deletion happens at the **Front**
+
+It follows:
+
+```
+FIFO
+
+First In
+
+↓
+
+First Out
+```
+
+---
+
+### Visualization
+
+```
+Front                         Rear
+  ↓                             ↓
+
++-----+-----+-----+-----+
+| 10  | 20  | 30  | 40  |
++-----+-----+-----+-----+
+```
+
+---
+
+# 2️⃣ FIFO Principle
+
+### Example
+
+Insert
+
+```
+10
+
+20
+
+30
+
+40
+```
+
+Remove
+
+```
+10
+
+20
+
+30
+
+40
+```
+
+The first inserted element is removed first.
+
+---
+
+# 3️⃣ Queue Terminology
+
+### Front
+
+The first element.
+
+```
+Front
+
+↓
+
+10 20 30
+```
+
+---
+
+### Rear
+
+The last element.
+
+```
+10 20 30
+
+        ↑
+
+      Rear
+```
+
+---
+
+# 4️⃣ Basic Queue Operations
+
+---
+
+## Enqueue
+
+Insert an element at the Rear.
+
+```
+Enqueue(50)
+```
+
+Before
+
+```
+10 20 30
+```
+
+After
+
+```
+10 20 30 50
+```
+
+---
+
+## Dequeue
+
+Remove an element from the Front.
+
+Before
+
+```
+10 20 30
+```
+
+After
+
+```
+20 30
+```
+
+---
+
+## Front()
+
+Returns the first element.
+
+```
+Queue
+
+10 20 30
+
+Front = 10
+```
+
+---
+
+## Rear()
+
+Returns the last element.
+
+```
+Queue
+
+10 20 30
+
+Rear = 30
+```
+
+---
+
+## isEmpty()
+
+Returns
+
+```
+True
+
+or
+
+False
+```
+
+---
+
+## Size()
+
+Returns total number of elements.
+
+---
+
+# 5️⃣ Queue Representation
+
+Queues can be implemented using:
+
+---
+
+### Array
+
+```
+Front                     Rear
+
+↓
+
+10 20 30 40
+
+               ↑
+```
+
+---
+
+### Linked List
+
+```
+Front
+
+↓
+
+10 → 20 → 30 → 40
+
+                ↑
+
+              Rear
+```
+
+---
+
+# 6️⃣ Queue Operations Flow
+
+### Enqueue
+
+```
+Insert
+
+↓
+
+Rear moves forward
+```
+
+---
+
+### Dequeue
+
+```
+Remove
+
+↓
+
+Front moves forward
+```
+
+---
+
+# 7️⃣ Overflow & Underflow
+
+### Overflow
+
+Occurs when trying to insert into a full queue.
+
+```
+Queue Full
+
+Cannot Enqueue
+```
+
+---
+
+### Underflow
+
+Occurs when trying to remove from an empty queue.
+
+```
+Queue Empty
+
+Cannot Dequeue
+```
+
+---
+
+# 8️⃣ Applications of Queue
+
+### CPU Scheduling
+
+```
+P1
+
+↓
+
+P2
+
+↓
+
+P3
+```
+
+---
+
+### Printer Queue
+
+```
+Document1
+
+↓
+
+Document2
+
+↓
+
+Document3
+```
+
+---
+
+### Ticket Booking
+
+```
+Customer1
+
+↓
+
+Customer2
+
+↓
+
+Customer3
+```
+
+---
+
+### Breadth First Search (BFS)
+
+Queues help visit nodes level by level.
+
+---
+
+### Network Packet Processing
+
+Packets are processed in the order they arrive.
+
+---
+
+# 9️⃣ Advantages
+
+✅ Follows FIFO order
+
+✅ Efficient insertion and deletion
+
+✅ Useful in scheduling
+
+✅ Easy to implement
+
+---
+
+# 🔟 Disadvantages
+
+❌ No random access
+
+❌ Fixed-size array implementation may overflow
+
+❌ Front space may be wasted in a simple array implementation
+
+---
+
+# 📊 Complexity Summary
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Enqueue | O(1) |
+| Dequeue | O(1) |
+| Front | O(1) |
+| Rear | O(1) |
+| isEmpty | O(1) |
+| Size | O(1) |
+
+---
+
+# 🌍 Real-World Applications
+
+### Call Center
+
+```
+Customer1
+
+↓
+
+Customer2
+
+↓
+
+Customer3
+```
+
+---
+
+### Banking System
+
+Customers are served in the order they arrive.
+
+---
+
+### BFS Traversal
+
+```
+Level 1
+
+↓
+
+Level 2
+
+↓
+
+Level 3
+```
+
+---
+
+### Task Scheduling
+
+Operating systems schedule processes using queues.
+
+---
+
+### Streaming Services
+
+Video/audio packets are buffered using queues.
+
+---
+
+# 💡 Interview Tips
+
+✅ Queue follows the **FIFO** principle.
+
+✅ Enqueue inserts at the **Rear**.
+
+✅ Dequeue removes from the **Front**.
+
+✅ BFS always uses a Queue.
+
+✅ Circular Queue solves wasted space in array implementation.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Confusing Front and Rear.
+
+❌ Performing dequeue on an empty queue.
+
+❌ Forgetting to update Front and Rear pointers.
+
+❌ Assuming Queue works like Stack.
+
+---
+
+# 📝 Summary
+
+- Queue is a linear data structure following FIFO.
+- Elements are inserted at the Rear and removed from the Front.
+- Enqueue and Dequeue operations take **O(1)** time.
+- Queues are widely used in scheduling, BFS, networking, and buffering.
+- Circular Queues improve memory utilization.
+
+---
+
+# 🎯 Practice Problems
+
+## Easy
+
+- Implement Queue using Array
+- Implement Queue using Linked List
+- Implement Queue using Stacks
+
+---
+
+## Medium
+
+- Circular Queue
+- Number of Recent Calls
+- First Unique Character
+- Time Needed to Buy Tickets
+
+---
+
+## Hard
+
+- Sliding Window Maximum
+- Design Circular Deque
+- Shortest Path in Binary Matrix (BFS)
+
+---
+
+# 🚀 What's Next?
+
+In **Stacks & Queues (Part 4)**, we'll cover:
+
+- Queue using Array
+- Queue using Linked List
+- Circular Queue
+- Deque (Double Ended Queue)
+- Priority Queue
+- C++ STL Queue
