@@ -1,0 +1,621 @@
+# 📚 Stacks & Queues (Part 4) - Queue Implementation
+
+## 📌 Introduction
+
+A Queue can be implemented using different data structures depending on the application's requirements.
+
+The most common implementations are:
+
+- Array
+- Linked List
+- Circular Queue
+- Deque
+- Priority Queue
+- C++ STL Queue
+
+Each implementation has its own advantages and use cases.
+
+---
+
+# 📋 Topics Covered
+
+- Queue using Array
+- Queue using Linked List
+- Circular Queue
+- Deque (Double Ended Queue)
+- Priority Queue
+- C++ STL Queue
+
+---
+
+# 1️⃣ Queue using Array
+
+## 📖 Idea
+
+Store queue elements in an array.
+
+Maintain two indices:
+
+```
+Front
+
+Rear
+```
+
+---
+
+### Visualization
+
+```
+Front                 Rear
+
+↓
+
+10 20 30 40
+
+               ↑
+```
+
+---
+
+### Operations
+
+```
+Enqueue
+
+↓
+
+Insert at Rear
+```
+
+```
+Dequeue
+
+↓
+
+Remove from Front
+```
+
+---
+
+### C++ Implementation
+
+```cpp
+class Queue
+{
+    int arr[100];
+    int front, rear;
+
+public:
+
+    Queue()
+    {
+        front = 0;
+        rear = -1;
+    }
+
+    void enqueue(int x)
+    {
+        arr[++rear] = x;
+    }
+
+    void dequeue()
+    {
+        if(front <= rear)
+            front++;
+    }
+
+    int Front()
+    {
+        return arr[front];
+    }
+};
+```
+
+---
+
+### Complexity
+
+| Operation | Time |
+|-----------|------|
+| Enqueue | O(1) |
+| Dequeue | O(1) |
+
+---
+
+# 2️⃣ Queue using Linked List
+
+## 📖 Idea
+
+Maintain
+
+```
+Front Pointer
+
+Rear Pointer
+```
+
+---
+
+### Visualization
+
+```
+Front
+
+↓
+
+10 → 20 → 30 → 40
+
+                ↑
+
+              Rear
+```
+
+---
+
+### Enqueue
+
+```
+Create Node
+
+↓
+
+Attach at Rear
+
+↓
+
+Move Rear
+```
+
+---
+
+### Dequeue
+
+```
+Delete Front
+
+↓
+
+Move Front
+```
+
+---
+
+### Complexity
+
+| Operation | Time |
+|-----------|------|
+| Enqueue | O(1) |
+| Dequeue | O(1) |
+
+---
+
+# 3️⃣ Circular Queue
+
+## 📖 Why Circular Queue?
+
+In a normal array queue,
+
+deleted positions cannot be reused.
+
+Circular Queue solves this problem by connecting the last position back to the first.
+
+---
+
+### Visualization
+
+```
+      0
+
+   ↑     ↓
+
+7         1
+
+↑         ↓
+
+6         2
+
+   ↑     ↓
+
+      5
+
+       4
+```
+
+---
+
+### Condition
+
+Next position
+
+```
+(rear + 1) % size
+```
+
+---
+
+### Advantages
+
+✅ Better memory utilization
+
+✅ No wasted space
+
+✅ O(1) operations
+
+---
+
+### Applications
+
+- CPU Scheduling
+- Circular Buffers
+- Streaming Data
+
+---
+
+# 4️⃣ Deque (Double Ended Queue)
+
+## 📖 Definition
+
+Deque allows insertion and deletion from **both ends**.
+
+---
+
+### Visualization
+
+```
+Front
+
+↓
+
+10 20 30 40
+
+                ↑
+
+              Rear
+```
+
+Insert
+
+```
+Front
+
+Rear
+```
+
+Delete
+
+```
+Front
+
+Rear
+```
+
+---
+
+### Types
+
+---
+
+#### Input Restricted Deque
+
+Insertion
+
+```
+Rear Only
+```
+
+Deletion
+
+```
+Both Ends
+```
+
+---
+
+#### Output Restricted Deque
+
+Insertion
+
+```
+Both Ends
+```
+
+Deletion
+
+```
+Front Only
+```
+
+---
+
+### Applications
+
+- Sliding Window
+- Browser History
+- Undo/Redo
+- Palindrome Checking
+
+---
+
+# 5️⃣ Priority Queue
+
+## 📖 Definition
+
+A Priority Queue removes elements according to their **priority**, not their insertion order.
+
+---
+
+### Example
+
+Input
+
+```
+10
+
+5
+
+20
+
+1
+```
+
+Output
+
+```
+20
+
+10
+
+5
+
+1
+```
+
+(Max Heap)
+
+---
+
+### Min Priority Queue
+
+Output
+
+```
+1
+
+5
+
+10
+
+20
+```
+
+---
+
+### STL Syntax
+
+```cpp
+priority_queue<int> pq;
+```
+
+Min Heap
+
+```cpp
+priority_queue<
+int,
+vector<int>,
+greater<int>
+> pq;
+```
+
+---
+
+### Applications
+
+- Dijkstra Algorithm
+- Prim's Algorithm
+- CPU Scheduling
+- Event Simulation
+
+---
+
+# 6️⃣ C++ STL Queue
+
+### Header
+
+```cpp
+#include <queue>
+```
+
+---
+
+### Declaration
+
+```cpp
+queue<int> q;
+```
+
+---
+
+### Operations
+
+```cpp
+q.push(10);
+
+q.push(20);
+
+q.pop();
+
+q.front();
+
+q.back();
+
+q.empty();
+
+q.size();
+```
+
+---
+
+### Example
+
+```cpp
+#include<iostream>
+#include<queue>
+using namespace std;
+
+int main()
+{
+    queue<int> q;
+
+    q.push(10);
+
+    q.push(20);
+
+    q.push(30);
+
+    cout << q.front();
+
+    q.pop();
+
+    cout << q.front();
+}
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Data Structure | Insert | Delete | Front |
+|----------------|--------|--------|--------|
+| Queue | O(1) | O(1) | O(1) |
+| Circular Queue | O(1) | O(1) | O(1) |
+| Deque | O(1) | O(1) | O(1) |
+| Priority Queue | O(log n) | O(log n) | O(1) |
+
+---
+
+# 🌍 Real-World Applications
+
+### Printer Queue
+
+```
+Job1
+
+↓
+
+Job2
+
+↓
+
+Job3
+```
+
+---
+
+### CPU Scheduling
+
+```
+P1
+
+↓
+
+P2
+
+↓
+
+P3
+```
+
+---
+
+### GPS Navigation
+
+Uses Priority Queue.
+
+---
+
+### Live Event Processing
+
+Highest priority event executes first.
+
+---
+
+### Sliding Window Maximum
+
+Uses Deque.
+
+---
+
+# 💡 Interview Tips
+
+✅ Queue follows FIFO.
+
+✅ Circular Queue prevents memory wastage.
+
+✅ Deque allows insertion/deletion from both ends.
+
+✅ Priority Queue is generally implemented using a Heap.
+
+✅ STL Queue provides efficient built-in operations.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Forgetting wrap-around in Circular Queue.
+
+❌ Confusing Queue with Deque.
+
+❌ Assuming Priority Queue maintains insertion order.
+
+❌ Accessing front() on an empty queue.
+
+---
+
+# 📝 Summary
+
+- Queue can be implemented using arrays or linked lists.
+- Circular Queue efficiently reuses freed space.
+- Deque supports insertion and deletion from both ends.
+- Priority Queue serves elements based on priority.
+- C++ STL provides `queue`, `deque`, and `priority_queue` containers.
+
+---
+
+# 🎯 Practice Problems
+
+## Easy
+
+- Implement Queue using Arrays
+- Implement Queue using Linked List
+- Design Circular Queue
+
+---
+
+## Medium
+
+- Design Circular Deque
+- Number of Recent Calls
+- Moving Average from Data Stream
+- Implement Stack using Queues
+
+---
+
+## Hard
+
+- Sliding Window Maximum
+- Shortest Path (Priority Queue)
+- Merge K Sorted Lists
+
+---
+
+# 🚀 What's Next?
+
+In **Stacks & Queues (Part 5)**, we'll cover:
+
+- Monotonic Queue
+- Sliding Window Technique
+- Heap Basics
+- Min Heap
+- Max Heap
+- Heap Operations
