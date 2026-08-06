@@ -1,0 +1,540 @@
+# 📚 Stacks & Queues (Part 2) - Stack Implementation & Interview Problems
+
+## 📌 Introduction
+
+A Stack can be implemented using different data structures. In C++, the most common implementations are:
+
+- Array
+- Linked List
+- STL Stack
+
+In this chapter, we'll learn all three methods along with some popular interview problems.
+
+---
+
+# 📋 Topics Covered
+
+- Stack using Array
+- Stack using Linked List
+- C++ STL Stack
+- Valid Parentheses
+- Next Greater Element
+- Monotonic Stack
+
+---
+
+# 1️⃣ Stack using Array
+
+## 📖 Idea
+
+Store stack elements in an array and maintain a **Top** index.
+
+---
+
+### Visualization
+
+```
+        TOP
+         ↓
+    +-------+
+    |   40  |
+    +-------+
+    |   30  |
+    +-------+
+    |   20  |
+    +-------+
+    |   10  |
+    +-------+
+```
+
+---
+
+### C++ Implementation
+
+```cpp
+class Stack
+{
+    int arr[100];
+    int top;
+
+public:
+
+    Stack()
+    {
+        top = -1;
+    }
+
+    void push(int x)
+    {
+        arr[++top] = x;
+    }
+
+    void pop()
+    {
+        if(top != -1)
+            top--;
+    }
+
+    int peek()
+    {
+        return arr[top];
+    }
+
+    bool empty()
+    {
+        return top == -1;
+    }
+};
+```
+
+---
+
+### Complexity
+
+| Operation | Time |
+|-----------|------|
+| Push | O(1) |
+| Pop | O(1) |
+| Peek | O(1) |
+
+---
+
+# 2️⃣ Stack using Linked List
+
+## 📖 Idea
+
+The Head node acts as the Top of the stack.
+
+---
+
+### Visualization
+
+```
+TOP
+
+↓
+
+40
+
+↓
+
+30
+
+↓
+
+20
+
+↓
+
+10
+```
+
+---
+
+### C++ Structure
+
+```cpp
+struct Node
+{
+    int data;
+    Node* next;
+
+    Node(int val)
+    {
+        data = val;
+        next = NULL;
+    }
+};
+```
+
+---
+
+### Push
+
+```
+New Node
+
+↓
+
+Head
+```
+
+---
+
+### Pop
+
+```
+Delete Head
+
+↓
+
+Move Head
+```
+
+---
+
+### Complexity
+
+| Operation | Time |
+|-----------|------|
+| Push | O(1) |
+| Pop | O(1) |
+| Peek | O(1) |
+
+---
+
+# 3️⃣ C++ STL Stack
+
+The C++ Standard Library provides the `stack` container.
+
+---
+
+### Syntax
+
+```cpp
+#include <stack>
+
+stack<int> st;
+```
+
+---
+
+### Common Operations
+
+```cpp
+st.push(10);
+
+st.push(20);
+
+st.pop();
+
+st.top();
+
+st.empty();
+
+st.size();
+```
+
+---
+
+### Example
+
+```cpp
+#include<iostream>
+#include<stack>
+using namespace std;
+
+int main()
+{
+    stack<int> st;
+
+    st.push(10);
+    st.push(20);
+    st.push(30);
+
+    cout << st.top();
+
+    st.pop();
+
+    cout << st.top();
+}
+```
+
+---
+
+# 4️⃣ Valid Parentheses
+
+## 📖 Problem
+
+Determine whether parentheses are balanced.
+
+---
+
+### Example
+
+```
+()
+
+[]
+
+{}
+
+Output
+
+True
+```
+
+---
+
+### Invalid Example
+
+```
+([)]
+
+Output
+
+False
+```
+
+---
+
+### Approach
+
+```
+Opening Bracket
+
+↓
+
+Push
+
+Closing Bracket
+
+↓
+
+Check Top
+
+↓
+
+Pop
+```
+
+---
+
+### Complexity
+
+```
+Time : O(n)
+
+Space : O(n)
+```
+
+---
+
+# 5️⃣ Next Greater Element
+
+## 📖 Problem
+
+For every element,
+
+find the first greater element on its right.
+
+---
+
+### Example
+
+Input
+
+```
+2 1 5 3 4
+```
+
+Output
+
+```
+5 5 -1 4 -1
+```
+
+---
+
+### Efficient Approach
+
+Use a **Monotonic Stack**.
+
+---
+
+### Complexity
+
+```
+O(n)
+```
+
+---
+
+# 6️⃣ Monotonic Stack
+
+## 📖 Definition
+
+A Monotonic Stack stores elements in sorted order.
+
+Two types exist:
+
+---
+
+### Increasing Stack
+
+```
+1
+
+2
+
+5
+
+8
+```
+
+---
+
+### Decreasing Stack
+
+```
+8
+
+6
+
+4
+
+2
+```
+
+---
+
+### Applications
+
+✅ Next Greater Element
+
+✅ Next Smaller Element
+
+✅ Daily Temperatures
+
+✅ Largest Rectangle in Histogram
+
+✅ Stock Span Problem
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|------|--------|
+| Push | O(1) | O(1) |
+| Pop | O(1) | O(1) |
+| Peek | O(1) | O(1) |
+| Valid Parentheses | O(n) | O(n) |
+| Next Greater Element | O(n) | O(n) |
+
+---
+
+# 🌍 Real-World Applications
+
+### Compiler
+
+Expression parsing
+
+```
+(a+b)*c
+```
+
+---
+
+### Browser
+
+```
+Back
+
+↓
+
+Previous Page
+```
+
+---
+
+### Undo Feature
+
+```
+Action
+
+↓
+
+Undo
+
+↓
+
+Redo
+```
+
+---
+
+### Stock Analysis
+
+Finding the next greater stock price.
+
+---
+
+### Histogram Area
+
+Finding maximum rectangle area.
+
+---
+
+# 💡 Interview Tips
+
+✅ Learn STL Stack syntax.
+
+✅ Valid Parentheses is one of the easiest interview questions.
+
+✅ Monotonic Stack reduces many **O(n²)** problems to **O(n)**.
+
+✅ Next Greater Element is the foundation for many advanced problems.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Accessing `top()` on an empty stack.
+
+❌ Forgetting to pop matched brackets.
+
+❌ Using recursion instead of a stack when iterative solutions are expected.
+
+❌ Not checking stack emptiness before accessing the top element.
+
+---
+
+# 📝 Summary
+
+- A Stack can be implemented using arrays, linked lists, or the C++ STL.
+- STL `stack` provides built-in functions like `push()`, `pop()`, `top()`, `empty()`, and `size()`.
+- Valid Parentheses is a classic stack problem.
+- Monotonic Stacks are useful for many optimization problems.
+- Next Greater Element is one of the most important stack-based interview questions.
+
+---
+
+# 🎯 Practice Problems
+
+## Easy
+
+- Implement Stack using Arrays
+- Implement Stack using Linked List
+- Valid Parentheses
+- Min Stack
+
+---
+
+## Medium
+
+- Next Greater Element I
+- Next Greater Element II
+- Daily Temperatures
+- Stock Span Problem
+
+---
+
+## Hard
+
+- Largest Rectangle in Histogram
+- Maximal Rectangle
+- Trapping Rain Water (Stack Approach)
+
+---
+
+# 🚀 What's Next?
+
+In **Stacks & Queues (Part 3)**, we'll cover:
+
+- Introduction to Queue
+- Queue Operations
+- Queue using Array
+- Queue using Linked List
+- Circular Queue
+- Queue Applications
