@@ -1,0 +1,789 @@
+# 📚 Stacks & Queues (Part 6) - Important Interview Problems
+
+## 📌 Introduction
+
+Stacks and Queues are fundamental data structures used in many important DSA problems.
+
+This part focuses on the most common **interview problems and problem-solving patterns** based on Stack, Queue, and Deque.
+
+---
+
+# 📋 Topics Covered
+
+- Min Stack
+- Stock Span Problem
+- Daily Temperatures
+- Next Greater Element
+- Largest Rectangle in Histogram
+- Implement Stack using Queue
+- Implement Queue using Stack
+- Sliding Window Maximum
+- Important Stack & Queue Patterns
+
+---
+
+# 1️⃣ Min Stack
+
+## 📖 Problem
+
+Design a stack that supports:
+
+- `push()`
+- `pop()`
+- `top()`
+- `getMin()`
+
+All operations should work in:
+
+```text
+O(1)
+```
+
+---
+
+## 💡 Approach
+
+Maintain two stacks:
+
+```text
+Main Stack
++
+Minimum Stack
+```
+
+The minimum stack keeps track of the minimum element at every stage.
+
+---
+
+### Example
+
+Push:
+
+```text
+5
+3
+7
+2
+```
+
+Main Stack:
+
+```text
+2
+7
+3
+5
+```
+
+Minimum Stack:
+
+```text
+2
+2
+3
+5
+```
+
+Minimum:
+
+```text
+2
+```
+
+---
+
+### Complexity
+
+```text
+Push  → O(1)
+Pop   → O(1)
+Top   → O(1)
+Min   → O(1)
+```
+
+---
+
+# 2️⃣ Stock Span Problem
+
+## 📖 Problem
+
+For each day's stock price, find the number of consecutive previous days whose price was less than or equal to today's price.
+
+---
+
+### Example
+
+Input:
+
+```text
+100 80 60 70 60 75 85
+```
+
+Output:
+
+```text
+1 1 1 2 1 4 6
+```
+
+---
+
+## 💡 Approach
+
+Use a **Monotonic Stack**.
+
+Store:
+
+```text
+Price + Index
+```
+
+Remove previous prices that are smaller than or equal to the current price.
+
+---
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(n)
+```
+
+---
+
+# 3️⃣ Daily Temperatures
+
+## 📖 Problem
+
+Given daily temperatures, find how many days you have to wait until a warmer temperature.
+
+---
+
+### Example
+
+Input:
+
+```text
+[73,74,75,71,69,72,76,73]
+```
+
+Output:
+
+```text
+[1,1,4,2,1,1,0,0]
+```
+
+---
+
+## 💡 Approach
+
+Use a **Monotonic Decreasing Stack**.
+
+Store indices of temperatures.
+
+When a warmer temperature is found:
+
+```text
+current temperature > stack top
+```
+
+Calculate the difference between indices.
+
+---
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(n)
+```
+
+---
+
+# 4️⃣ Next Greater Element
+
+## 📖 Problem
+
+Find the first greater element to the right of every element.
+
+---
+
+### Example
+
+Input:
+
+```text
+[4,5,2,10]
+```
+
+Output:
+
+```text
+[5,10,10,-1]
+```
+
+---
+
+## 💡 Approach
+
+Traverse from right to left.
+
+Use a decreasing stack.
+
+---
+
+### Algorithm
+
+```text
+For every element:
+
+Remove smaller elements
+
+↓
+
+If stack is empty
+
+    answer = -1
+
+Otherwise
+
+    answer = stack.top()
+
+Push current element
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(n)
+```
+
+---
+
+# 5️⃣ Largest Rectangle in Histogram
+
+## 📖 Problem
+
+Given an array representing histogram bar heights, find the area of the largest rectangle.
+
+---
+
+### Example
+
+Input:
+
+```text
+[2,1,5,6,2,3]
+```
+
+Output:
+
+```text
+10
+```
+
+---
+
+### Visualization
+
+```text
+        █
+    █   █
+    █   █
+█   █   █   █
+█   █   █ █ █
+2  1  5 6 2 3
+```
+
+The largest rectangle has area:
+
+```text
+5 × 2 = 10
+```
+
+---
+
+## 💡 Approach
+
+Use a **Monotonic Increasing Stack**.
+
+For each bar, determine:
+
+```text
+Previous Smaller Element
+
++
+
+Next Smaller Element
+```
+
+Then calculate:
+
+```text
+Area = Height × Width
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(n)
+```
+
+---
+
+# 6️⃣ Implement Stack Using Queue
+
+## 📖 Problem
+
+Implement Stack operations using Queue.
+
+Required operations:
+
+```text
+push()
+pop()
+top()
+empty()
+```
+
+---
+
+## 💡 Approach
+
+Use one or two queues.
+
+For a single queue:
+
+After inserting an element, rotate the previous elements behind it.
+
+---
+
+### Example
+
+Push:
+
+```text
+10
+20
+30
+```
+
+Queue becomes:
+
+```text
+30 10 20
+```
+
+Front represents the Stack Top.
+
+---
+
+### Complexity
+
+```text
+Push → O(n)
+
+Pop  → O(1)
+```
+
+---
+
+# 7️⃣ Implement Queue Using Stack
+
+## 📖 Problem
+
+Implement Queue using Stack.
+
+Required operations:
+
+```text
+push()
+pop()
+peek()
+empty()
+```
+
+---
+
+## 💡 Approach
+
+Use two stacks:
+
+```text
+Input Stack
+
++
+
+Output Stack
+```
+
+---
+
+### Example
+
+Enqueue:
+
+```text
+10
+20
+30
+```
+
+Input Stack:
+
+```text
+30
+20
+10
+```
+
+Transfer to Output Stack:
+
+```text
+10
+20
+30
+```
+
+Now the first inserted element is available at the top.
+
+---
+
+### Complexity
+
+With the two-stack approach:
+
+```text
+Amortized Time: O(1)
+```
+
+---
+
+# 8️⃣ Sliding Window Maximum
+
+## 📖 Problem
+
+Find the maximum element in every window of size `k`.
+
+---
+
+### Example
+
+Input:
+
+```text
+[1,3,-1,-3,5,3,6,7]
+
+k = 3
+```
+
+Output:
+
+```text
+[3,3,5,5,6,7]
+```
+
+---
+
+## 💡 Approach
+
+Use a **Decreasing Deque**.
+
+The front of the deque always stores the index of the maximum element.
+
+---
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(k)
+```
+
+---
+
+# 9️⃣ Important Stack Patterns
+
+## Pattern 1: Monotonic Stack
+
+Used for:
+
+- Next Greater Element
+- Next Smaller Element
+- Stock Span
+- Daily Temperatures
+- Largest Rectangle
+
+---
+
+## Pattern 2: Two Stacks
+
+Used for:
+
+- Queue using Stacks
+- Expression Evaluation
+- Min Stack
+
+---
+
+## Pattern 3: Stack + Index
+
+Used for:
+
+- Stock Span
+- Daily Temperatures
+- Histogram Problems
+
+---
+
+## Pattern 4: Stack + Deque
+
+Used for:
+
+- Sliding Window Maximum
+- Sliding Window Minimum
+
+---
+
+# 🔟 Stack vs Queue
+
+| Feature | Stack | Queue |
+|---------|-------|-------|
+| Principle | LIFO | FIFO |
+| Insertion | Top | Rear |
+| Deletion | Top | Front |
+| Main Operations | Push / Pop | Enqueue / Dequeue |
+| Common Algorithm | DFS | BFS |
+| STL | `stack` | `queue` |
+
+---
+
+# 1️⃣1️⃣ Important STL Containers
+
+## Stack
+
+```cpp
+stack<int> st;
+
+st.push(10);
+st.pop();
+st.top();
+st.empty();
+st.size();
+```
+
+---
+
+## Queue
+
+```cpp
+queue<int> q;
+
+q.push(10);
+q.pop();
+q.front();
+q.back();
+q.empty();
+q.size();
+```
+
+---
+
+## Deque
+
+```cpp
+deque<int> dq;
+
+dq.push_front(10);
+dq.push_back(20);
+
+dq.pop_front();
+dq.pop_back();
+```
+
+---
+
+## Priority Queue
+
+```cpp
+priority_queue<int> pq;
+
+pq.push(10);
+pq.push(20);
+
+cout << pq.top();
+```
+
+---
+
+# 📊 Complexity Cheat Sheet
+
+| Problem | Time | Space |
+|---------|------|-------|
+| Min Stack | O(1) | O(n) |
+| Stock Span | O(n) | O(n) |
+| Daily Temperatures | O(n) | O(n) |
+| Next Greater Element | O(n) | O(n) |
+| Largest Rectangle | O(n) | O(n) |
+| Stack using Queue | O(n) Push | O(n) |
+| Queue using Stack | O(1) Amortized | O(n) |
+| Sliding Window Maximum | O(n) | O(k) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Always identify whether the problem requires **LIFO or FIFO**.
+
+✅ Look for a **Monotonic Stack** when the problem asks for the next greater/smaller element.
+
+✅ Store **indices** when distance or range is required.
+
+✅ Use a **Deque** for optimized Sliding Window problems.
+
+✅ Learn the two-stack technique for implementing Queue.
+
+✅ Learn the two-queue technique for implementing Stack.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Accessing `top()` or `front()` when the data structure is empty.
+
+❌ Forgetting to remove outdated indices.
+
+❌ Using the wrong monotonic order.
+
+❌ Confusing values with indices.
+
+❌ Forgetting edge cases such as:
+
+- Empty input
+- One element
+- Duplicate values
+- `k = 1`
+- `k = n`
+
+---
+
+# 🎯 Must-Solve Interview Problems
+
+### ⭐ Easy
+
+1. Valid Parentheses
+2. Implement Stack
+3. Implement Queue
+4. Next Greater Element I
+5. Min Stack
+
+### ⭐ Medium
+
+6. Daily Temperatures
+7. Stock Span
+8. Sliding Window Maximum
+9. Queue using Stacks
+10. Stack using Queues
+
+### ⭐ Hard
+
+11. Largest Rectangle in Histogram
+12. Maximal Rectangle
+13. Trapping Rain Water
+14. Sliding Window Problems
+
+---
+
+# 📝 Final Summary
+
+Stacks and Queues are extremely important building blocks for DSA.
+
+### Stack
+
+```text
+LIFO
+```
+
+### Queue
+
+```text
+FIFO
+```
+
+### Monotonic Stack
+
+Useful for:
+
+```text
+Next Greater
+Next Smaller
+Stock Span
+Histogram
+```
+
+### Deque
+
+Useful for:
+
+```text
+Sliding Window
+```
+
+Understanding these patterns makes many difficult problems much easier to solve.
+
+---
+
+# 🎉 Stacks & Queues Completed!
+
+You have now covered:
+
+✔ Stack Fundamentals
+
+✔ Stack Implementation
+
+✔ Queue Fundamentals
+
+✔ Queue Implementation
+
+✔ Circular Queue
+
+✔ Deque
+
+✔ Priority Queue
+
+✔ Monotonic Stack
+
+✔ Monotonic Queue
+
+✔ Sliding Window
+
+✔ Important Interview Problems
+
+---
+
+# 🚀 What's Next?
+
+According to the DSA roadmap, the next major topic is:
+
+## 🌳 Binary Trees (Part 1)
+
+Topics will include:
+
+- Introduction to Trees
+- Binary Tree Terminology
+- Tree Representation
+- Tree Traversals
+- Preorder
+- Inorder
+- Postorder
+- Level Order Traversal
