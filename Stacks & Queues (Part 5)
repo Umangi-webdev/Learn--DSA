@@ -1,0 +1,517 @@
+# 📚 Stacks & Queues (Part 5) - Monotonic Queue & Sliding Window
+
+## 📌 Introduction
+
+A **Monotonic Queue** is a data structure that maintains its elements in a specific increasing or decreasing order.
+
+It is especially useful when solving **Sliding Window** problems where we need to efficiently find the maximum or minimum element in every window.
+
+These techniques are commonly used in coding interviews and competitive programming.
+
+---
+
+# 📋 Topics Covered
+
+- What is a Monotonic Queue?
+- Increasing Monotonic Queue
+- Decreasing Monotonic Queue
+- Sliding Window Technique
+- Sliding Window Maximum
+- Sliding Window Minimum
+- Deque for Optimization
+- Important Interview Patterns
+
+---
+
+# 1️⃣ What is a Monotonic Queue?
+
+A Monotonic Queue is a queue where elements are maintained in a particular order.
+
+There are two main types:
+
+### Increasing Monotonic Queue
+
+Elements are maintained in increasing order.
+
+```text
+1 → 3 → 5 → 8
+```
+
+### Decreasing Monotonic Queue
+
+Elements are maintained in decreasing order.
+
+```text
+8 → 5 → 3 → 1
+```
+
+---
+
+# 2️⃣ Why Use a Monotonic Queue?
+
+Suppose we need to find the maximum element in every window of size `k`.
+
+A brute-force approach checks every element inside each window.
+
+This can take:
+
+```text
+O(n × k)
+```
+
+Using a Monotonic Queue, we can solve it in:
+
+```text
+O(n)
+```
+
+This is a major optimization.
+
+---
+
+# 3️⃣ Deque
+
+A **Deque (Double Ended Queue)** allows insertion and deletion from both ends.
+
+```text
+Front
+  ↓
++----+----+----+----+
+|  8 |  5 |  3 |  1 |
++----+----+----+----+
+                         ↑
+                       Rear
+```
+
+Operations can be performed from:
+
+```text
+Front ← → Rear
+```
+
+C++ provides a built-in `deque`.
+
+```cpp
+#include <deque>
+
+deque<int> dq;
+```
+
+---
+
+# 4️⃣ Sliding Window Technique
+
+## 📖 Definition
+
+The Sliding Window technique is used to process a continuous portion of an array or string.
+
+Instead of repeatedly processing the same elements, the window moves from left to right.
+
+---
+
+### Example
+
+Array:
+
+```text
+1 3 2 5 4 6
+```
+
+Window size:
+
+```text
+k = 3
+```
+
+Windows:
+
+```text
+[1 3 2]
+
+[3 2 5]
+
+[2 5 4]
+
+[5 4 6]
+```
+
+The window moves one position at a time.
+
+---
+
+# 5️⃣ Sliding Window Maximum
+
+## 📖 Problem
+
+Given an array and a window size `k`, find the maximum element in every window.
+
+---
+
+### Example
+
+Input:
+
+```text
+nums = [1,3,-1,-3,5,3,6,7]
+
+k = 3
+```
+
+Output:
+
+```text
+[3,3,5,5,6,7]
+```
+
+---
+
+# 6️⃣ Brute Force Approach
+
+For every window:
+
+1. Traverse all `k` elements.
+2. Find the maximum.
+3. Move the window.
+
+### Complexity
+
+```text
+Time: O(n × k)
+
+Space: O(1)
+```
+
+This becomes inefficient when `n` and `k` are large.
+
+---
+
+# 7️⃣ Optimized Approach Using Deque
+
+Use a **decreasing deque**.
+
+The deque stores indices of useful elements.
+
+---
+
+### Rules
+
+For every element:
+
+### Step 1
+
+Remove indices that are outside the current window.
+
+```text
+dq.front() <= i-k
+```
+
+---
+
+### Step 2
+
+Remove smaller elements from the back.
+
+```text
+nums[dq.back()] <= nums[i]
+```
+
+These elements can never become the maximum while the current element is present.
+
+---
+
+### Step 3
+
+Insert the current index.
+
+```text
+dq.push_back(i)
+```
+
+---
+
+### Step 4
+
+The front of the deque contains the index of the maximum element.
+
+```text
+dq.front()
+```
+
+---
+
+# 8️⃣ C++ Implementation
+
+```cpp
+vector<int> maxSlidingWindow(vector<int>& nums, int k)
+{
+    deque<int> dq;
+    vector<int> result;
+
+    for(int i = 0; i < nums.size(); i++)
+    {
+        // Remove elements outside the window
+        while(!dq.empty() && dq.front() <= i - k)
+        {
+            dq.pop_front();
+        }
+
+        // Remove smaller elements
+        while(!dq.empty() && nums[dq.back()] <= nums[i])
+        {
+            dq.pop_back();
+        }
+
+        // Add current index
+        dq.push_back(i);
+
+        // Add maximum when window is ready
+        if(i >= k - 1)
+        {
+            result.push_back(nums[dq.front()]);
+        }
+    }
+
+    return result;
+}
+```
+
+---
+
+# 9️⃣ Example Walkthrough
+
+Array:
+
+```text
+[1, 3, -1, -3, 5]
+```
+
+Window:
+
+```text
+k = 3
+```
+
+---
+
+### Window 1
+
+```text
+[1, 3, -1]
+```
+
+Maximum:
+
+```text
+3
+```
+
+---
+
+### Window 2
+
+```text
+[3, -1, -3]
+```
+
+Maximum:
+
+```text
+3
+```
+
+---
+
+### Window 3
+
+```text
+[-1, -3, 5]
+```
+
+Maximum:
+
+```text
+5
+```
+
+Output:
+
+```text
+[3, 3, 5]
+```
+
+---
+
+# 🔟 Why Remove Smaller Elements?
+
+Consider:
+
+```text
+[2, 5]
+```
+
+If `5` comes after `2`, then `2` can never become the maximum while `5` remains inside the window.
+
+Therefore:
+
+```text
+2
+```
+
+can be removed.
+
+Deque becomes:
+
+```text
+5
+```
+
+This keeps only useful candidates.
+
+---
+
+# 1️⃣1️⃣ Sliding Window Minimum
+
+The same idea can be used to find minimum values.
+
+Instead of maintaining a decreasing deque, maintain an:
+
+```text
+Increasing Deque
+```
+
+---
+
+### Example
+
+```text
+Array:
+
+[4, 2, 3, 1]
+
+k = 2
+```
+
+Windows:
+
+```text
+[4,2] → 2
+
+[2,3] → 2
+
+[3,1] → 1
+```
+
+Output:
+
+```text
+[2,2,1]
+```
+
+---
+
+# 1️⃣2️⃣ Monotonic Stack vs Monotonic Queue
+
+| Feature | Monotonic Stack | Monotonic Queue |
+|---------|-----------------|-----------------|
+| Structure | Stack | Deque |
+| Main Use | Next Greater/Smaller | Sliding Window |
+| Removal | Usually from one end | Both ends |
+| Common Problems | NGE, Histogram | Sliding Window Maximum |
+
+---
+
+# 1️⃣3️⃣ Applications
+
+Monotonic Queue is useful in:
+
+- Sliding Window Maximum
+- Sliding Window Minimum
+- Range Maximum Queries
+- Range Minimum Queries
+- Optimization Problems
+- Dynamic Programming Optimization
+
+---
+
+# 📊 Complexity
+
+| Approach | Time | Space |
+|----------|------|-------|
+| Brute Force | O(n × k) | O(1) |
+| Monotonic Queue | O(n) | O(k) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Use a **Deque** to implement a Monotonic Queue.
+
+✅ Store **indices**, not just values.
+
+✅ Remove elements outside the current window.
+
+✅ Remove useless smaller/larger elements.
+
+✅ The front always represents the best candidate.
+
+✅ Sliding Window Maximum can be solved in **O(n)**.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Storing only values instead of indices.
+
+❌ Forgetting to remove expired indices.
+
+❌ Using an increasing deque when maximum is required.
+
+❌ Using a decreasing deque when minimum is required.
+
+❌ Forgetting to check whether the deque is empty.
+
+---
+
+# 📝 Summary
+
+- A Monotonic Queue maintains elements in a specific order.
+- A Deque is commonly used to implement it.
+- Sliding Window problems can be optimized using Monotonic Queues.
+- For maximum values, use a **decreasing deque**.
+- For minimum values, use an **increasing deque**.
+- Sliding Window Maximum can be solved in **O(n)** time.
+
+---
+
+# 🎯 Practice Problems
+
+## Easy
+
+- Moving Average from Data Stream
+- Number of Recent Calls
+
+## Medium
+
+- Sliding Window Maximum
+- Sliding Window Minimum
+- First Negative Number in Every Window
+
+## Hard
+
+- Constrained Subsequence Sum
+- Jump Game VI
+- Shortest Subarray with Sum at Least K
+
+---
+
+# 🚀 What's Next?
+
+In **Stacks & Queues (Part 6)**, we'll cover:
+
+- Important Stack & Queue Interview Problems
+- Min Stack
+- Stock Span
+- Daily Temperatures
+- Largest Rectangle in Histogram
+- Sliding Window Problems
+- Stack & Queue Problem-Solving Patterns
