@@ -1,0 +1,921 @@
+# 🌳 Binary Trees (Part 2) - Recursive Tree Problems
+
+## 📌 Introduction
+
+Most Binary Tree problems can be solved using **Recursion** because every tree is made up of smaller subtrees.
+
+For every node, we can independently solve the problem for:
+
+- Left Subtree
+- Right Subtree
+
+and then combine their results.
+
+This recursive thinking is one of the most important skills for solving Tree problems.
+
+---
+
+# 📋 Topics Covered
+
+- Recursive Tree Traversal
+- Maximum Depth
+- Minimum Depth
+- Count Nodes
+- Sum of Nodes
+- Diameter of Binary Tree
+- Balanced Binary Tree
+- Same Tree
+- Invert Binary Tree
+- Recursive Problem-Solving Pattern
+
+---
+
+# 1️⃣ Recursive Tree Pattern
+
+For most Binary Tree problems, start with:
+
+```cpp
+if(root == NULL)
+    return ...;
+```
+
+Then solve:
+
+```text
+Left Subtree
+
++
+
+Right Subtree
+
++
+
+Current Node
+```
+
+General pattern:
+
+```cpp
+answer(left subtree)
+
+answer(right subtree)
+
+combine results
+```
+
+---
+
+# 2️⃣ Maximum Depth of Binary Tree
+
+## 📖 Problem
+
+Find the maximum depth or height of a Binary Tree.
+
+Example:
+
+```text
+        1
+       / \
+      2   3
+     /
+    4
+```
+
+Maximum depth:
+
+```text
+3
+```
+
+Path:
+
+```text
+1 → 2 → 4
+```
+
+---
+
+## 💡 Approach
+
+Find the height of both subtrees:
+
+```text
+Left Height
+Right Height
+```
+
+Then:
+
+```text
+Height = 1 + max(left, right)
+```
+
+---
+
+### C++ Code
+
+```cpp
+int maxDepth(Node* root)
+{
+    if(root == NULL)
+        return 0;
+
+    int leftHeight = maxDepth(root->left);
+
+    int rightHeight = maxDepth(root->right);
+
+    return 1 + max(leftHeight, rightHeight);
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 3️⃣ Minimum Depth of Binary Tree
+
+## 📖 Problem
+
+Find the minimum depth from the root to the nearest **leaf node**.
+
+Example:
+
+```text
+        1
+       / \
+      2   3
+         /
+        4
+```
+
+Minimum depth:
+
+```text
+2
+```
+
+Because:
+
+```text
+1 → 2
+```
+
+---
+
+## ⚠️ Important
+
+A node with only one child is **not a leaf**.
+
+We must handle the cases carefully.
+
+---
+
+### C++ Code
+
+```cpp
+int minDepth(Node* root)
+{
+    if(root == NULL)
+        return 0;
+
+    if(root->left == NULL)
+        return 1 + minDepth(root->right);
+
+    if(root->right == NULL)
+        return 1 + minDepth(root->left);
+
+    return 1 + min(
+        minDepth(root->left),
+        minDepth(root->right)
+    );
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 4️⃣ Count Number of Nodes
+
+## 📖 Problem
+
+Find the total number of nodes in a Binary Tree.
+
+Example:
+
+```text
+        1
+       / \
+      2   3
+     / \
+    4   5
+```
+
+Total:
+
+```text
+5
+```
+
+---
+
+## 💡 Approach
+
+For every node:
+
+```text
+1
+
++
+
+Left Subtree Nodes
+
++
+
+Right Subtree Nodes
+```
+
+---
+
+### C++ Code
+
+```cpp
+int countNodes(Node* root)
+{
+    if(root == NULL)
+        return 0;
+
+    return 1
+        + countNodes(root->left)
+        + countNodes(root->right);
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 5️⃣ Sum of All Nodes
+
+## 📖 Problem
+
+Find the sum of all nodes in a Binary Tree.
+
+Example:
+
+```text
+        1
+       / \
+      2   3
+     / \
+    4   5
+```
+
+Sum:
+
+```text
+1 + 2 + 3 + 4 + 5 = 15
+```
+
+---
+
+### C++ Code
+
+```cpp
+int sumNodes(Node* root)
+{
+    if(root == NULL)
+        return 0;
+
+    return root->data
+        + sumNodes(root->left)
+        + sumNodes(root->right);
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 6️⃣ Diameter of Binary Tree
+
+## 📖 Problem
+
+The diameter is the length of the **longest path between any two nodes** in a Binary Tree.
+
+The path does not necessarily have to pass through the root.
+
+Example:
+
+```text
+          1
+         / \
+        2   3
+       / \
+      4   5
+```
+
+Longest path:
+
+```text
+4 → 2 → 1 → 3
+```
+
+Number of edges:
+
+```text
+3
+```
+
+---
+
+## 💡 Important Formula
+
+For every node:
+
+```text
+Diameter through node
+=
+Left Height + Right Height
+```
+
+The answer is the maximum diameter found at any node.
+
+---
+
+### C++ Code
+
+```cpp
+int height(Node* root, int &diameter)
+{
+    if(root == NULL)
+        return 0;
+
+    int leftHeight = height(root->left, diameter);
+
+    int rightHeight = height(root->right, diameter);
+
+    diameter = max(
+        diameter,
+        leftHeight + rightHeight
+    );
+
+    return 1 + max(leftHeight, rightHeight);
+}
+
+int diameterOfBinaryTree(Node* root)
+{
+    int diameter = 0;
+
+    height(root, diameter);
+
+    return diameter;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 7️⃣ Balanced Binary Tree
+
+## 📖 Problem
+
+Determine whether a Binary Tree is height-balanced.
+
+A tree is balanced if the height difference between the left and right subtrees of every node is at most:
+
+```text
+1
+```
+
+That is:
+
+```text
+|Left Height - Right Height| <= 1
+```
+
+---
+
+### Example
+
+Balanced:
+
+```text
+        1
+       / \
+      2   3
+     / \
+    4   5
+```
+
+---
+
+### Unbalanced:
+
+```text
+        1
+       /
+      2
+     /
+    3
+   /
+  4
+```
+
+---
+
+## 💡 Efficient Approach
+
+Calculate height while checking balance.
+
+If an unbalanced subtree is found, return:
+
+```text
+-1
+```
+
+---
+
+### C++ Code
+
+```cpp
+int checkHeight(Node* root)
+{
+    if(root == NULL)
+        return 0;
+
+    int leftHeight = checkHeight(root->left);
+
+    if(leftHeight == -1)
+        return -1;
+
+    int rightHeight = checkHeight(root->right);
+
+    if(rightHeight == -1)
+        return -1;
+
+    if(abs(leftHeight - rightHeight) > 1)
+        return -1;
+
+    return 1 + max(leftHeight, rightHeight);
+}
+
+bool isBalanced(Node* root)
+{
+    return checkHeight(root) != -1;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 8️⃣ Same Tree
+
+## 📖 Problem
+
+Determine whether two Binary Trees are identical.
+
+Two trees are the same if:
+
+- Their values are equal.
+- Their structures are identical.
+
+---
+
+### Example
+
+Tree A:
+
+```text
+    1
+   / \
+  2   3
+```
+
+Tree B:
+
+```text
+    1
+   / \
+  2   3
+```
+
+Result:
+
+```text
+true
+```
+
+---
+
+### C++ Code
+
+```cpp
+bool isSameTree(Node* p, Node* q)
+{
+    if(p == NULL && q == NULL)
+        return true;
+
+    if(p == NULL || q == NULL)
+        return false;
+
+    if(p->data != q->data)
+        return false;
+
+    return isSameTree(p->left, q->left)
+        && isSameTree(p->right, q->right);
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 9️⃣ Invert Binary Tree
+
+## 📖 Problem
+
+Invert a Binary Tree by swapping its left and right children.
+
+---
+
+### Before
+
+```text
+        1
+       / \
+      2   3
+     / \
+    4   5
+```
+
+### After
+
+```text
+        1
+       / \
+      3   2
+         / \
+        5   4
+```
+
+---
+
+## 💡 Approach
+
+At every node:
+
+```text
+Swap Left and Right
+```
+
+Then recursively invert both subtrees.
+
+---
+
+### C++ Code
+
+```cpp
+Node* invertTree(Node* root)
+{
+    if(root == NULL)
+        return NULL;
+
+    swap(root->left, root->right);
+
+    invertTree(root->left);
+
+    invertTree(root->right);
+
+    return root;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 🔟 Recursive Tree Problem Pattern
+
+When solving a recursive Tree problem, ask:
+
+### Step 1
+
+What should happen for:
+
+```cpp
+root == NULL
+```
+
+?
+
+---
+
+### Step 2
+
+What information do I need from:
+
+```text
+Left Subtree?
+```
+
+---
+
+### Step 3
+
+What information do I need from:
+
+```text
+Right Subtree?
+```
+
+---
+
+### Step 4
+
+How do I combine:
+
+```text
+Left Result
+
++
+
+Right Result
+
++
+
+Current Node
+```
+
+?
+
+This simple framework solves many Binary Tree problems.
+
+---
+
+# 1️⃣1️⃣ Important Recursion Patterns
+
+## Pattern 1: Return Height
+
+Used for:
+
+- Maximum Depth
+- Minimum Depth
+- Diameter
+- Balanced Tree
+
+```text
+Return subtree height
+```
+
+---
+
+## Pattern 2: Return Count
+
+Used for:
+
+- Count Nodes
+- Count Leaf Nodes
+- Count nodes satisfying a condition
+
+```text
+1 + left + right
+```
+
+---
+
+## Pattern 3: Return Sum
+
+Used for:
+
+- Sum of Nodes
+- Root-to-Leaf calculations
+- Path Sum
+
+```text
+root + left + right
+```
+
+---
+
+## Pattern 4: Compare Trees
+
+Used for:
+
+- Same Tree
+- Symmetric Tree
+- Subtree problems
+
+```text
+Compare current nodes
+
++
+
+Compare left subtrees
+
++
+
+Compare right subtrees
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|---------|------|-------|
+| Maximum Depth | O(n) | O(h) |
+| Minimum Depth | O(n) | O(h) |
+| Count Nodes | O(n) | O(h) |
+| Sum of Nodes | O(n) | O(h) |
+| Diameter | O(n) | O(h) |
+| Balanced Tree | O(n) | O(h) |
+| Same Tree | O(n) | O(h) |
+| Invert Tree | O(n) | O(h) |
+
+Where:
+
+```text
+n = Number of Nodes
+
+h = Height of Tree
+```
+
+---
+
+# 💡 Interview Tips
+
+✅ Always start with the `NULL` base case.
+
+✅ Think about the left subtree and right subtree independently.
+
+✅ Many Tree problems are solved using postorder-style recursion.
+
+✅ For height-based problems, return the height from the recursive function.
+
+✅ For Diameter and Balanced Tree, avoid repeatedly calculating subtree heights.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Forgetting the `NULL` base case.
+
+❌ Confusing height and depth.
+
+❌ Assuming the diameter must pass through the root.
+
+❌ Checking only the root's balance instead of every node.
+
+❌ Recalculating heights repeatedly and causing O(n²) solutions.
+
+---
+
+# 🎯 Must-Solve Problems
+
+### Easy
+
+- Maximum Depth of Binary Tree
+- Minimum Depth of Binary Tree
+- Same Tree
+- Invert Binary Tree
+- Count Complete Tree Nodes
+
+### Medium
+
+- Diameter of Binary Tree
+- Balanced Binary Tree
+- Path Sum
+- Symmetric Tree
+- Subtree of Another Tree
+
+---
+
+# 📝 Quick Revision
+
+```text
+Maximum Depth
+→ 1 + max(left, right)
+
+Count Nodes
+→ 1 + left + right
+
+Sum
+→ root + left + right
+
+Diameter
+→ leftHeight + rightHeight
+
+Balanced
+→ |leftHeight - rightHeight| <= 1
+
+Same Tree
+→ Compare root + left + right
+
+Invert
+→ Swap left and right
+```
+
+---
+
+# 🎉 Summary
+
+In this part, we learned how recursion can simplify Binary Tree problems.
+
+✔ Maximum Depth
+
+✔ Minimum Depth
+
+✔ Count Nodes
+
+✔ Sum of Nodes
+
+✔ Diameter
+
+✔ Balanced Binary Tree
+
+✔ Same Tree
+
+✔ Invert Binary Tree
+
+✔ Recursive Tree Patterns
+
+---
+
+# 🚀 What's Next?
+
+In **Binary Trees (Part 3)**, we'll cover more advanced concepts:
+
+- Path Sum Problems
+- Root-to-Leaf Paths
+- Lowest Common Ancestor
+- Zigzag Level Order
+- Boundary Traversal
+- Vertical Order Traversal
+- Right & Left View of Binary Tree
