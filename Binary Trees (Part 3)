@@ -1,0 +1,992 @@
+# 🌳 Binary Trees (Part 3) - Advanced Tree Problems
+
+## 📌 Introduction
+
+In this part, we move beyond basic traversals and recursion and solve more advanced Binary Tree problems.
+
+These problems are extremely important for coding interviews because they combine:
+
+- Recursion
+- DFS
+- BFS
+- Queue
+- Hash Map
+- Tree Traversals
+
+---
+
+# 📋 Topics Covered
+
+- Path Sum
+- Root-to-Leaf Paths
+- Lowest Common Ancestor
+- Left View
+- Right View
+- Top View
+- Bottom View
+- Zigzag Level Order Traversal
+- Boundary Traversal
+- Vertical Order Traversal
+
+---
+
+# 1️⃣ Path Sum
+
+## 📖 Problem
+
+Given a Binary Tree and a target sum, determine whether there exists a root-to-leaf path whose values add up to the target.
+
+Example:
+
+```text
+        5
+       / \
+      4   8
+     /   / \
+    11  13  4
+```
+
+Target:
+
+```text
+20
+```
+
+Path:
+
+```text
+5 → 4 → 11
+```
+
+Sum:
+
+```text
+5 + 4 + 11 = 20
+```
+
+Answer:
+
+```text
+true
+```
+
+---
+
+## 💡 Approach
+
+At every node:
+
+```text
+target -= root->data
+```
+
+Then recursively check:
+
+```text
+Left Subtree
+
+OR
+
+Right Subtree
+```
+
+A valid path must end at a **leaf node**.
+
+---
+
+### C++ Code
+
+```cpp
+bool hasPathSum(Node* root, int targetSum)
+{
+    if(root == NULL)
+        return false;
+
+    if(root->left == NULL && root->right == NULL)
+        return targetSum == root->data;
+
+    int remaining = targetSum - root->data;
+
+    return hasPathSum(root->left, remaining) ||
+           hasPathSum(root->right, remaining);
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 2️⃣ Root-to-Leaf Paths
+
+## 📖 Problem
+
+Find all paths from the root to every leaf node.
+
+Example:
+
+```text
+        1
+       / \
+      2   3
+     / \
+    4   5
+```
+
+Output:
+
+```text
+1 → 2 → 4
+1 → 2 → 5
+1 → 3
+```
+
+---
+
+## 💡 Approach
+
+Use DFS.
+
+Maintain a current path:
+
+```text
+path
+```
+
+When a leaf is reached:
+
+```text
+store path
+```
+
+After recursion:
+
+```text
+remove current node
+```
+
+This is called **Backtracking**.
+
+---
+
+### C++ Code
+
+```cpp
+void solve(Node* root,
+           vector<int>& path,
+           vector<vector<int>>& result)
+{
+    if(root == NULL)
+        return;
+
+    path.push_back(root->data);
+
+    if(root->left == NULL && root->right == NULL)
+    {
+        result.push_back(path);
+    }
+    else
+    {
+        solve(root->left, path, result);
+        solve(root->right, path, result);
+    }
+
+    path.pop_back();
+}
+```
+
+---
+
+# 3️⃣ Lowest Common Ancestor (LCA)
+
+## 📖 Definition
+
+The Lowest Common Ancestor of two nodes is the lowest node in the tree that has both nodes as descendants.
+
+Example:
+
+```text
+          1
+        /   \
+       2     3
+      / \
+     4   5
+```
+
+For:
+
+```text
+4 and 5
+```
+
+LCA:
+
+```text
+2
+```
+
+For:
+
+```text
+4 and 3
+```
+
+LCA:
+
+```text
+1
+```
+
+---
+
+## 💡 Recursive Approach
+
+For every node:
+
+1. If root is NULL → return NULL.
+2. If root is one of the target nodes → return root.
+3. Search in the left subtree.
+4. Search in the right subtree.
+5. If both sides return a node → current root is LCA.
+
+---
+
+### C++ Code
+
+```cpp
+Node* lowestCommonAncestor(
+    Node* root,
+    Node* p,
+    Node* q)
+{
+    if(root == NULL || root == p || root == q)
+        return root;
+
+    Node* left = lowestCommonAncestor(
+        root->left, p, q
+    );
+
+    Node* right = lowestCommonAncestor(
+        root->right, p, q
+    );
+
+    if(left != NULL && right != NULL)
+        return root;
+
+    return left != NULL ? left : right;
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 4️⃣ Right View of Binary Tree
+
+## 📖 Definition
+
+The Right View contains the nodes visible when the tree is viewed from the right side.
+
+Example:
+
+```text
+          1
+        /   \
+       2     3
+        \     \
+         5     4
+```
+
+Right View:
+
+```text
+1 3 4
+```
+
+---
+
+## 💡 BFS Approach
+
+Process the tree level by level.
+
+For every level:
+
+```text
+take the last node
+```
+
+---
+
+### C++ Code
+
+```cpp
+vector<int> rightSideView(Node* root)
+{
+    vector<int> result;
+
+    if(root == NULL)
+        return result;
+
+    queue<Node*> q;
+    q.push(root);
+
+    while(!q.empty())
+    {
+        int size = q.size();
+
+        for(int i = 0; i < size; i++)
+        {
+            Node* current = q.front();
+            q.pop();
+
+            if(i == size - 1)
+                result.push_back(current->data);
+
+            if(current->left)
+                q.push(current->left);
+
+            if(current->right)
+                q.push(current->right);
+        }
+    }
+
+    return result;
+}
+```
+
+---
+
+# 5️⃣ Left View of Binary Tree
+
+## 📖 Definition
+
+The Left View contains the nodes visible when the tree is viewed from the left side.
+
+Example:
+
+```text
+          1
+        /   \
+       2     3
+      /       \
+     4         5
+```
+
+Left View:
+
+```text
+1 2 4
+```
+
+---
+
+## 💡 BFS Approach
+
+For every level:
+
+```text
+take the first node
+```
+
+---
+
+### C++ Code
+
+```cpp
+vector<int> leftView(Node* root)
+{
+    vector<int> result;
+
+    if(root == NULL)
+        return result;
+
+    queue<Node*> q;
+    q.push(root);
+
+    while(!q.empty())
+    {
+        int size = q.size();
+
+        for(int i = 0; i < size; i++)
+        {
+            Node* current = q.front();
+            q.pop();
+
+            if(i == 0)
+                result.push_back(current->data);
+
+            if(current->left)
+                q.push(current->left);
+
+            if(current->right)
+                q.push(current->right);
+        }
+    }
+
+    return result;
+}
+```
+
+---
+
+# 6️⃣ Top View of Binary Tree
+
+## 📖 Definition
+
+The Top View contains the nodes visible when the tree is viewed from above.
+
+We assign each node a **horizontal distance** from the root.
+
+```text
+          1
+        /   \
+       2     3
+        \
+         5
+```
+
+Horizontal distances:
+
+```text
+        1 → 0
+       / \
+   2 → -1  3 → +1
+       \
+        5 → 0
+```
+
+Top View:
+
+```text
+2 1 3
+```
+
+---
+
+## 💡 Approach
+
+Use:
+
+```text
+Queue + Map
+```
+
+Store:
+
+```text
+Horizontal Distance → First Node
+```
+
+---
+
+### C++ Code
+
+```cpp
+vector<int> topView(Node* root)
+{
+    vector<int> result;
+
+    if(root == NULL)
+        return result;
+
+    map<int, int> mp;
+    queue<pair<Node*, int>> q;
+
+    q.push({root, 0});
+
+    while(!q.empty())
+    {
+        auto [current, hd] = q.front();
+        q.pop();
+
+        if(mp.find(hd) == mp.end())
+            mp[hd] = current->data;
+
+        if(current->left)
+            q.push({current->left, hd - 1});
+
+        if(current->right)
+            q.push({current->right, hd + 1});
+    }
+
+    for(auto it : mp)
+        result.push_back(it.second);
+
+    return result;
+}
+```
+
+---
+
+# 7️⃣ Bottom View of Binary Tree
+
+## 📖 Definition
+
+The Bottom View contains the nodes visible when the tree is viewed from below.
+
+The idea is similar to Top View.
+
+The difference is:
+
+```text
+Top View → Keep first node
+
+Bottom View → Keep last node
+```
+
+---
+
+## 💡 Approach
+
+Use:
+
+```text
+Queue + Map
+```
+
+Whenever a node is encountered:
+
+```text
+mp[horizontalDistance] = node
+```
+
+This overwrites the previous node.
+
+---
+
+### C++ Code
+
+```cpp
+vector<int> bottomView(Node* root)
+{
+    vector<int> result;
+
+    if(root == NULL)
+        return result;
+
+    map<int, int> mp;
+    queue<pair<Node*, int>> q;
+
+    q.push({root, 0});
+
+    while(!q.empty())
+    {
+        auto [current, hd] = q.front();
+        q.pop();
+
+        mp[hd] = current->data;
+
+        if(current->left)
+            q.push({current->left, hd - 1});
+
+        if(current->right)
+            q.push({current->right, hd + 1});
+    }
+
+    for(auto it : mp)
+        result.push_back(it.second);
+
+    return result;
+}
+```
+
+---
+
+# 8️⃣ Zigzag Level Order Traversal
+
+## 📖 Definition
+
+Zigzag traversal visits alternate levels in opposite directions.
+
+Example:
+
+```text
+          1
+        /   \
+       2     3
+      / \   / \
+     4   5 6   7
+```
+
+Normal Level Order:
+
+```text
+1
+2 3
+4 5 6 7
+```
+
+Zigzag:
+
+```text
+1
+3 2
+4 5 6 7
+```
+
+---
+
+## 💡 Approach
+
+Use BFS.
+
+Maintain a flag:
+
+```text
+leftToRight
+```
+
+Reverse the current level when required.
+
+---
+
+### C++ Code
+
+```cpp
+vector<vector<int>> zigzagLevelOrder(Node* root)
+{
+    vector<vector<int>> result;
+
+    if(root == NULL)
+        return result;
+
+    queue<Node*> q;
+    q.push(root);
+
+    bool leftToRight = true;
+
+    while(!q.empty())
+    {
+        int size = q.size();
+
+        vector<int> level(size);
+
+        for(int i = 0; i < size; i++)
+        {
+            Node* current = q.front();
+            q.pop();
+
+            int index = leftToRight
+                        ? i
+                        : size - i - 1;
+
+            level[index] = current->data;
+
+            if(current->left)
+                q.push(current->left);
+
+            if(current->right)
+                q.push(current->right);
+        }
+
+        result.push_back(level);
+
+        leftToRight = !leftToRight;
+    }
+
+    return result;
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(n)
+```
+
+---
+
+# 9️⃣ Boundary Traversal
+
+## 📖 Definition
+
+Boundary Traversal visits the boundary nodes of a Binary Tree.
+
+The order is generally:
+
+```text
+1. Root
+2. Left Boundary
+3. Leaf Nodes
+4. Right Boundary in Reverse
+```
+
+Example:
+
+```text
+          1
+        /   \
+       2     3
+      / \     \
+     4   5     6
+```
+
+Boundary:
+
+```text
+1 → 2 → 4 → 5 → 6 → 3
+```
+
+---
+
+# 🔟 Boundary Traversal Components
+
+### Step 1: Root
+
+Add the root.
+
+---
+
+### Step 2: Left Boundary
+
+Traverse down the left side.
+
+Do not include leaf nodes.
+
+---
+
+### Step 3: Leaf Nodes
+
+Traverse the entire tree and add all leaf nodes.
+
+---
+
+### Step 4: Right Boundary
+
+Traverse the right side.
+
+Store nodes temporarily and add them in reverse order.
+
+---
+
+# 1️⃣1️⃣ Vertical Order Traversal
+
+## 📖 Definition
+
+Vertical Traversal groups nodes according to their horizontal position.
+
+Example:
+
+```text
+          1
+        /   \
+       2     3
+      / \     \
+     4   5     6
+```
+
+Horizontal distances:
+
+```text
+4 → -2
+2 → -1
+1 →  0
+5 →  0
+3 → +1
+6 → +2
+```
+
+Nodes are grouped by their horizontal distance.
+
+---
+
+## 💡 Approach
+
+Use:
+
+```text
+Queue
+
++
+
+Map
+```
+
+For each node store:
+
+```text
+Horizontal Distance
+```
+
+For more complex versions, also track:
+
+```text
+Level
+```
+
+and sometimes node values for tie-breaking.
+
+---
+
+# 1️⃣2️⃣ Tree Views Comparison
+
+| View | Main Idea |
+|------|-----------|
+| Left View | First node of every level |
+| Right View | Last node of every level |
+| Top View | First node at each horizontal distance |
+| Bottom View | Last node at each horizontal distance |
+| Vertical View | Group nodes by horizontal distance |
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|---------|------|-------|
+| Path Sum | O(n) | O(h) |
+| Root-to-Leaf Paths | O(n) | O(h) + output |
+| LCA | O(n) | O(h) |
+| Left View | O(n) | O(n) |
+| Right View | O(n) | O(n) |
+| Top View | O(n log n) | O(n) |
+| Bottom View | O(n log n) | O(n) |
+| Zigzag Traversal | O(n) | O(n) |
+| Boundary Traversal | O(n) | O(h) |
+| Vertical Traversal | O(n log n) | O(n) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Use **DFS/Recursion** for path problems.
+
+✅ Use **BFS + Queue** for level-based problems.
+
+✅ Use **Map + Horizontal Distance** for Top/Bottom/Vertical Views.
+
+✅ Right View → last node of each level.
+
+✅ Left View → first node of each level.
+
+✅ Top View → first node at each horizontal distance.
+
+✅ Bottom View → last node at each horizontal distance.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Including non-leaf nodes as leaves.
+
+❌ Forgetting to reverse the right boundary.
+
+❌ Confusing Top View with Vertical Traversal.
+
+❌ Using the root as the only possible LCA.
+
+❌ Forgetting horizontal distance while solving view problems.
+
+❌ Not handling an empty tree.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Path Sum
+→ Root-to-Leaf + Target
+
+LCA
+→ Common Ancestor of Two Nodes
+
+Left View
+→ First node of every level
+
+Right View
+→ Last node of every level
+
+Top View
+→ First node at each horizontal distance
+
+Bottom View
+→ Last node at each horizontal distance
+
+Zigzag
+→ Alternate Level Direction
+
+Vertical View
+→ Group by Horizontal Distance
+```
+
+---
+
+# 🎯 Must-Solve Problems
+
+### ⭐ Easy
+
+- Path Sum
+- Binary Tree Paths
+- Symmetric Tree
+- Find Bottom Left Tree Value
+
+### ⭐ Medium
+
+- Lowest Common Ancestor
+- Binary Tree Right Side View
+- Binary Tree Zigzag Level Order Traversal
+- Boundary Traversal
+- Top View
+- Bottom View
+
+### ⭐ Hard
+
+- Vertical Order Traversal
+- Vertical Traversal of a Binary Tree
+- Serialize and Deserialize Binary Tree
+
+---
+
+# 🎉 Summary
+
+In this part, we learned:
+
+✔ Path Sum
+
+✔ Root-to-Leaf Paths
+
+✔ Lowest Common Ancestor
+
+✔ Left View
+
+✔ Right View
+
+✔ Top View
+
+✔ Bottom View
+
+✔ Zigzag Traversal
+
+✔ Boundary Traversal
+
+✔ Vertical Traversal
+
+These concepts combine recursion, DFS, BFS, queues, maps, and tree traversal techniques.
+
+---
+
+# 🚀 What's Next?
+
+In **Binary Trees (Part 4)**, we'll cover:
+
+- Advanced Binary Tree Problems
+- Symmetric Tree
+- Maximum Path Sum
+- Serialize & Deserialize
+- Morris Traversal
+- Iterative Traversals
+- Tree Construction
+- Important Interview Patterns
