@@ -1,0 +1,1183 @@
+# 🌳 Binary Trees (Part 4) - Advanced Interview Problems
+
+## 📌 Introduction
+
+This is the final part of the Binary Trees section.
+
+Here we focus on advanced problems that combine:
+
+- Recursion
+- DFS
+- BFS
+- Stack
+- Queue
+- Hash Map
+- Tree Traversals
+- Divide & Conquer
+
+These concepts are frequently asked in coding interviews.
+
+---
+
+# 📋 Topics Covered
+
+- Symmetric Binary Tree
+- Maximum Path Sum
+- Serialize & Deserialize Binary Tree
+- Iterative Preorder Traversal
+- Iterative Inorder Traversal
+- Iterative Postorder Traversal
+- Morris Inorder Traversal
+- Construct Binary Tree from Traversals
+- Important Tree Problem-Solving Patterns
+
+---
+
+# 1️⃣ Symmetric Binary Tree
+
+## 📖 Problem
+
+Determine whether a Binary Tree is a mirror image of itself.
+
+Example:
+
+```text
+          1
+        /   \
+       2     2
+      / \   / \
+     3   4 4   3
+```
+
+This tree is symmetric.
+
+Output:
+
+```text
+true
+```
+
+---
+
+## 💡 Approach
+
+Compare:
+
+```text
+Left Subtree
+```
+
+with the mirror image of:
+
+```text
+Right Subtree
+```
+
+For two nodes to be mirror images:
+
+```text
+left->data == right->data
+
+left->left  ↔ right->right
+
+left->right ↔ right->left
+```
+
+---
+
+### C++ Code
+
+```cpp
+bool isMirror(Node* left, Node* right)
+{
+    if(left == NULL && right == NULL)
+        return true;
+
+    if(left == NULL || right == NULL)
+        return false;
+
+    if(left->data != right->data)
+        return false;
+
+    return isMirror(left->left, right->right) &&
+           isMirror(left->right, right->left);
+}
+
+bool isSymmetric(Node* root)
+{
+    if(root == NULL)
+        return true;
+
+    return isMirror(root->left, root->right);
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 2️⃣ Maximum Path Sum
+
+## 📖 Problem
+
+Find the maximum sum of values along any path in a Binary Tree.
+
+The path can start and end at any nodes.
+
+Example:
+
+```text
+        -10
+        /  \
+       9    20
+           /  \
+          15   7
+```
+
+Maximum path:
+
+```text
+15 → 20 → 7
+```
+
+Sum:
+
+```text
+42
+```
+
+---
+
+## 💡 Important Idea
+
+For every node:
+
+```text
+Left Gain
++
+Current Node
++
+Right Gain
+```
+
+This gives the maximum path passing through the current node.
+
+But when returning to the parent, we can only choose **one side**:
+
+```text
+Current Node + max(Left Gain, Right Gain)
+```
+
+---
+
+### C++ Code
+
+```cpp
+int maxGain(Node* root, int &answer)
+{
+    if(root == NULL)
+        return 0;
+
+    int leftGain = max(0, maxGain(root->left, answer));
+
+    int rightGain = max(0, maxGain(root->right, answer));
+
+    int currentPath =
+        root->data + leftGain + rightGain;
+
+    answer = max(answer, currentPath);
+
+    return root->data +
+           max(leftGain, rightGain);
+}
+
+int maxPathSum(Node* root)
+{
+    int answer = INT_MIN;
+
+    maxGain(root, answer);
+
+    return answer;
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 3️⃣ Serialize and Deserialize Binary Tree
+
+## 📖 Definition
+
+### Serialization
+
+Convert a Binary Tree into a string or sequence so that it can be stored or transmitted.
+
+### Deserialization
+
+Convert the serialized data back into the original Binary Tree.
+
+---
+
+### Example
+
+Tree:
+
+```text
+        1
+       / \
+      2   3
+```
+
+Possible serialization:
+
+```text
+1,2,#,#,3,#,#
+```
+
+Here:
+
+```text
+# = NULL
+```
+
+---
+
+## 💡 Why Store NULL?
+
+Consider:
+
+```text
+    1
+   /
+  2
+```
+
+and
+
+```text
+1
+ \
+  2
+```
+
+Without NULL markers, their traversals can become ambiguous.
+
+NULL markers preserve the structure.
+
+---
+
+## 🔹 Serialization
+
+A common approach is preorder traversal:
+
+```text
+Root
+Left
+Right
+```
+
+---
+
+### C++ Code
+
+```cpp
+void serialize(Node* root, string &result)
+{
+    if(root == NULL)
+    {
+        result += "#,";
+        return;
+    }
+
+    result += to_string(root->data) + ",";
+
+    serialize(root->left, result);
+
+    serialize(root->right, result);
+}
+```
+
+---
+
+## 🔹 Deserialization
+
+Read values from the serialized sequence.
+
+If the value is:
+
+```text
+#
+```
+
+return NULL.
+
+Otherwise:
+
+```text
+Create Node
+
+↓
+
+Build Left Subtree
+
+↓
+
+Build Right Subtree
+```
+
+---
+
+### C++ Code
+
+```cpp
+Node* deserialize(
+    vector<string>& values,
+    int &index)
+{
+    if(index >= values.size())
+        return NULL;
+
+    if(values[index] == "#")
+    {
+        index++;
+        return NULL;
+    }
+
+    Node* root =
+        new Node(stoi(values[index]));
+
+    index++;
+
+    root->left =
+        deserialize(values, index);
+
+    root->right =
+        deserialize(values, index);
+
+    return root;
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(n)
+```
+
+---
+
+# 4️⃣ Iterative Preorder Traversal
+
+## 📖 Traversal
+
+```text
+Root → Left → Right
+```
+
+Instead of recursion, use a **Stack**.
+
+---
+
+### Algorithm
+
+```text
+Push Root
+
+↓
+
+Pop Node
+
+↓
+
+Process Node
+
+↓
+
+Push Right
+
+↓
+
+Push Left
+```
+
+Why push right first?
+
+Because Stack follows:
+
+```text
+LIFO
+```
+
+So the left child will be processed first.
+
+---
+
+### C++ Code
+
+```cpp
+vector<int> preorder(Node* root)
+{
+    vector<int> result;
+
+    if(root == NULL)
+        return result;
+
+    stack<Node*> st;
+
+    st.push(root);
+
+    while(!st.empty())
+    {
+        Node* current = st.top();
+        st.pop();
+
+        result.push_back(current->data);
+
+        if(current->right)
+            st.push(current->right);
+
+        if(current->left)
+            st.push(current->left);
+    }
+
+    return result;
+}
+```
+
+---
+
+# 5️⃣ Iterative Inorder Traversal
+
+## 📖 Traversal
+
+```text
+Left → Root → Right
+```
+
+Use a Stack.
+
+---
+
+## 💡 Algorithm
+
+Keep moving left:
+
+```text
+Root
+ ↓
+Left
+ ↓
+Left
+```
+
+Push every node onto the stack.
+
+When there is no left child:
+
+```text
+Pop
+
+↓
+
+Process
+
+↓
+
+Move Right
+```
+
+---
+
+### C++ Code
+
+```cpp
+vector<int> inorder(Node* root)
+{
+    vector<int> result;
+
+    stack<Node*> st;
+
+    Node* current = root;
+
+    while(current != NULL || !st.empty())
+    {
+        while(current != NULL)
+        {
+            st.push(current);
+
+            current = current->left;
+        }
+
+        current = st.top();
+        st.pop();
+
+        result.push_back(current->data);
+
+        current = current->right;
+    }
+
+    return result;
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 6️⃣ Iterative Postorder Traversal
+
+## 📖 Traversal
+
+```text
+Left → Right → Root
+```
+
+Postorder is slightly more difficult iteratively.
+
+One common approach uses **two stacks**.
+
+---
+
+### Algorithm
+
+```text
+Stack 1
+
+↓
+
+Process Node
+
+↓
+
+Push Left & Right
+
+↓
+
+Stack 2
+
+↓
+
+Reverse Processing
+```
+
+---
+
+### C++ Code
+
+```cpp
+vector<int> postorder(Node* root)
+{
+    vector<int> result;
+
+    if(root == NULL)
+        return result;
+
+    stack<Node*> st1;
+    stack<Node*> st2;
+
+    st1.push(root);
+
+    while(!st1.empty())
+    {
+        Node* current = st1.top();
+        st1.pop();
+
+        st2.push(current);
+
+        if(current->left)
+            st1.push(current->left);
+
+        if(current->right)
+            st1.push(current->right);
+    }
+
+    while(!st2.empty())
+    {
+        result.push_back(st2.top()->data);
+        st2.pop();
+    }
+
+    return result;
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(n)
+```
+
+---
+
+# 7️⃣ Morris Traversal
+
+## 📖 Definition
+
+Morris Traversal allows us to perform tree traversal with:
+
+```text
+O(1)
+```
+
+extra space.
+
+It avoids recursion and an explicit stack.
+
+---
+
+## 💡 Morris Inorder Traversal
+
+Traversal:
+
+```text
+Left → Root → Right
+```
+
+The main idea is to create temporary links between nodes.
+
+---
+
+### Algorithm
+
+For current node:
+
+### Case 1
+
+If there is no left child:
+
+```text
+Process current
+
+Move right
+```
+
+---
+
+### Case 2
+
+If left child exists:
+
+Find the inorder predecessor.
+
+If predecessor's right is NULL:
+
+```text
+Connect predecessor → current
+
+Move left
+```
+
+Otherwise:
+
+```text
+Remove temporary link
+
+Process current
+
+Move right
+```
+
+---
+
+### C++ Code
+
+```cpp
+vector<int> morrisInorder(Node* root)
+{
+    vector<int> result;
+
+    Node* current = root;
+
+    while(current != NULL)
+    {
+        if(current->left == NULL)
+        {
+            result.push_back(current->data);
+
+            current = current->right;
+        }
+        else
+        {
+            Node* predecessor =
+                current->left;
+
+            while(predecessor->right != NULL &&
+                  predecessor->right != current)
+            {
+                predecessor =
+                    predecessor->right;
+            }
+
+            if(predecessor->right == NULL)
+            {
+                predecessor->right = current;
+
+                current = current->left;
+            }
+            else
+            {
+                predecessor->right = NULL;
+
+                result.push_back(current->data);
+
+                current = current->right;
+            }
+        }
+    }
+
+    return result;
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Extra Space: O(1)
+```
+
+---
+
+# 8️⃣ Construct Binary Tree from Preorder and Inorder
+
+## 📖 Problem
+
+Given:
+
+```text
+Preorder
+```
+
+and
+
+```text
+Inorder
+```
+
+construct the original Binary Tree.
+
+---
+
+### Example
+
+Preorder:
+
+```text
+3 9 20 15 7
+```
+
+Inorder:
+
+```text
+9 3 15 20 7
+```
+
+Tree:
+
+```text
+        3
+       / \
+      9   20
+         /  \
+        15   7
+```
+
+---
+
+## 💡 Important Observation
+
+In preorder:
+
+```text
+First element = Root
+```
+
+In inorder:
+
+```text
+Left of Root = Left Subtree
+
+Right of Root = Right Subtree
+```
+
+---
+
+## 🚀 Efficient Approach
+
+Use a Hash Map to store the index of each value in the inorder traversal.
+
+---
+
+### C++ Code
+
+```cpp
+Node* buildTree(
+    vector<int>& preorder,
+    int preStart,
+    int preEnd,
+    vector<int>& inorder,
+    int inStart,
+    int inEnd,
+    unordered_map<int, int>& position)
+{
+    if(preStart > preEnd ||
+       inStart > inEnd)
+        return NULL;
+
+    int rootValue = preorder[preStart];
+
+    Node* root = new Node(rootValue);
+
+    int rootIndex = position[rootValue];
+
+    int leftSize = rootIndex - inStart;
+
+    root->left = buildTree(
+        preorder,
+        preStart + 1,
+        preStart + leftSize,
+        inorder,
+        inStart,
+        rootIndex - 1,
+        position
+    );
+
+    root->right = buildTree(
+        preorder,
+        preStart + leftSize + 1,
+        preEnd,
+        inorder,
+        rootIndex + 1,
+        inEnd,
+        position
+    );
+
+    return root;
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(n)
+```
+
+---
+
+# 9️⃣ Construct Binary Tree from Inorder and Postorder
+
+The same idea can be used with:
+
+```text
+Inorder + Postorder
+```
+
+Important observation:
+
+```text
+Postorder Last Element = Root
+```
+
+Then use Inorder to divide:
+
+```text
+Left Subtree
+
+Right Subtree
+```
+
+---
+
+# 🔟 Tree Construction Rule
+
+Remember:
+
+### Preorder + Inorder
+
+```text
+Preorder First = Root
+```
+
+### Postorder + Inorder
+
+```text
+Postorder Last = Root
+```
+
+### Inorder
+
+Used to determine:
+
+```text
+Left Subtree
+
+Right Subtree
+```
+
+---
+
+# 1️⃣1️⃣ Important Tree Patterns
+
+## Pattern 1: DFS Recursion
+
+Used for:
+
+- Maximum Depth
+- Diameter
+- Path Sum
+- Maximum Path Sum
+- Balanced Tree
+
+---
+
+## Pattern 2: BFS
+
+Used for:
+
+- Level Order
+- Zigzag Traversal
+- Left View
+- Right View
+
+---
+
+## Pattern 3: BFS + Map
+
+Used for:
+
+- Top View
+- Bottom View
+- Vertical Traversal
+
+---
+
+## Pattern 4: Stack
+
+Used for:
+
+- Iterative Preorder
+- Iterative Inorder
+- Iterative Postorder
+
+---
+
+## Pattern 5: Hash Map
+
+Used for:
+
+- Tree Construction
+- Fast Index Lookup
+
+---
+
+## Pattern 6: Morris Traversal
+
+Used when:
+
+```text
+O(1) Extra Space
+```
+
+is required for traversal.
+
+---
+
+# 📊 Complexity Cheat Sheet
+
+| Problem | Time | Extra Space |
+|---------|------|-------------|
+| Symmetric Tree | O(n) | O(h) |
+| Maximum Path Sum | O(n) | O(h) |
+| Serialize Tree | O(n) | O(n) |
+| Deserialize Tree | O(n) | O(n) |
+| Iterative Preorder | O(n) | O(h) |
+| Iterative Inorder | O(n) | O(h) |
+| Iterative Postorder | O(n) | O(n) |
+| Morris Inorder | O(n) | O(1) |
+| Construct Tree | O(n) | O(n) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Learn recursive and iterative traversals.
+
+✅ Remember:
+
+```text
+Preorder  → Root First
+
+Inorder   → Root Middle
+
+Postorder → Root Last
+```
+
+✅ For tree construction, use a Hash Map for efficient inorder lookup.
+
+✅ Use BFS for level-based problems.
+
+✅ Use DFS for path and depth problems.
+
+✅ Learn Morris Traversal for O(1) extra-space traversal.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Mixing preorder and postorder logic.
+
+❌ Forgetting that Postorder's last element is the root.
+
+❌ Not handling NULL nodes.
+
+❌ Forgetting to restore temporary Morris links.
+
+❌ Using O(n²) tree construction by repeatedly searching the inorder array.
+
+❌ Confusing tree height with tree depth.
+
+---
+
+# 🎯 Must-Solve Interview Problems
+
+### ⭐ Easy
+
+- Symmetric Tree
+- Binary Tree Paths
+- Same Tree
+- Invert Binary Tree
+- Maximum Depth
+
+### ⭐ Medium
+
+- Binary Tree Maximum Path Sum
+- Lowest Common Ancestor
+- Construct Binary Tree from Preorder and Inorder
+- Construct Binary Tree from Inorder and Postorder
+- Binary Tree Right Side View
+
+### ⭐ Hard
+
+- Serialize and Deserialize Binary Tree
+- Binary Tree Maximum Path Sum
+- Morris Traversal
+- Vertical Order Traversal
+- Recover Binary Search Tree
+
+---
+
+# 📝 Quick Revision
+
+```text
+Symmetric Tree
+→ Compare left and right as mirrors
+
+Maximum Path Sum
+→ Left Gain + Node + Right Gain
+
+Preorder
+→ Root → Left → Right
+
+Inorder
+→ Left → Root → Right
+
+Postorder
+→ Left → Right → Root
+
+Morris
+→ O(1) Extra Space
+
+Tree Construction
+→ Traversal + Inorder + Hash Map
+```
+
+---
+
+# 🎉 Binary Trees Completed!
+
+You have now covered:
+
+✔ Binary Tree Fundamentals
+
+✔ Tree Terminology
+
+✔ Tree Types
+
+✔ Preorder Traversal
+
+✔ Inorder Traversal
+
+✔ Postorder Traversal
+
+✔ Level Order Traversal
+
+✔ Recursive Tree Problems
+
+✔ Path Sum
+
+✔ Diameter
+
+✔ Balanced Tree
+
+✔ Lowest Common Ancestor
+
+✔ Tree Views
+
+✔ Zigzag Traversal
+
+✔ Boundary Traversal
+
+✔ Vertical Traversal
+
+✔ Iterative Traversals
+
+✔ Morris Traversal
+
+✔ Tree Construction
+
+✔ Advanced Interview Problems
+
+---
+
+# 🚀 What's Next?
+
+According to the roadmap, the next topic is:
+
+## 🌲 BST (Part 1)
+
+Topics will include:
+
+- What is a Binary Search Tree?
+- BST Properties
+- BST vs Binary Tree
+- Search in BST
+- Insert in BST
+- Find Minimum & Maximum
+- Inorder Traversal of BST
+- BST Complexity
