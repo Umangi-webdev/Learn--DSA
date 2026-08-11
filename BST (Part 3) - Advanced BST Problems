@@ -1,0 +1,1110 @@
+# 🌲 BST (Part 3) - Advanced BST Problems
+
+## 📌 Introduction
+
+In this part, we cover advanced Binary Search Tree problems.
+
+These problems combine:
+
+- BST Properties
+- Inorder Traversal
+- Two Pointers
+- Iterators
+- Recursion
+- Hashing
+- Tree Construction
+- DFS
+
+The most important idea is to **use the BST ordering property instead of treating the tree like a normal Binary Tree**.
+
+---
+
+# 📋 Topics Covered
+
+- Recover Binary Search Tree
+- Two Sum in BST
+- BST Iterator
+- Convert Sorted Array to BST
+- Balance a BST
+- Merge Two BSTs
+- Largest BST in Binary Tree
+- Advanced BST Patterns
+
+---
+
+# 1️⃣ Recover Binary Search Tree
+
+## 📖 Problem
+
+Sometimes two nodes of a BST are accidentally swapped.
+
+Restore the BST without changing its structure.
+
+Example:
+
+```text
+Correct BST:
+
+        3
+       / \
+      1   4
+         /
+        2
+```
+
+Suppose two nodes are swapped.
+
+The goal is to identify the incorrect nodes and swap their values back.
+
+---
+
+# 2️⃣ Important Observation
+
+Inorder traversal of a valid BST is sorted.
+
+Example:
+
+```text
+1 2 3 4 5
+```
+
+If two nodes are swapped:
+
+```text
+1 4 3 2 5
+```
+
+We can detect the positions where:
+
+```text
+previous > current
+```
+
+These violations help identify the swapped nodes.
+
+---
+
+### C++ Code
+
+```cpp
+class Solution
+{
+private:
+
+    Node* first = NULL;
+    Node* second = NULL;
+    Node* prev = NULL;
+
+    void inorder(Node* root)
+    {
+        if(root == NULL)
+            return;
+
+        inorder(root->left);
+
+        if(prev != NULL &&
+           prev->data > root->data)
+        {
+            if(first == NULL)
+                first = prev;
+
+            second = root;
+        }
+
+        prev = root;
+
+        inorder(root->right);
+    }
+
+public:
+
+    void recoverTree(Node* root)
+    {
+        inorder(root);
+
+        if(first != NULL && second != NULL)
+        {
+            swap(first->data, second->data);
+        }
+    }
+};
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 3️⃣ Two Sum in BST
+
+## 📖 Problem
+
+Given a BST and a target value `k`, determine whether there are two different nodes whose values add up to `k`.
+
+Example:
+
+```text
+          5
+        /   \
+       3     6
+      / \     \
+     2   4     7
+```
+
+Target:
+
+```text
+9
+```
+
+Possible pair:
+
+```text
+2 + 7 = 9
+```
+
+Answer:
+
+```text
+true
+```
+
+---
+
+# 4️⃣ Approach 1: Inorder + Two Pointers
+
+Inorder traversal gives sorted values.
+
+```text
+2 3 4 5 6 7
+```
+
+Then use two pointers:
+
+```text
+left → beginning
+
+right → end
+```
+
+If:
+
+```text
+sum < target
+```
+
+Move:
+
+```text
+left++
+```
+
+If:
+
+```text
+sum > target
+```
+
+Move:
+
+```text
+right--
+```
+
+---
+
+### C++ Code
+
+```cpp
+bool twoSumBST(Node* root, int target)
+{
+    vector<int> values;
+
+    inorder(root, values);
+
+    int left = 0;
+    int right = values.size() - 1;
+
+    while(left < right)
+    {
+        int sum = values[left] + values[right];
+
+        if(sum == target)
+            return true;
+
+        if(sum < target)
+            left++;
+        else
+            right--;
+    }
+
+    return false;
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(n)
+```
+
+---
+
+# 5️⃣ Two Sum Using BST Iterators
+
+A more advanced approach uses two iterators:
+
+```text
+Normal Inorder
+```
+
+and
+
+```text
+Reverse Inorder
+```
+
+This allows us to get:
+
+```text
+Smallest → Largest
+```
+
+and:
+
+```text
+Largest → Smallest
+```
+
+without storing the complete inorder array.
+
+---
+
+# 6️⃣ BST Iterator
+
+## 📖 Problem
+
+Design an iterator that returns BST elements in ascending order.
+
+Example:
+
+```text
+        7
+       / \
+      3   15
+         /  \
+        9    20
+```
+
+Calling:
+
+```cpp
+next()
+```
+
+should return:
+
+```text
+3
+7
+9
+15
+20
+```
+
+---
+
+# 7️⃣ BST Iterator Idea
+
+Use a stack.
+
+Initially push all left nodes:
+
+```text
+Root
+ ↓
+Left
+ ↓
+Left
+```
+
+The top of the stack is the next smallest value.
+
+After returning a node:
+
+```text
+Move to its right subtree
+```
+
+and push all left nodes again.
+
+---
+
+### C++ Code
+
+```cpp
+class BSTIterator
+{
+    stack<Node*> st;
+
+    void pushLeft(Node* root)
+    {
+        while(root != NULL)
+        {
+            st.push(root);
+            root = root->left;
+        }
+    }
+
+public:
+
+    BSTIterator(Node* root)
+    {
+        pushLeft(root);
+    }
+
+    int next()
+    {
+        Node* current = st.top();
+
+        st.pop();
+
+        if(current->right != NULL)
+            pushLeft(current->right);
+
+        return current->data;
+    }
+
+    bool hasNext()
+    {
+        return !st.empty();
+    }
+};
+```
+
+### Complexity
+
+```text
+next() → O(1) amortized
+
+hasNext() → O(1)
+
+Space → O(h)
+```
+
+---
+
+# 8️⃣ Convert Sorted Array to BST
+
+## 📖 Problem
+
+Given a sorted array, construct a height-balanced BST.
+
+Example:
+
+```text
+Array:
+
+[-10, -3, 0, 5, 9]
+```
+
+Choose the middle element as root:
+
+```text
+        0
+       / \
+     -3   5
+     /     \
+   -10      9
+```
+
+---
+
+# 9️⃣ Why Choose the Middle?
+
+If we choose the middle element:
+
+```text
+Left Half → Left Subtree
+
+Right Half → Right Subtree
+```
+
+This keeps the tree approximately balanced.
+
+---
+
+### C++ Code
+
+```cpp
+Node* sortedArrayToBST(
+    vector<int>& nums,
+    int left,
+    int right)
+{
+    if(left > right)
+        return NULL;
+
+    int mid = left + (right - left) / 2;
+
+    Node* root = new Node(nums[mid]);
+
+    root->left =
+        sortedArrayToBST(
+            nums,
+            left,
+            mid - 1
+        );
+
+    root->right =
+        sortedArrayToBST(
+            nums,
+            mid + 1,
+            right
+        );
+
+    return root;
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(log n)
+```
+
+for a balanced tree's recursion depth.
+
+---
+
+# 🔟 Balance a BST
+
+## 📖 Problem
+
+Given an unbalanced BST, convert it into a balanced BST.
+
+Example:
+
+```text
+Unbalanced:
+
+1
+ \
+  2
+   \
+    3
+     \
+      4
+```
+
+Convert to:
+
+```text
+        2
+       / \
+      1   3
+           \
+            4
+```
+
+---
+
+# 1️⃣1️⃣ Approach
+
+### Step 1
+
+Perform inorder traversal.
+
+This produces a sorted array:
+
+```text
+1 2 3 4
+```
+
+### Step 2
+
+Build a balanced BST from the sorted array.
+
+Use the middle element as the root.
+
+---
+
+### C++ Code
+
+```cpp
+void storeInorder(
+    Node* root,
+    vector<int>& values)
+{
+    if(root == NULL)
+        return;
+
+    storeInorder(root->left, values);
+
+    values.push_back(root->data);
+
+    storeInorder(root->right, values);
+}
+
+Node* buildBalanced(
+    vector<int>& values,
+    int left,
+    int right)
+{
+    if(left > right)
+        return NULL;
+
+    int mid =
+        left + (right - left) / 2;
+
+    Node* root =
+        new Node(values[mid]);
+
+    root->left =
+        buildBalanced(
+            values,
+            left,
+            mid - 1
+        );
+
+    root->right =
+        buildBalanced(
+            values,
+            mid + 1,
+            right
+        );
+
+    return root;
+}
+
+Node* balanceBST(Node* root)
+{
+    vector<int> values;
+
+    storeInorder(root, values);
+
+    return buildBalanced(
+        values,
+        0,
+        values.size() - 1
+    );
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(n)
+```
+
+---
+
+# 1️⃣2️⃣ Merge Two BSTs
+
+## 📖 Problem
+
+Given two BSTs, create a sorted list containing all their elements.
+
+Example:
+
+```text
+BST 1:
+
+    2
+   / \
+  1   4
+```
+
+```text
+BST 2:
+
+    3
+   / \
+  0   5
+```
+
+Merged result:
+
+```text
+0 1 2 3 4 5
+```
+
+---
+
+# 1️⃣3️⃣ Approach
+
+Since inorder traversal of a BST gives sorted values:
+
+```text
+BST 1 → Sorted Array
+
+BST 2 → Sorted Array
+```
+
+Then merge the two sorted arrays.
+
+---
+
+### C++ Code
+
+```cpp
+void inorder(
+    Node* root,
+    vector<int>& values)
+{
+    if(root == NULL)
+        return;
+
+    inorder(root->left, values);
+
+    values.push_back(root->data);
+
+    inorder(root->right, values);
+}
+
+vector<int> mergeBSTs(
+    Node* root1,
+    Node* root2)
+{
+    vector<int> a;
+    vector<int> b;
+
+    inorder(root1, a);
+    inorder(root2, b);
+
+    vector<int> result;
+
+    int i = 0;
+    int j = 0;
+
+    while(i < a.size() &&
+          j < b.size())
+    {
+        if(a[i] < b[j])
+            result.push_back(a[i++]);
+        else
+            result.push_back(b[j++]);
+    }
+
+    while(i < a.size())
+        result.push_back(a[i++]);
+
+    while(j < b.size())
+        result.push_back(b[j++]);
+
+    return result;
+}
+```
+
+### Complexity
+
+```text
+Time: O(n + m)
+
+Space: O(n + m)
+```
+
+---
+
+# 1️⃣4️⃣ Largest BST in a Binary Tree
+
+## 📖 Problem
+
+Given a Binary Tree, find the size of the largest subtree that is also a valid BST.
+
+Example:
+
+```text
+          10
+         /  \
+        5    15
+       / \     \
+      1   8     7
+```
+
+The subtree rooted at `5` is a valid BST:
+
+```text
+      5
+     / \
+    1   8
+```
+
+Size:
+
+```text
+3
+```
+
+---
+
+# 1️⃣5️⃣ Information Required
+
+For every subtree, we need:
+
+```text
+Minimum Value
+
+Maximum Value
+
+Size
+
+Is BST?
+```
+
+Then determine whether the current subtree is a BST.
+
+---
+
+### C++ Structure
+
+```cpp
+struct Info
+{
+    int minimum;
+    int maximum;
+    int size;
+    bool isBST;
+};
+```
+
+---
+
+### C++ Code
+
+```cpp
+Info solve(Node* root, int& answer)
+{
+    if(root == NULL)
+    {
+        return {
+            INT_MAX,
+            INT_MIN,
+            0,
+            true
+        };
+    }
+
+    Info left = solve(root->left, answer);
+
+    Info right = solve(root->right, answer);
+
+    Info current;
+
+    current.size =
+        left.size + right.size + 1;
+
+    if(left.isBST &&
+       right.isBST &&
+       left.maximum < root->data &&
+       root->data < right.minimum)
+    {
+        current.isBST = true;
+
+        current.minimum =
+            min(root->data, left.minimum);
+
+        current.maximum =
+            max(root->data, right.maximum);
+
+        answer =
+            max(answer, current.size);
+    }
+    else
+    {
+        current.isBST = false;
+
+        current.minimum = INT_MIN;
+        current.maximum = INT_MAX;
+    }
+
+    return current;
+}
+```
+
+### Complexity
+
+```text
+Time: O(n)
+
+Space: O(h)
+```
+
+---
+
+# 1️⃣6️⃣ Important BST Patterns
+
+## Pattern 1: Inorder = Sorted Order
+
+Whenever you see:
+
+```text
+BST
+```
+
+immediately remember:
+
+```text
+Inorder → Sorted
+```
+
+This helps solve:
+
+- Kth Smallest
+- Kth Largest
+- Two Sum
+- Merge BSTs
+- Recover BST
+
+---
+
+## Pattern 2: Reverse Inorder
+
+```text
+Right → Root → Left
+```
+
+gives:
+
+```text
+Descending Order
+```
+
+Useful for:
+
+```text
+Kth Largest
+```
+
+---
+
+## Pattern 3: BST Iterator
+
+Use:
+
+```text
+Stack + Controlled Inorder
+```
+
+This avoids storing the entire sorted sequence.
+
+---
+
+## Pattern 4: Sorted Array → Balanced BST
+
+Use:
+
+```text
+Middle Element → Root
+```
+
+Then recursively construct:
+
+```text
+Left Half → Left Subtree
+
+Right Half → Right Subtree
+```
+
+---
+
+## Pattern 5: Validate Subtree
+
+For complex tree problems, return multiple values from recursion:
+
+```text
+Minimum
+
+Maximum
+
+Size
+
+Validity
+```
+
+This is a powerful **Tree DP** pattern.
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|---------|------|-------|
+| Recover BST | O(n) | O(h) |
+| Two Sum in BST | O(n) | O(n) |
+| BST Iterator | O(1) amortized | O(h) |
+| Sorted Array to BST | O(n) | O(log n) |
+| Balance BST | O(n) | O(n) |
+| Merge Two BSTs | O(n + m) | O(n + m) |
+| Largest BST in Binary Tree | O(n) | O(h) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Remember that inorder traversal of a BST is sorted.
+
+✅ Use reverse inorder for descending order.
+
+✅ BST Iterator is basically controlled inorder traversal.
+
+✅ To balance a BST, convert it to a sorted sequence and rebuild it using middle elements.
+
+✅ For complex subtree problems, return multiple pieces of information from recursion.
+
+✅ Always consider whether the BST property can eliminate unnecessary traversal.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Forgetting to check both left and right subtree conditions.
+
+❌ Using an unordered traversal when sorted order is required.
+
+❌ Forgetting that duplicate handling depends on the BST definition.
+
+❌ Creating an unnecessarily skewed tree from a sorted array.
+
+❌ Confusing BST Iterator with a normal Binary Tree traversal.
+
+❌ Forgetting that a subtree must satisfy the BST property at every level.
+
+---
+
+# 📝 Quick Revision
+
+```text
+BST
+→ Inorder = Sorted
+```
+
+```text
+Kth Smallest
+→ Normal Inorder
+```
+
+```text
+Kth Largest
+→ Reverse Inorder
+```
+
+```text
+Two Sum
+→ Sorted Values + Two Pointers
+```
+
+```text
+BST Iterator
+→ Stack + Inorder
+```
+
+```text
+Sorted Array → BST
+→ Middle Element as Root
+```
+
+```text
+Balance BST
+→ Inorder → Sorted Array → Balanced BST
+```
+
+```text
+Largest BST
+→ Return Min + Max + Size + IsBST
+```
+
+---
+
+# 🎯 Must-Solve Problems
+
+### ⭐ Medium
+
+- Two Sum IV - Input is a BST
+- Binary Search Tree Iterator
+- Convert Sorted Array to Binary Search Tree
+- Balance a Binary Search Tree
+- Kth Smallest Element in a BST
+
+### ⭐ Hard
+
+- Recover Binary Search Tree
+- Merge BSTs
+- Largest BST Subtree
+- Serialize and Deserialize BST
+- Count of Smaller Numbers After Self
+
+---
+
+# 🎉 BST Completed!
+
+You have now covered:
+
+✔ BST Fundamentals
+
+✔ Search in BST
+
+✔ Insert in BST
+
+✔ Minimum & Maximum
+
+✔ Inorder Traversal
+
+✔ Delete Node
+
+✔ Validate BST
+
+✔ Lowest Common Ancestor
+
+✔ Kth Smallest & Largest
+
+✔ Predecessor & Successor
+
+✔ Floor & Ceil
+
+✔ Recover BST
+
+✔ Two Sum in BST
+
+✔ BST Iterator
+
+✔ Convert Sorted Array to BST
+
+✔ Balance BST
+
+✔ Merge BSTs
+
+✔ Largest BST in Binary Tree
+
+---
+
+# 🚀 What's Next?
+
+According to the roadmap, the next topic is:
+
+## 🔥 Heaps
+
+Topics will include:
+
+- What is a Heap?
+- Min Heap
+- Max Heap
+- Heap Representation
+- Heapify
+- Priority Queue
+- Insert & Delete
+- Heap Sort
+- Kth Largest / Smallest
+- Top K Problems
+- Important Heap Interview Patterns
