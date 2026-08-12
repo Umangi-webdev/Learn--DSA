@@ -6,7 +6,7 @@
 
 <p>
   <img src="https://img.shields.io/badge/Language-JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
-  <img src="https://img.shields.io/badge/Topics-DSA-blue?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Topics-DSA-blue?style=for-o90uuuu77889999iuyiuiu79iuthe-badge"/>
   <img src="https://img.shields.io/badge/Status-In%20Progress-success?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Level-Beginner%20to%20Advanced-orange?style=for-the-badge"/>
 </p>
