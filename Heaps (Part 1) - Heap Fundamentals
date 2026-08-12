@@ -1,0 +1,1131 @@
+# 🔥 Heaps (Part 1) - Heap Fundamentals
+
+## 📌 Introduction
+
+A **Heap** is a specialized tree-based data structure that satisfies the **Heap Property**.
+
+A Heap is commonly implemented using a **Complete Binary Tree**.
+
+Heaps are widely used in:
+
+- Priority Queues
+- Heap Sort
+- Kth Largest / Smallest problems
+- Top K problems
+- Scheduling
+- Graph Algorithms
+- Finding minimum / maximum efficiently
+
+---
+
+# 📋 Topics Covered
+
+- What is a Heap?
+- Complete Binary Tree
+- Min Heap
+- Max Heap
+- Heap Property
+- Array Representation
+- Parent & Child Index
+- Insert into Heap
+- Delete from Heap
+- Heapify
+- Priority Queue
+- Time Complexity
+
+---
+
+# 1️⃣ What is a Heap?
+
+A Heap is a **Complete Binary Tree** that follows a specific ordering property.
+
+There are two main types:
+
+```text
+Min Heap
+Max Heap
+```
+
+---
+
+# 2️⃣ Complete Binary Tree
+
+A Complete Binary Tree is a tree in which:
+
+- Every level is completely filled except possibly the last.
+- The last level is filled from left to right.
+
+Example:
+
+```text
+          10
+        /    \
+       20     30
+      / \    /
+     40 50  60
+```
+
+This is a Complete Binary Tree.
+
+---
+
+# 3️⃣ Min Heap
+
+In a **Min Heap**, every parent is smaller than or equal to its children.
+
+```text
+Parent <= Children
+```
+
+Example:
+
+```text
+          10
+        /    \
+       20     15
+      / \    / \
+     30 40  25 50
+```
+
+The minimum element is always at the root.
+
+```text
+Minimum = Root
+```
+
+---
+
+# 4️⃣ Max Heap
+
+In a **Max Heap**, every parent is greater than or equal to its children.
+
+```text
+Parent >= Children
+```
+
+Example:
+
+```text
+          50
+        /    \
+       40     45
+      / \    / \
+     20 30  35 10
+```
+
+The maximum element is always at the root.
+
+```text
+Maximum = Root
+```
+
+---
+
+# 5️⃣ Min Heap vs Max Heap
+
+| Feature | Min Heap | Max Heap |
+|---------|----------|----------|
+| Root | Minimum | Maximum |
+| Property | Parent ≤ Children | Parent ≥ Children |
+| Useful For | Minimum priority | Maximum priority |
+| Example | Smallest element first | Largest element first |
+
+---
+
+# 6️⃣ Heap Property
+
+## Min Heap
+
+```text
+Parent <= Left Child
+Parent <= Right Child
+```
+
+## Max Heap
+
+```text
+Parent >= Left Child
+Parent >= Right Child
+```
+
+Important:
+
+A Heap does **NOT** require the entire tree to be sorted.
+
+Example Min Heap:
+
+```text
+          5
+        /   \
+       10    7
+      / \   /
+     20 15 12
+```
+
+The values are not globally sorted, but every parent is smaller than its children.
+
+---
+
+# 7️⃣ Heap Representation Using Array
+
+A Heap is usually stored in an array.
+
+Example:
+
+```text
+          10
+        /    \
+       20     15
+      / \    / \
+     30 40  25 50
+```
+
+Array:
+
+```text
+[10, 20, 15, 30, 40, 25, 50]
+```
+
+We don't need explicit pointers.
+
+This makes heaps memory efficient.
+
+---
+
+# 8️⃣ Index Formulas
+
+For a **0-indexed array**:
+
+```text
+Parent:
+
+(i - 1) / 2
+```
+
+```text
+Left Child:
+
+2 * i + 1
+```
+
+```text
+Right Child:
+
+2 * i + 2
+```
+
+Example:
+
+```text
+Array:
+
+Index:  0   1   2   3   4   5   6
+Value: 10  20  15  30  40  25  50
+```
+
+For index:
+
+```text
+i = 1
+```
+
+Value:
+
+```text
+20
+```
+
+Left child:
+
+```text
+2 * 1 + 1 = 3
+```
+
+Right child:
+
+```text
+2 * 1 + 2 = 4
+```
+
+---
+
+# 9️⃣ Parent Index
+
+For a node at index `i`:
+
+```text
+Parent = (i - 1) / 2
+```
+
+Example:
+
+```text
+i = 5
+```
+
+Parent:
+
+```text
+(5 - 1) / 2
+= 2
+```
+
+So index `2` is the parent.
+
+---
+
+# 🔟 Insert into Heap
+
+When inserting an element:
+
+### Step 1
+
+Add the element at the end of the array.
+
+### Step 2
+
+Compare it with its parent.
+
+### Step 3
+
+If the heap property is violated, swap them.
+
+### Step 4
+
+Continue moving upward.
+
+This process is called:
+
+```text
+Heapify Up
+```
+
+or:
+
+```text
+Bubble Up
+```
+
+---
+
+# 1️⃣1️⃣ Insert in Min Heap
+
+Suppose we have:
+
+```text
+[10, 20, 15, 30, 40]
+```
+
+Insert:
+
+```text
+5
+```
+
+First:
+
+```text
+[10, 20, 15, 30, 40, 5]
+```
+
+Parent of `5`:
+
+```text
+15
+```
+
+Since:
+
+```text
+5 < 15
+```
+
+Swap:
+
+```text
+[10, 20, 5, 30, 40, 15]
+```
+
+Now compare `5` with parent `10`.
+
+```text
+5 < 10
+```
+
+Swap:
+
+```text
+[5, 20, 10, 30, 40, 15]
+```
+
+Heap restored.
+
+---
+
+# 1️⃣2️⃣ Min Heap Insertion
+
+### C++ Code
+
+```cpp
+void insertMinHeap(
+    vector<int>& heap,
+    int value)
+{
+    heap.push_back(value);
+
+    int index = heap.size() - 1;
+
+    while(index > 0)
+    {
+        int parent = (index - 1) / 2;
+
+        if(heap[parent] <= heap[index])
+            break;
+
+        swap(heap[parent], heap[index]);
+
+        index = parent;
+    }
+}
+```
+
+### Complexity
+
+```text
+Time: O(log n)
+
+Space: O(1)
+```
+
+---
+
+# 1️⃣3️⃣ Insert in Max Heap
+
+For Max Heap, we move the newly inserted element upward while:
+
+```text
+Child > Parent
+```
+
+### C++ Code
+
+```cpp
+void insertMaxHeap(
+    vector<int>& heap,
+    int value)
+{
+    heap.push_back(value);
+
+    int index = heap.size() - 1;
+
+    while(index > 0)
+    {
+        int parent = (index - 1) / 2;
+
+        if(heap[parent] >= heap[index])
+            break;
+
+        swap(heap[parent], heap[index]);
+
+        index = parent;
+    }
+}
+```
+
+---
+
+# 1️⃣4️⃣ Delete Root from Heap
+
+The root is the most important element:
+
+```text
+Min Heap → Minimum
+
+Max Heap → Maximum
+```
+
+To delete the root:
+
+### Step 1
+
+Replace the root with the last element.
+
+### Step 2
+
+Remove the last element.
+
+### Step 3
+
+Compare the new root with its children.
+
+### Step 4
+
+Swap with the appropriate child.
+
+### Step 5
+
+Continue until the heap property is restored.
+
+This process is called:
+
+```text
+Heapify Down
+```
+
+or:
+
+```text
+Bubble Down
+```
+
+---
+
+# 1️⃣5️⃣ Delete Root from Min Heap
+
+Example:
+
+```text
+        10
+       /  \
+      20   15
+     / \   /
+    30 40 25
+```
+
+Array:
+
+```text
+[10, 20, 15, 30, 40, 25]
+```
+
+Delete root `10`.
+
+Move last element:
+
+```text
+[25, 20, 15, 30, 40]
+```
+
+Compare `25` with children:
+
+```text
+20 and 15
+```
+
+Choose the smaller child:
+
+```text
+15
+```
+
+Swap:
+
+```text
+[15, 20, 25, 30, 40]
+```
+
+Heap restored.
+
+---
+
+# 1️⃣6️⃣ Min Heapify Down
+
+### C++ Code
+
+```cpp
+void heapifyDown(
+    vector<int>& heap,
+    int index)
+{
+    int n = heap.size();
+
+    while(true)
+    {
+        int left = 2 * index + 1;
+        int right = 2 * index + 2;
+
+        int smallest = index;
+
+        if(left < n &&
+           heap[left] < heap[smallest])
+        {
+            smallest = left;
+        }
+
+        if(right < n &&
+           heap[right] < heap[smallest])
+        {
+            smallest = right;
+        }
+
+        if(smallest == index)
+            break;
+
+        swap(heap[index], heap[smallest]);
+
+        index = smallest;
+    }
+}
+```
+
+---
+
+# 1️⃣7️⃣ Delete from Min Heap
+
+```cpp
+int deleteMin(vector<int>& heap)
+{
+    if(heap.empty())
+        return -1;
+
+    int answer = heap[0];
+
+    heap[0] = heap.back();
+
+    heap.pop_back();
+
+    if(!heap.empty())
+        heapifyDown(heap, 0);
+
+    return answer;
+}
+```
+
+### Complexity
+
+```text
+Time: O(log n)
+
+Space: O(1)
+```
+
+---
+
+# 1️⃣8️⃣ Heapify
+
+**Heapify** means restoring the heap property.
+
+There are two major operations:
+
+```text
+Heapify Up
+Heapify Down
+```
+
+---
+
+## Heapify Up
+
+Used mainly after:
+
+```text
+Insertion
+```
+
+Direction:
+
+```text
+Bottom → Top
+```
+
+---
+
+## Heapify Down
+
+Used mainly after:
+
+```text
+Deletion
+```
+
+Direction:
+
+```text
+Top → Bottom
+```
+
+---
+
+# 1️⃣9️⃣ Heapify Comparison
+
+| Operation | Direction | Common Use |
+|-----------|-----------|------------|
+| Heapify Up | Bottom → Top | Insert |
+| Heapify Down | Top → Bottom | Delete |
+
+---
+
+# 2️⃣0️⃣ Priority Queue
+
+A Priority Queue is a data structure where elements are processed according to their priority.
+
+A Heap is commonly used to implement a Priority Queue.
+
+Example:
+
+```text
+Normal Queue:
+
+First In → First Out
+```
+
+Priority Queue:
+
+```text
+Highest / Lowest Priority → First
+```
+
+---
+
+# 2️⃣1️⃣ C++ Priority Queue
+
+By default, C++ provides a **Max Heap**.
+
+```cpp
+priority_queue<int> pq;
+```
+
+Example:
+
+```cpp
+pq.push(10);
+pq.push(30);
+pq.push(20);
+
+cout << pq.top();
+```
+
+Output:
+
+```text
+30
+```
+
+Because the largest element has the highest priority.
+
+---
+
+# 2️⃣2️⃣ Min Heap Using Priority Queue
+
+Use:
+
+```cpp
+priority_queue<
+    int,
+    vector<int>,
+    greater<int>
+> pq;
+```
+
+Example:
+
+```cpp
+priority_queue<
+    int,
+    vector<int>,
+    greater<int>
+> pq;
+
+pq.push(10);
+pq.push(30);
+pq.push(20);
+
+cout << pq.top();
+```
+
+Output:
+
+```text
+10
+```
+
+---
+
+# 2️⃣3️⃣ Priority Queue Operations
+
+### Push
+
+```cpp
+pq.push(value);
+```
+
+Complexity:
+
+```text
+O(log n)
+```
+
+### Top
+
+```cpp
+pq.top();
+```
+
+Complexity:
+
+```text
+O(1)
+```
+
+### Pop
+
+```cpp
+pq.pop();
+```
+
+Complexity:
+
+```text
+O(log n)
+```
+
+### Empty
+
+```cpp
+pq.empty();
+```
+
+Complexity:
+
+```text
+O(1)
+```
+
+### Size
+
+```cpp
+pq.size();
+```
+
+Complexity:
+
+```text
+O(1)
+```
+
+---
+
+# 📊 Heap Complexity
+
+| Operation | Complexity |
+|-----------|------------|
+| Get Min/Max | O(1) |
+| Insert | O(log n) |
+| Delete Root | O(log n) |
+| Heapify | O(log n) |
+| Build Heap | O(n) |
+| Search | O(n) |
+
+---
+
+# 2️⃣4️⃣ Why is Heap Search O(n)?
+
+Unlike a BST, a Heap is **not globally sorted**.
+
+Example:
+
+```text
+        5
+       / \
+      10  7
+     / \
+    20 15
+```
+
+Searching for:
+
+```text
+15
+```
+
+cannot simply decide:
+
+```text
+Go Left
+or
+Go Right
+```
+
+Therefore, searching may require checking many nodes.
+
+```text
+Search → O(n)
+```
+
+---
+
+# 2️⃣5️⃣ Heap vs BST
+
+| Feature | Heap | BST |
+|---------|------|-----|
+| Root | Min/Max | Depends on tree |
+| Global Ordering | No | Yes |
+| Search | O(n) | O(log n) average |
+| Min/Max | O(1) | O(h) |
+| Insert | O(log n) | O(h) |
+| Delete Root | O(log n) | Depends |
+| Common Use | Priority Queue | Searching |
+
+---
+
+# 2️⃣6️⃣ Heap Applications
+
+Heaps are commonly used in:
+
+### 🔥 Top K Problems
+
+```text
+Kth Largest
+Kth Smallest
+Top K Frequent
+```
+
+### 🔥 Scheduling
+
+```text
+CPU Scheduling
+Task Scheduling
+Event Processing
+```
+
+### 🔥 Graph Algorithms
+
+```text
+Dijkstra
+Prim's Algorithm
+```
+
+### 🔥 Sorting
+
+```text
+Heap Sort
+```
+
+### 🔥 Streaming Data
+
+```text
+Running Median
+Priority-based Processing
+```
+
+---
+
+# 2️⃣7️⃣ Important Heap Patterns
+
+## Pattern 1: Need Minimum Quickly
+
+Use:
+
+```text
+Min Heap
+```
+
+---
+
+## Pattern 2: Need Maximum Quickly
+
+Use:
+
+```text
+Max Heap
+```
+
+---
+
+## Pattern 3: Top K Largest
+
+Often use:
+
+```text
+Min Heap of size K
+```
+
+---
+
+## Pattern 4: Top K Smallest
+
+Often use:
+
+```text
+Max Heap of size K
+```
+
+---
+
+## Pattern 5: Repeatedly Process Minimum
+
+Use:
+
+```text
+Min Heap
+```
+
+---
+
+## Pattern 6: Repeatedly Process Maximum
+
+Use:
+
+```text
+Max Heap
+```
+
+---
+
+# 2️⃣8️⃣ Important Terminology
+
+| Term | Meaning |
+|------|---------|
+| Heap | Complete Binary Tree with Heap Property |
+| Min Heap | Minimum at Root |
+| Max Heap | Maximum at Root |
+| Heapify Up | Restore property upward |
+| Heapify Down | Restore property downward |
+| Priority Queue | Priority-based data structure |
+| Complete Binary Tree | Filled level-by-level from left |
+
+---
+
+# 📝 Quick Revision
+
+```text
+Min Heap
+
+Parent <= Children
+```
+
+```text
+Max Heap
+
+Parent >= Children
+```
+
+```text
+0-Based Index
+
+Parent = (i - 1) / 2
+
+Left = 2*i + 1
+
+Right = 2*i + 2
+```
+
+```text
+Insert
+→ Heapify Up
+```
+
+```text
+Delete Root
+→ Heapify Down
+```
+
+```text
+Min Heap
+→ Minimum at Root
+```
+
+```text
+Max Heap
+→ Maximum at Root
+```
+
+```text
+Search in Heap
+→ O(n)
+```
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Assuming a Heap is completely sorted.
+
+❌ Confusing Heap with BST.
+
+❌ Using the wrong child during Min Heapify.
+
+❌ Forgetting to compare both children.
+
+❌ Using a Max Heap when a Min Heap is required.
+
+❌ Forgetting that C++ `priority_queue` is a Max Heap by default.
+
+---
+
+# 🎯 Must-Solve Problems
+
+### ⭐ Easy
+
+- Implement Min Heap
+- Implement Max Heap
+- Priority Queue Operations
+- Find Minimum / Maximum
+- Kth Largest Element
+
+### ⭐ Medium
+
+- Kth Smallest Element
+- Top K Frequent Elements
+- Last Stone Weight
+- K Closest Points to Origin
+- Merge K Sorted Lists
+
+### ⭐ Hard
+
+- Find Median from Data Stream
+- Sliding Window Median
+- Smallest Range Covering Elements from K Lists
+
+---
+
+# 🎉 Summary
+
+In this part, we learned:
+
+✔ What is a Heap
+
+✔ Complete Binary Tree
+
+✔ Min Heap
+
+✔ Max Heap
+
+✔ Heap Property
+
+✔ Array Representation
+
+✔ Parent & Child Index Formulas
+
+✔ Heapify Up
+
+✔ Heapify Down
+
+✔ Insert
+
+✔ Delete Root
+
+✔ Priority Queue
+
+✔ Heap Complexity
+
+✔ Heap Applications
+
+✔ Important Heap Patterns
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Heaps (Part 2)
+
+Next, we will cover:
+
+- Build Heap
+- Heapify Algorithm
+- Bottom-Up Heap Construction
+- Heap Sort
+- Kth Largest Element
+- Kth Smallest Element
+- Top K Problems
+- Priority Queue Patterns
