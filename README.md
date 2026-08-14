@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📚 DSA Handbook
+# 📚 DSA Notes
 
 ### Master Data Structures & Algorithms with well-structured notes, visual explanations, complexity analysis, code examples, and interview preparation.
 
