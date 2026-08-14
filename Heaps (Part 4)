@@ -1,0 +1,112 @@
+# Heap – Part 4 (Advanced Heap Problems & Techniques)
+
+## Introduction to Heap
+
+A Heap is a specialized tree-based data structure that follows the Complete Binary Tree property. This means all levels of the tree are completely filled except possibly the last level, which is filled from left to right. Heaps are commonly implemented using arrays because of their complete tree structure.
+
+There are two main types of heaps:
+
+### 1. Max Heap
+In a Max Heap, the value of each parent node is greater than or equal to its children. Therefore, the largest element is always present at the root.
+
+Example:
+        50
+       /  \
+     30    40
+    / \   /
+   10 20 35
+
+### 2. Min Heap
+In a Min Heap, the value of each parent node is smaller than or equal to its children. Therefore, the smallest element is always present at the root.
+
+Example:
+        10
+       /  \
+     20    15
+    / \   /
+   30 40 25
+
+### Array Representation of Heap
+
+For an element at index i:
+
+- Left Child = 2*i + 1
+- Right Child = 2*i + 2
+- Parent = (i - 1) / 2
+
+### Why Use Heap?
+
+Heap is useful whenever we need repeated access to the smallest or largest element efficiently.
+
+Common Applications:
+- Priority Queue
+- Dijkstra’s Algorithm
+- Prim’s Algorithm
+- Huffman Coding
+- Scheduling Systems
+- Kth Largest/Smallest Problems
+- Median in Data Stream
+- Merge K Sorted Lists
+- Operating System Task Scheduling
+
+### Time Complexities
+
+| Operation | Complexity |
+|------------|------------|
+| Insert | O(log N) |
+| Delete | O(log N) |
+| Get Min/Max | O(1) |
+| Heapify | O(log N) |
+| Build Heap | O(N) |
+
+---
+
+## Advanced Heap Problems & Techniques
+
+One important problem is **K Closest Elements to a Given Value**. Given an array and a value X, we need to find the K elements closest to X. This can be solved using a Max Heap of size K. For each element, calculate its distance from X using `abs(arr[i] - X)` and store `{distance, element}` in the heap. If the heap size exceeds K, remove the top element. The remaining K elements are the answer. The time complexity is **O(N log K)**.
+
+Another common problem is **Frequency Sort**, where elements are sorted according to their frequency. First, count frequencies using a HashMap. Then store `{frequency, element}` pairs in a Max Heap and extract elements based on frequency. This approach takes **O(N log N)** time.
+
+The **Connect Ropes with Minimum Cost** problem is a classic heap application. Given rope lengths, we must connect all ropes with the minimum possible cost. The optimal approach uses a Min Heap. Insert all rope lengths into the heap, repeatedly remove the two smallest ropes, add their lengths to the total cost, and insert the combined rope back into the heap. Continue until only one rope remains. The time complexity is **O(N log N)**.
+
+In the **Sum Between K1-th and K2-th Smallest Elements** problem, we first find the K1-th and K2-th smallest elements and then calculate the sum of all elements strictly between them. Heaps allow efficient retrieval of Kth smallest elements, leading to a complexity of **O(N log K)**.
+
+The **Median in a Stream** problem involves finding the median after each incoming number. This is solved using two heaps. A Max Heap stores the smaller half of the elements, while a Min Heap stores the larger half. The heaps are balanced so that their sizes differ by at most one. If both heaps have the same size, the median is the average of their top elements. Otherwise, the median is the top element of the larger heap. Each insertion takes **O(log N)** time. This technique is widely used in real-time analytics, financial systems, and streaming data applications.
+
+Heaps are also heavily used in graph algorithms, especially **Dijkstra’s Algorithm**. Dijkstra repeatedly requires the node with the minimum distance from the source. By storing `{distance, node}` pairs in a Min Heap, the complexity improves from **O(V²)** to **O((V + E) log V)**, making it efficient for large graphs.
+
+## Important Heap Interview Problems
+
+### Easy
+1. K Largest Elements
+2. K Smallest Elements
+3. Sort a K-Sorted Array
+4. K Closest Numbers
+
+### Medium
+5. Top K Frequent Elements
+6. Frequency Sort
+7. Connect Ropes with Minimum Cost
+8. K Closest Points to Origin
+
+### Hard
+9. Median in a Stream
+10. Merge K Sorted Lists
+11. Dijkstra’s Algorithm
+12. Sliding Window Median
+
+## Key Takeaways
+
+- Max Heap → Largest element at the top.
+- Min Heap → Smallest element at the top.
+- Kth Largest Element → Min Heap of size K.
+- Kth Smallest Element → Max Heap of size K.
+- Top K Frequent Elements → Heap + HashMap.
+- Connect Ropes with Minimum Cost → Min Heap.
+- Median in a Stream → Two Heaps.
+- Dijkstra’s Algorithm → Min Heap.
+- Heap is widely used in scheduling, graph algorithms, streaming data, and priority-based systems.
+
+## Summary
+
+Heap is one of the most important non-linear data structures used in Data Structures and Algorithms. It provides efficient insertion, deletion, and retrieval of the minimum or maximum element. Understanding heap operations and advanced heap patterns is essential for solving interview problems involving Kth elements, priority queues, graph algorithms, and real-time data processing.
