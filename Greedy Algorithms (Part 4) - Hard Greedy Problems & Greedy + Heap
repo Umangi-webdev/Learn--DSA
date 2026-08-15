@@ -1,0 +1,812 @@
+# 🔥 Greedy Algorithms (Part 4) - Hard Greedy Problems & Greedy + Heap
+
+## 📌 Introduction
+
+In this part, we will cover some of the hardest and most frequently asked Greedy interview problems.
+
+These problems combine:
+
+- Greedy + Heap
+- Greedy + Sorting
+- Greedy + Priority Queue
+- Greedy + Mathematical Thinking
+
+Many FAANG and product-based companies ask these problems.
+
+---
+
+# 📋 Topics Covered
+
+- Remove K Digits
+- Queue Reconstruction by Height
+- Huffman Coding
+- IPO Problem
+- Minimum Refueling Stops
+- Course Schedule III
+- Greedy + Heap Pattern
+- Hard Interview Questions
+
+---
+
+# 1️⃣ Remove K Digits
+
+## 📖 Problem
+
+Given a number string and integer k.
+
+Remove exactly k digits to create the smallest possible number.
+
+---
+
+### Example
+
+```text
+num = "1432219"
+
+k = 3
+```
+
+Output:
+
+```text
+1219
+```
+
+---
+
+# 2️⃣ Greedy Strategy
+
+Whenever a digit is larger than the next digit:
+
+```text
+Current Digit > Next Digit
+```
+
+Remove the current digit.
+
+Reason:
+
+```text
+Smaller digit in front
+creates smaller number.
+```
+
+---
+
+### Example
+
+```text
+1432219
+```
+
+Remove:
+
+```text
+4
+```
+
+because:
+
+```text
+4 > 3
+```
+
+Continue similarly.
+
+---
+
+# 3️⃣ Monotonic Stack Idea
+
+Maintain increasing digits.
+
+If:
+
+```text
+top > current
+```
+
+and:
+
+```text
+k > 0
+```
+
+remove top.
+
+---
+
+### C++ Code
+
+```cpp
+string removeKdigits(
+    string num,
+    int k)
+{
+    string st;
+
+    for(char digit : num)
+    {
+        while(
+            !st.empty() &&
+            k > 0 &&
+            st.back() > digit)
+        {
+            st.pop_back();
+            k--;
+        }
+
+        st.push_back(digit);
+    }
+
+    while(k--)
+    {
+        st.pop_back();
+    }
+
+    int index = 0;
+
+    while(
+        index < st.size() &&
+        st[index] == '0')
+    {
+        index++;
+    }
+
+    string answer =
+        st.substr(index);
+
+    return answer.empty()
+           ? "0"
+           : answer;
+}
+```
+
+### Complexity
+
+```text
+Time: O(N)
+
+Space: O(N)
+```
+
+---
+
+# 4️⃣ Queue Reconstruction by Height
+
+## 📖 Problem
+
+Each person:
+
+```text
+[h, k]
+```
+
+where:
+
+```text
+h = height
+k = people in front
+with height >= h
+```
+
+Reconstruct the queue.
+
+---
+
+### Example
+
+```text
+[7,0]
+[4,4]
+[7,1]
+[5,0]
+[6,1]
+[5,2]
+```
+
+---
+
+# 5️⃣ Greedy Strategy
+
+Sort:
+
+```text
+Height Descending
+```
+
+If heights equal:
+
+```text
+k Ascending
+```
+
+Then insert each person at index k.
+
+---
+
+### C++ Code
+
+```cpp
+vector<vector<int>>
+reconstructQueue(
+vector<vector<int>>& people)
+{
+    sort(
+        people.begin(),
+        people.end(),
+        [](auto &a, auto &b)
+        {
+            if(a[0] == b[0])
+                return a[1] < b[1];
+
+            return a[0] > b[0];
+        }
+    );
+
+    vector<vector<int>> answer;
+
+    for(auto &person : people)
+    {
+        answer.insert(
+            answer.begin() +
+            person[1],
+            person
+        );
+    }
+
+    return answer;
+}
+```
+
+### Complexity
+
+```text
+Time: O(N²)
+
+Space: O(N)
+```
+
+---
+
+# 6️⃣ Huffman Coding
+
+## 📖 Problem
+
+Construct minimum cost binary encoding.
+
+Used in:
+
+```text
+Compression
+ZIP
+JPEG
+PNG
+```
+
+---
+
+### Example
+
+Characters:
+
+```text
+A → 5
+B → 9
+C → 12
+D → 13
+E → 16
+F → 45
+```
+
+---
+
+# 7️⃣ Greedy Strategy
+
+Always combine:
+
+```text
+Two Smallest Frequencies
+```
+
+Use:
+
+```text
+Min Heap
+```
+
+---
+
+### Steps
+
+```text
+Take smallest 2 nodes
+Merge them
+Insert back
+Repeat
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N log N)
+
+Space: O(N)
+```
+
+---
+
+# 8️⃣ IPO Problem
+
+## 📖 Problem
+
+You have:
+
+```text
+Initial Capital
+```
+
+and:
+
+```text
+K Projects
+```
+
+Each project has:
+
+```text
+Required Capital
+Profit
+```
+
+Maximize final capital.
+
+---
+
+### Example
+
+```text
+Capital = 0
+
+k = 2
+```
+
+Projects:
+
+```text
+Profit  Capital
+
+1         0
+2         1
+3         1
+```
+
+Output:
+
+```text
+4
+```
+
+---
+
+# 9️⃣ Greedy + Heap Strategy
+
+Use:
+
+```text
+Min Heap
+```
+
+for capital requirements.
+
+Use:
+
+```text
+Max Heap
+```
+
+for profits.
+
+---
+
+### Idea
+
+Add all affordable projects into max heap.
+
+Select:
+
+```text
+Highest Profit Project
+```
+
+Repeat k times.
+
+---
+
+### Complexity
+
+```text
+Time: O(N log N)
+
+Space: O(N)
+```
+
+---
+
+# 🔟 Minimum Refueling Stops
+
+## 📖 Problem
+
+Reach target distance.
+
+You start with:
+
+```text
+Fuel
+```
+
+There are fuel stations.
+
+Find minimum refueling stops.
+
+---
+
+### Example
+
+```text
+Target = 100
+
+Fuel = 10
+```
+
+Stations:
+
+```text
+10 60
+20 30
+30 30
+60 40
+```
+
+Output:
+
+```text
+2
+```
+
+---
+
+# 1️⃣1️⃣ Greedy Strategy
+
+Whenever fuel becomes insufficient:
+
+```text
+Refuel from largest station
+already passed.
+```
+
+Use:
+
+```text
+Max Heap
+```
+
+---
+
+### Why?
+
+Largest fuel gives maximum reach.
+
+---
+
+### Complexity
+
+```text
+Time: O(N log N)
+
+Space: O(N)
+```
+
+---
+
+# 1️⃣2️⃣ Course Schedule III
+
+## 📖 Problem
+
+Each course:
+
+```text
+Duration
+Deadline
+```
+
+Take maximum number of courses.
+
+---
+
+### Example
+
+```text
+[100,200]
+[200,1300]
+[1000,1250]
+[2000,3200]
+```
+
+Output:
+
+```text
+3
+```
+
+---
+
+# 1️⃣3️⃣ Greedy Strategy
+
+Sort by:
+
+```text
+Deadline
+```
+
+Take courses one by one.
+
+Maintain:
+
+```text
+Total Time
+```
+
+If total time exceeds deadline:
+
+```text
+Remove
+Longest Duration Course
+```
+
+Use:
+
+```text
+Max Heap
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N log N)
+
+Space: O(N)
+```
+
+---
+
+# 1️⃣4️⃣ Greedy + Heap Pattern
+
+Very common interview pattern:
+
+```text
+Choose Best Candidate
++
+Priority Queue
+```
+
+---
+
+### Pattern
+
+```text
+Insert candidates
+↓
+Pick best candidate
+↓
+Update state
+↓
+Repeat
+```
+
+---
+
+# 1️⃣5️⃣ Common Problems Using Heap + Greedy
+
+### Max Heap
+
+```text
+IPO
+Minimum Refueling Stops
+Course Schedule III
+Task Scheduler
+Reorganize String
+```
+
+---
+
+### Min Heap
+
+```text
+Huffman Coding
+Merge K Sorted Lists
+Connect Ropes
+```
+
+---
+
+# 1️⃣6️⃣ Recognizing Heap + Greedy Problems
+
+Look for:
+
+```text
+Repeatedly choose best option
+```
+
+or:
+
+```text
+Maximum profit
+Minimum cost
+Largest available
+Smallest available
+```
+
+Often:
+
+```text
+Priority Queue
+```
+
+is the answer.
+
+---
+
+# 1️⃣7️⃣ Complexity Summary
+
+| Problem | Time | Space |
+|----------|----------|----------|
+| Remove K Digits | O(N) | O(N) |
+| Queue Reconstruction | O(N²) | O(N) |
+| Huffman Coding | O(N log N) | O(N) |
+| IPO | O(N log N) | O(N) |
+| Minimum Refueling Stops | O(N log N) | O(N) |
+| Course Schedule III | O(N log N) | O(N) |
+
+---
+
+# 💡 Interview Tips
+
+✅ If repeatedly selecting largest element → Max Heap.
+
+✅ If repeatedly selecting smallest element → Min Heap.
+
+✅ Sort before applying greedy whenever deadlines exist.
+
+✅ Greedy + Heap is one of the most important interview patterns.
+
+✅ Learn Course Schedule III and IPO thoroughly.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Using sorting only when dynamic selection is required.
+
+❌ Forgetting to remove longest course in Course Schedule III.
+
+❌ Using min heap instead of max heap.
+
+❌ Ignoring affordable-project condition in IPO.
+
+❌ Missing leading zero removal in Remove K Digits.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Remove K Digits
+→ Monotonic Stack
+```
+
+```text
+Queue Reconstruction
+→ Sort + Insert
+```
+
+```text
+Huffman Coding
+→ Min Heap
+```
+
+```text
+IPO
+→ Min Heap + Max Heap
+```
+
+```text
+Minimum Refueling Stops
+→ Max Heap
+```
+
+```text
+Course Schedule III
+→ Sort by Deadline + Max Heap
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Remove K Digits
+
+⭐ Queue Reconstruction by Height
+
+⭐ Huffman Coding
+
+⭐ IPO
+
+⭐ Course Schedule III
+
+⭐ Minimum Refueling Stops
+
+⭐ Task Scheduler
+
+⭐ Reorganize String
+
+⭐ Connect Ropes
+
+---
+
+# 🎉 Greedy Algorithms Completed!
+
+You have now covered:
+
+✔ Greedy Fundamentals
+
+✔ Activity Selection
+
+✔ Fractional Knapsack
+
+✔ Job Sequencing
+
+✔ Minimum Platforms
+
+✔ Jump Game
+
+✔ Gas Station
+
+✔ Candy
+
+✔ Partition Labels
+
+✔ Interval Scheduling
+
+✔ Remove K Digits
+
+✔ Huffman Coding
+
+✔ IPO
+
+✔ Course Schedule III
+
+✔ Minimum Refueling Stops
+
+✔ Greedy + Heap Pattern
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Graphs (Part 1)
+
+Topics:
+
+- Introduction to Graphs
+- Terminologies
+- Graph Representation
+- Adjacency Matrix
+- Adjacency List
+- BFS Traversal
+- DFS Traversal
+- Connected Components
+- Graph Complexity Analysis
