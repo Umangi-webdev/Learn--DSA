@@ -1,0 +1,874 @@
+# 🔥 Greedy Algorithms (Part 3) - Gas Station, Candy, Partition Labels & Interval Problems
+
+## 📌 Introduction
+
+In this part, we will cover some of the most frequently asked Greedy interview problems.
+
+These problems focus on:
+
+- Interval Scheduling
+- Resource Allocation
+- Array Traversal
+- String Partitioning
+- Greedy Optimization
+
+---
+
+# 📋 Topics Covered
+
+- Non-overlapping Intervals
+- Minimum Arrows to Burst Balloons
+- Gas Station
+- Candy
+- Partition Labels
+- Meeting Rooms
+- Advanced Interval Greedy Pattern
+
+---
+
+# 1️⃣ Non-overlapping Intervals
+
+## 📖 Problem
+
+Given intervals:
+
+```text
+[start, end]
+```
+
+Remove the minimum number of intervals so that the remaining intervals do not overlap.
+
+---
+
+### Example
+
+```text
+[1,2]
+[2,3]
+[3,4]
+[1,3]
+```
+
+Output:
+
+```text
+1
+```
+
+Remove:
+
+```text
+[1,3]
+```
+
+---
+
+# 2️⃣ Greedy Strategy
+
+Sort intervals by:
+
+```text
+Ending Time
+```
+
+Always keep the interval that finishes earliest.
+
+Why?
+
+Because it leaves maximum room for future intervals.
+
+---
+
+### C++ Code
+
+```cpp
+int eraseOverlapIntervals(
+    vector<vector<int>>& intervals)
+{
+    sort(
+        intervals.begin(),
+        intervals.end(),
+        [](auto &a, auto &b)
+        {
+            return a[1] < b[1];
+        }
+    );
+
+    int count = 0;
+
+    int lastEnd =
+        intervals[0][1];
+
+    for(int i = 1;
+        i < intervals.size();
+        i++)
+    {
+        if(intervals[i][0] < lastEnd)
+        {
+            count++;
+        }
+        else
+        {
+            lastEnd =
+                intervals[i][1];
+        }
+    }
+
+    return count;
+}
+```
+
+### Complexity
+
+```text
+Time: O(N log N)
+
+Space: O(1)
+```
+
+---
+
+# 3️⃣ Minimum Arrows to Burst Balloons
+
+## 📖 Problem
+
+Each balloon is represented as:
+
+```text
+[start,end]
+```
+
+One arrow can burst all balloons whose ranges overlap.
+
+Find minimum arrows needed.
+
+---
+
+### Example
+
+```text
+[10,16]
+[2,8]
+[1,6]
+[7,12]
+```
+
+Output:
+
+```text
+2
+```
+
+---
+
+# 4️⃣ Greedy Strategy
+
+Sort balloons by:
+
+```text
+End Position
+```
+
+Shoot arrow at earliest ending balloon.
+
+If next balloon overlaps:
+
+```text
+Same arrow works
+```
+
+Else:
+
+```text
+Need another arrow
+```
+
+---
+
+### C++ Code
+
+```cpp
+int findMinArrowShots(
+    vector<vector<int>>& points)
+{
+    sort(
+        points.begin(),
+        points.end(),
+        [](auto &a, auto &b)
+        {
+            return a[1] < b[1];
+        }
+    );
+
+    int arrows = 1;
+
+    long long end =
+        points[0][1];
+
+    for(int i = 1;
+        i < points.size();
+        i++)
+    {
+        if(points[i][0] > end)
+        {
+            arrows++;
+
+            end =
+                points[i][1];
+        }
+    }
+
+    return arrows;
+}
+```
+
+### Complexity
+
+```text
+Time: O(N log N)
+
+Space: O(1)
+```
+
+---
+
+# 5️⃣ Gas Station
+
+## 📖 Problem
+
+You are given:
+
+```text
+gas[i]
+cost[i]
+```
+
+Find the starting station from which you can complete the circuit.
+
+If impossible:
+
+```text
+Return -1
+```
+
+---
+
+### Example
+
+```text
+Gas:
+
+1 2 3 4 5
+
+Cost:
+
+3 4 5 1 2
+```
+
+Output:
+
+```text
+3
+```
+
+---
+
+# 6️⃣ Important Observation
+
+If:
+
+```text
+Total Gas
+<
+Total Cost
+```
+
+Answer is:
+
+```text
+-1
+```
+
+because the trip is impossible.
+
+---
+
+# 7️⃣ Greedy Strategy
+
+Maintain:
+
+```text
+Tank
+```
+
+If tank becomes negative:
+
+```text
+Current start is invalid
+```
+
+Start from next station.
+
+---
+
+### C++ Code
+
+```cpp
+int canCompleteCircuit(
+    vector<int>& gas,
+    vector<int>& cost)
+{
+    int total = 0;
+    int tank = 0;
+
+    int start = 0;
+
+    for(int i = 0;
+        i < gas.size();
+        i++)
+    {
+        total +=
+            gas[i] - cost[i];
+
+        tank +=
+            gas[i] - cost[i];
+
+        if(tank < 0)
+        {
+            start = i + 1;
+            tank = 0;
+        }
+    }
+
+    return total >= 0 ?
+           start : -1;
+}
+```
+
+### Complexity
+
+```text
+Time: O(N)
+
+Space: O(1)
+```
+
+---
+
+# 8️⃣ Candy Problem
+
+## 📖 Problem
+
+Every child has a rating.
+
+Rules:
+
+```text
+Each child gets at least 1 candy.
+```
+
+If:
+
+```text
+rating[i] > rating[i-1]
+```
+
+Then:
+
+```text
+candies[i] > candies[i-1]
+```
+
+Goal:
+
+```text
+Minimum candies required.
+```
+
+---
+
+### Example
+
+```text
+Ratings:
+
+1 0 2
+```
+
+Output:
+
+```text
+5
+```
+
+Distribution:
+
+```text
+2 1 2
+```
+
+---
+
+# 9️⃣ Greedy Strategy
+
+Two passes:
+
+### Left → Right
+
+Handle increasing ratings.
+
+### Right → Left
+
+Handle decreasing ratings.
+
+---
+
+### C++ Code
+
+```cpp
+int candy(
+    vector<int>& ratings)
+{
+    int n =
+        ratings.size();
+
+    vector<int> candies(
+        n,
+        1
+    );
+
+    for(int i = 1;
+        i < n;
+        i++)
+    {
+        if(ratings[i] >
+           ratings[i-1])
+        {
+            candies[i] =
+                candies[i-1] + 1;
+        }
+    }
+
+    for(int i = n-2;
+        i >= 0;
+        i--)
+    {
+        if(ratings[i] >
+           ratings[i+1])
+        {
+            candies[i] =
+                max(
+                    candies[i],
+                    candies[i+1] + 1
+                );
+        }
+    }
+
+    return accumulate(
+        candies.begin(),
+        candies.end(),
+        0
+    );
+}
+```
+
+### Complexity
+
+```text
+Time: O(N)
+
+Space: O(N)
+```
+
+---
+
+# 🔟 Partition Labels
+
+## 📖 Problem
+
+Partition a string into maximum parts so that each letter appears in only one part.
+
+---
+
+### Example
+
+```text
+ababcbacadefegdehijhklij
+```
+
+Output:
+
+```text
+9 7 8
+```
+
+---
+
+# 1️⃣1️⃣ Greedy Strategy
+
+First find:
+
+```text
+Last occurrence
+```
+
+of every character.
+
+While traversing:
+
+```text
+Keep extending partition
+```
+
+until current index reaches the farthest last occurrence.
+
+Then cut the partition.
+
+---
+
+### C++ Code
+
+```cpp
+vector<int> partitionLabels(
+    string s)
+{
+    vector<int> last(
+        26,
+        0
+    );
+
+    for(int i = 0;
+        i < s.size();
+        i++)
+    {
+        last[s[i]-'a'] = i;
+    }
+
+    vector<int> answer;
+
+    int start = 0;
+    int end = 0;
+
+    for(int i = 0;
+        i < s.size();
+        i++)
+    {
+        end =
+            max(
+                end,
+                last[s[i]-'a']
+            );
+
+        if(i == end)
+        {
+            answer.push_back(
+                end - start + 1
+            );
+
+            start = i + 1;
+        }
+    }
+
+    return answer;
+}
+```
+
+### Complexity
+
+```text
+Time: O(N)
+
+Space: O(1)
+```
+
+---
+
+# 1️⃣2️⃣ Meeting Rooms
+
+## 📖 Problem
+
+Determine if a person can attend all meetings.
+
+---
+
+### Example
+
+```text
+[0,30]
+[5,10]
+[15,20]
+```
+
+Output:
+
+```text
+False
+```
+
+because intervals overlap.
+
+---
+
+# 1️⃣3️⃣ Greedy Strategy
+
+Sort by:
+
+```text
+Start Time
+```
+
+If:
+
+```text
+Current Start
+<
+Previous End
+```
+
+then overlap exists.
+
+---
+
+### C++ Code
+
+```cpp
+bool canAttendMeetings(
+    vector<vector<int>>& intervals)
+{
+    sort(
+        intervals.begin(),
+        intervals.end()
+    );
+
+    for(int i = 1;
+        i < intervals.size();
+        i++)
+    {
+        if(intervals[i][0] <
+           intervals[i-1][1])
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+```
+
+### Complexity
+
+```text
+Time: O(N log N)
+
+Space: O(1)
+```
+
+---
+
+# 1️⃣4️⃣ Advanced Interval Pattern
+
+Many interval problems follow:
+
+```text
+Sort
++
+Track End Point
++
+Make Greedy Choice
+```
+
+Examples:
+
+```text
+Activity Selection
+Non-overlapping Intervals
+Meeting Rooms
+Balloon Burst
+```
+
+---
+
+# 1️⃣5️⃣ Common Greedy Patterns
+
+### Pattern 1
+
+```text
+Earliest Finish Time
+```
+
+Problems:
+
+```text
+Activity Selection
+Non-overlapping Intervals
+```
+
+---
+
+### Pattern 2
+
+```text
+Sort by End Position
+```
+
+Problems:
+
+```text
+Burst Balloons
+```
+
+---
+
+### Pattern 3
+
+```text
+Track Current Resource
+```
+
+Problems:
+
+```text
+Gas Station
+```
+
+---
+
+### Pattern 4
+
+```text
+Two Pass Greedy
+```
+
+Problems:
+
+```text
+Candy
+```
+
+---
+
+### Pattern 5
+
+```text
+Last Occurrence
+```
+
+Problems:
+
+```text
+Partition Labels
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|----------|----------|
+| Non-overlapping Intervals | O(N log N) | O(1) |
+| Minimum Arrows | O(N log N) | O(1) |
+| Gas Station | O(N) | O(1) |
+| Candy | O(N) | O(N) |
+| Partition Labels | O(N) | O(1) |
+| Meeting Rooms | O(N log N) | O(1) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Most interval problems start with sorting.
+
+✅ Earliest finishing interval is often the optimal choice.
+
+✅ If total resources are insufficient, answer may be impossible.
+
+✅ Two-pass greedy is common in array optimization problems.
+
+✅ Track last occurrence in string partitioning problems.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Sorting by start instead of end.
+
+❌ Forgetting total gas check.
+
+❌ Using one pass for Candy.
+
+❌ Cutting partition too early.
+
+❌ Ignoring interval overlap conditions.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Non-overlapping Intervals
+→ Sort by End Time
+```
+
+```text
+Minimum Arrows
+→ Sort by End Position
+```
+
+```text
+Gas Station
+→ Tank + Total Gas Check
+```
+
+```text
+Candy
+→ Two Pass Greedy
+```
+
+```text
+Partition Labels
+→ Last Occurrence
+```
+
+```text
+Meeting Rooms
+→ Sort + Overlap Check
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Non-overlapping Intervals
+
+⭐ Minimum Arrows to Burst Balloons
+
+⭐ Gas Station
+
+⭐ Candy
+
+⭐ Partition Labels
+
+⭐ Meeting Rooms
+
+⭐ Meeting Rooms II
+
+⭐ Insert Interval
+
+⭐ Merge Intervals
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Greedy Algorithms (Part 4) - Hard Greedy Problems
+
+Topics:
+
+- IPO
+- Course Schedule III
+- Minimum Refueling Stops
+- Remove K Digits
+- Queue Reconstruction by Height
+- Huffman Coding
+- Greedy + Heap Pattern
+- Hard Interview Questions
