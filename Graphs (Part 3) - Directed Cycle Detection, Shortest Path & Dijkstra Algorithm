@@ -1,0 +1,901 @@
+# 🔥 Graphs (Part 3) - Directed Cycle Detection, Shortest Path & Dijkstra Algorithm
+
+## 📌 Introduction
+
+In previous parts, we learned:
+
+✔ BFS
+
+✔ DFS
+
+✔ Connected Components
+
+✔ Bipartite Graph
+
+✔ Topological Sort
+
+Now we move to one of the most important graph topics:
+
+```text
+Shortest Path Algorithms
+```
+
+These are asked heavily in:
+
+- FAANG Interviews
+- Product-Based Companies
+- Competitive Programming
+
+---
+
+# 📋 Topics Covered
+
+- Cycle Detection in Directed Graph
+- DFS Recursion Stack Method
+- Kahn's Cycle Detection
+- Shortest Path in DAG
+- Shortest Path in Unweighted Graph
+- Dijkstra Algorithm
+- Bellman Ford Introduction
+
+---
+
+# 1️⃣ Cycle Detection in Directed Graph
+
+Undirected cycle detection uses:
+
+```text
+Parent Node
+```
+
+But in Directed Graph:
+
+```text
+Parent concept fails
+```
+
+We use:
+
+```text
+Recursion Stack
+```
+
+---
+
+## Example
+
+```text
+1 → 2
+↑   ↓
+4 ← 3
+```
+
+Cycle:
+
+```text
+1 → 2 → 3 → 4 → 1
+```
+
+---
+
+# 2️⃣ DFS Recursion Stack Method
+
+Maintain:
+
+```text
+visited[]
+```
+
+and
+
+```text
+pathVisited[]
+```
+
+---
+
+### Meaning
+
+```text
+visited[node]
+```
+
+Node already explored.
+
+---
+
+```text
+pathVisited[node]
+```
+
+Node currently in DFS path.
+
+---
+
+### Observation
+
+If during DFS:
+
+```text
+neighbor already exists
+in pathVisited
+```
+
+Then:
+
+```text
+Cycle Exists
+```
+
+---
+
+# 3️⃣ C++ Code
+
+```cpp
+bool dfs(
+    int node,
+    vector<int> adj[],
+    vector<int>& vis,
+    vector<int>& pathVis)
+{
+    vis[node] = 1;
+
+    pathVis[node] = 1;
+
+    for(int neighbor : adj[node])
+    {
+        if(!vis[neighbor])
+        {
+            if(
+                dfs(
+                    neighbor,
+                    adj,
+                    vis,
+                    pathVis
+                )
+            )
+            {
+                return true;
+            }
+        }
+        else if(pathVis[neighbor])
+        {
+            return true;
+        }
+    }
+
+    pathVis[node] = 0;
+
+    return false;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(V + E)
+
+Space: O(V)
+```
+
+---
+
+# 4️⃣ Cycle Detection using Kahn's Algorithm
+
+## Idea
+
+Topological Sort works only for:
+
+```text
+DAG
+```
+
+If graph contains cycle:
+
+```text
+Topological Sort
+cannot include all nodes.
+```
+
+---
+
+### Observation
+
+If:
+
+```text
+Topological Nodes Count
+<
+Total Nodes
+```
+
+Then:
+
+```text
+Cycle Exists
+```
+
+---
+
+# 5️⃣ Kahn's Cycle Detection
+
+```cpp
+bool hasCycle(
+    int V,
+    vector<int> adj[])
+{
+    vector<int> indegree(
+        V,
+        0
+    );
+
+    for(int i=0;i<V;i++)
+    {
+        for(int neighbor :
+            adj[i])
+        {
+            indegree[
+                neighbor
+            ]++;
+        }
+    }
+
+    queue<int> q;
+
+    for(int i=0;i<V;i++)
+    {
+        if(indegree[i]==0)
+        {
+            q.push(i);
+        }
+    }
+
+    int count = 0;
+
+    while(!q.empty())
+    {
+        int node = q.front();
+
+        q.pop();
+
+        count++;
+
+        for(int neighbor :
+            adj[node])
+        {
+            indegree[
+                neighbor
+            ]--;
+
+            if(
+                indegree[
+                    neighbor
+                ] == 0
+            )
+            {
+                q.push(
+                    neighbor
+                );
+            }
+        }
+    }
+
+    return count != V;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(V + E)
+
+Space: O(V)
+```
+
+---
+
+# 6️⃣ Shortest Path in DAG
+
+Applicable only for:
+
+```text
+Directed Acyclic Graph
+```
+
+---
+
+## Strategy
+
+Step 1:
+
+```text
+Topological Sort
+```
+
+Step 2:
+
+```text
+Relax Edges
+```
+
+in Topological Order.
+
+---
+
+### Why?
+
+Because dependencies are already processed.
+
+---
+
+### Complexity
+
+```text
+Time: O(V + E)
+
+Space: O(V)
+```
+
+---
+
+# 7️⃣ Edge Relaxation
+
+Most shortest path algorithms use:
+
+```text
+Relaxation
+```
+
+Formula:
+
+```text
+if(
+dist[u] + wt
+<
+dist[v]
+)
+```
+
+Then:
+
+```text
+dist[v]
+=
+dist[u] + wt
+```
+
+---
+
+# 8️⃣ Shortest Path in Unweighted Graph
+
+All edges:
+
+```text
+Weight = 1
+```
+
+Use:
+
+```text
+BFS
+```
+
+---
+
+### Example
+
+```text
+0 -- 1 -- 2
+|
+3
+```
+
+Shortest distance from 0:
+
+```text
+0 → 0
+
+1 → 1
+
+2 → 2
+
+3 → 1
+```
+
+---
+
+# 9️⃣ BFS Solution
+
+```cpp
+vector<int> shortestPath(
+    int N,
+    vector<int> adj[],
+    int src)
+{
+    vector<int> dist(
+        N,
+        1e9
+    );
+
+    queue<int> q;
+
+    dist[src] = 0;
+
+    q.push(src);
+
+    while(!q.empty())
+    {
+        int node = q.front();
+
+        q.pop();
+
+        for(int neighbor :
+            adj[node])
+        {
+            if(
+                dist[node] + 1
+                <
+                dist[neighbor]
+            )
+            {
+                dist[neighbor] =
+                    dist[node] + 1;
+
+                q.push(
+                    neighbor
+                );
+            }
+        }
+    }
+
+    return dist;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(V + E)
+
+Space: O(V)
+```
+
+---
+
+# 🔟 Dijkstra Algorithm
+
+## Purpose
+
+Find shortest path from:
+
+```text
+Source Node
+```
+
+to:
+
+```text
+All Nodes
+```
+
+---
+
+### Condition
+
+Works only when:
+
+```text
+All Edge Weights
+>= 0
+```
+
+---
+
+### Example
+
+```text
+0 --4--> 1
+
+0 --1--> 2
+
+2 --2--> 1
+```
+
+Shortest:
+
+```text
+0 → 2 → 1
+```
+
+Cost:
+
+```text
+3
+```
+
+---
+
+# 1️⃣1️⃣ Greedy Idea
+
+Always process:
+
+```text
+Closest Unprocessed Node
+```
+
+Use:
+
+```text
+Min Heap
+```
+
+---
+
+# 1️⃣2️⃣ Dijkstra Algorithm Steps
+
+### Step 1
+
+Push:
+
+```text
+(source,0)
+```
+
+into Min Heap.
+
+---
+
+### Step 2
+
+Take minimum distance node.
+
+---
+
+### Step 3
+
+Relax all edges.
+
+---
+
+### Step 4
+
+Update distances.
+
+---
+
+### Step 5
+
+Push updated distance.
+
+---
+
+# 1️⃣3️⃣ C++ Code
+
+```cpp
+vector<int> dijkstra(
+    int V,
+    vector<vector<int>> adj[],
+    int src)
+{
+    priority_queue<
+        pair<int,int>,
+        vector<pair<int,int>>,
+        greater<pair<int,int>>
+    > pq;
+
+    vector<int> dist(
+        V,
+        1e9
+    );
+
+    dist[src] = 0;
+
+    pq.push({0, src});
+
+    while(!pq.empty())
+    {
+        auto current =
+            pq.top();
+
+        pq.pop();
+
+        int dis =
+            current.first;
+
+        int node =
+            current.second;
+
+        for(auto edge :
+            adj[node])
+        {
+            int adjNode =
+                edge[0];
+
+            int wt =
+                edge[1];
+
+            if(
+                dis + wt
+                <
+                dist[adjNode]
+            )
+            {
+                dist[adjNode] =
+                    dis + wt;
+
+                pq.push({
+                    dist[adjNode],
+                    adjNode
+                });
+            }
+        }
+    }
+
+    return dist;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(E log V)
+
+Space: O(V)
+```
+
+---
+
+# 1️⃣4️⃣ Dijkstra Dry Run
+
+Graph:
+
+```text
+0 --4--> 1
+
+0 --1--> 2
+
+2 --2--> 1
+```
+
+Initially:
+
+```text
+dist[0]=0
+
+dist[1]=∞
+
+dist[2]=∞
+```
+
+---
+
+Process:
+
+```text
+0
+```
+
+Update:
+
+```text
+1 → 4
+
+2 → 1
+```
+
+---
+
+Process:
+
+```text
+2
+```
+
+Update:
+
+```text
+1 → 3
+```
+
+Final:
+
+```text
+0 → 0
+
+1 → 3
+
+2 → 1
+```
+
+---
+
+# 1️⃣5️⃣ Bellman Ford Introduction
+
+Dijkstra fails when:
+
+```text
+Negative Edges
+```
+
+exist.
+
+Example:
+
+```text
+0 → 1 = 5
+
+1 → 2 = -10
+```
+
+Use:
+
+```text
+Bellman Ford
+```
+
+instead.
+
+---
+
+### Bellman Ford Features
+
+✔ Handles Negative Weights
+
+✔ Detects Negative Cycle
+
+✔ Single Source Shortest Path
+
+---
+
+### Complexity
+
+```text
+Time: O(V × E)
+```
+
+Slower than Dijkstra.
+
+---
+
+# 1️⃣6️⃣ Dijkstra vs BFS
+
+| BFS | Dijkstra |
+|-------|----------|
+| Unweighted Graph | Weighted Graph |
+| Queue | Min Heap |
+| O(V+E) | O(E log V) |
+| Weight = 1 | Weight ≥ 0 |
+
+---
+
+# 1️⃣7️⃣ Dijkstra vs Bellman Ford
+
+| Dijkstra | Bellman Ford |
+|------------|------------|
+| Faster | Slower |
+| No Negative Edges | Supports Negative Edges |
+| O(E log V) | O(VE) |
+| No Negative Cycle Detection | Detects Negative Cycle |
+
+---
+
+# 📊 Complexity Summary
+
+| Algorithm | Time | Space |
+|------------|----------|----------|
+| Directed Cycle DFS | O(V+E) | O(V) |
+| Kahn Cycle Detection | O(V+E) | O(V) |
+| Shortest Path DAG | O(V+E) | O(V) |
+| BFS Shortest Path | O(V+E) | O(V) |
+| Dijkstra | O(E log V) | O(V) |
+| Bellman Ford | O(VE) | O(V) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Dijkstra requires non-negative weights.
+
+✅ BFS gives shortest path in unweighted graphs.
+
+✅ Kahn's Algorithm can detect directed cycles.
+
+✅ Relaxation is the core concept of shortest path algorithms.
+
+✅ Learn Dijkstra thoroughly for interviews.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Using Dijkstra with negative edges.
+
+❌ Forgetting pathVisited array.
+
+❌ Incorrect relaxation formula.
+
+❌ Not using Min Heap.
+
+❌ Confusing BFS with Dijkstra.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Directed Cycle
+→ DFS + pathVisited
+```
+
+```text
+Kahn Cycle Detection
+→ Count Topological Nodes
+```
+
+```text
+Shortest Path DAG
+→ Topological Sort
+```
+
+```text
+Unweighted Graph
+→ BFS
+```
+
+```text
+Weighted Graph
+→ Dijkstra
+```
+
+```text
+Negative Weights
+→ Bellman Ford
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Detect Cycle in Directed Graph
+
+⭐ Course Schedule
+
+⭐ Course Schedule II
+
+⭐ Shortest Path in DAG
+
+⭐ Shortest Path in Binary Matrix
+
+⭐ Network Delay Time
+
+⭐ Dijkstra Algorithm
+
+⭐ Path With Minimum Effort
+
+⭐ Cheapest Flights Within K Stops
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Graphs (Part 4)
+
+Topics:
+
+- Bellman Ford Algorithm
+- Floyd Warshall Algorithm
+- Minimum Spanning Tree (MST)
+- Prim's Algorithm
+- Kruskal Algorithm
+- Disjoint Set Union (DSU)
+- Union by Rank
+- Union by Size
+- Path Compression
