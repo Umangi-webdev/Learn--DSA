@@ -1,0 +1,910 @@
+# 🔥 Graphs (Part 2) - Cycle Detection, Bipartite Graph & Topological Sorting
+
+## 📌 Introduction
+
+In Part 1, we learned:
+
+✔ Graph Representation
+
+✔ BFS
+
+✔ DFS
+
+✔ Connected Components
+
+Now we will learn some of the most important interview topics:
+
+- Cycle Detection
+- Bipartite Graph
+- Directed Graph Basics
+- Topological Sorting
+- Kahn's Algorithm
+
+These topics are asked frequently in FAANG, Product-Based Companies, and Coding Interviews.
+
+---
+
+# 📋 Topics Covered
+
+- Cycle Detection in Undirected Graph
+- Cycle Detection using BFS
+- Cycle Detection using DFS
+- Bipartite Graph
+- Directed Graph
+- Topological Sorting
+- Kahn's Algorithm
+- Applications
+
+---
+
+# 1️⃣ Cycle in a Graph
+
+A cycle exists if we can return to the same node after traversing edges.
+
+Example:
+
+```text
+1 ---- 2
+|      |
+|      |
+4 ---- 3
+```
+
+Cycle:
+
+```text
+1 → 2 → 3 → 4 → 1
+```
+
+---
+
+# 2️⃣ Cycle Detection in Undirected Graph using BFS
+
+## Idea
+
+Store:
+
+```text
+Node
+Parent
+```
+
+If we visit a node that is already visited and is NOT the parent, then a cycle exists.
+
+---
+
+### Example
+
+```text
+1 ---- 2
+|      |
+4 ---- 3
+```
+
+Start BFS from:
+
+```text
+1
+```
+
+Eventually:
+
+```text
+3 sees 4
+
+4 already visited
+
+4 is not parent
+
+Cycle Found
+```
+
+---
+
+## C++ Code
+
+```cpp
+bool detectCycleBFS(
+    int start,
+    vector<int> adj[],
+    vector<int>& vis)
+{
+    queue<pair<int,int>> q;
+
+    vis[start] = 1;
+
+    q.push({start, -1});
+
+    while(!q.empty())
+    {
+        auto current = q.front();
+
+        q.pop();
+
+        int node = current.first;
+        int parent = current.second;
+
+        for(int neighbor : adj[node])
+        {
+            if(!vis[neighbor])
+            {
+                vis[neighbor] = 1;
+
+                q.push({
+                    neighbor,
+                    node
+                });
+            }
+            else if(neighbor != parent)
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(V + E)
+
+Space: O(V)
+```
+
+---
+
+# 3️⃣ Cycle Detection in Undirected Graph using DFS
+
+## Idea
+
+While traversing:
+
+```text
+If neighbor is visited
+and neighbor != parent
+
+Cycle Exists
+```
+
+---
+
+## C++ Code
+
+```cpp
+bool detectCycleDFS(
+    int node,
+    int parent,
+    vector<int> adj[],
+    vector<int>& vis)
+{
+    vis[node] = 1;
+
+    for(int neighbor : adj[node])
+    {
+        if(!vis[neighbor])
+        {
+            if(
+                detectCycleDFS(
+                    neighbor,
+                    node,
+                    adj,
+                    vis
+                )
+            )
+            {
+                return true;
+            }
+        }
+        else if(neighbor != parent)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(V + E)
+
+Space: O(V)
+```
+
+---
+
+# 4️⃣ Bipartite Graph
+
+## Definition
+
+A graph is Bipartite if its vertices can be divided into two sets such that:
+
+```text
+No two adjacent nodes
+belong to same set
+```
+
+---
+
+### Example
+
+```text
+1 ---- 2
+|      |
+|      |
+4 ---- 3
+```
+
+Possible sets:
+
+```text
+Set A = {1,3}
+
+Set B = {2,4}
+```
+
+This graph is Bipartite.
+
+---
+
+# 5️⃣ Bipartite Graph Observation
+
+A graph is Bipartite if:
+
+```text
+It can be colored
+using only 2 colors.
+```
+
+Example:
+
+```text
+Red
+Blue
+```
+
+Adjacent nodes must have different colors.
+
+---
+
+# 6️⃣ Bipartite Graph using BFS
+
+Maintain:
+
+```text
+Color Array
+```
+
+Values:
+
+```text
+-1 → Not Colored
+
+0 → Red
+
+1 → Blue
+```
+
+---
+
+## C++ Code
+
+```cpp
+bool isBipartiteBFS(
+    int start,
+    vector<int> adj[],
+    vector<int>& color)
+{
+    queue<int> q;
+
+    q.push(start);
+
+    color[start] = 0;
+
+    while(!q.empty())
+    {
+        int node = q.front();
+
+        q.pop();
+
+        for(int neighbor : adj[node])
+        {
+            if(color[neighbor] == -1)
+            {
+                color[neighbor] =
+                    !color[node];
+
+                q.push(neighbor);
+            }
+            else if(
+                color[neighbor]
+                ==
+                color[node]
+            )
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(V + E)
+
+Space: O(V)
+```
+
+---
+
+# 7️⃣ Bipartite Graph using DFS
+
+```cpp
+bool dfs(
+    int node,
+    int clr,
+    vector<int> adj[],
+    vector<int>& color)
+{
+    color[node] = clr;
+
+    for(int neighbor : adj[node])
+    {
+        if(color[neighbor] == -1)
+        {
+            if(
+                !dfs(
+                    neighbor,
+                    !clr,
+                    adj,
+                    color
+                )
+            )
+            {
+                return false;
+            }
+        }
+        else if(
+            color[neighbor]
+            ==
+            clr
+        )
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+```
+
+---
+
+# 8️⃣ Directed Graph
+
+In a Directed Graph:
+
+```text
+Edge Direction Matters
+```
+
+Example:
+
+```text
+1 → 2
+
+2 → 3
+```
+
+Here:
+
+```text
+3 cannot reach 1
+```
+
+unless another edge exists.
+
+---
+
+# 9️⃣ Directed Acyclic Graph (DAG)
+
+A Directed Graph with:
+
+```text
+No Cycles
+```
+
+Example:
+
+```text
+1 → 2
+
+1 → 3
+
+2 → 4
+
+3 → 4
+```
+
+This is a DAG.
+
+---
+
+# 🔟 Topological Sorting
+
+## Definition
+
+Linear ordering of vertices such that:
+
+```text
+For every edge
+
+u → v
+
+u appears before v
+```
+
+---
+
+### Example
+
+```text
+1 → 2
+
+1 → 3
+
+2 → 4
+
+3 → 4
+```
+
+Possible Topological Order:
+
+```text
+1 2 3 4
+```
+
+or:
+
+```text
+1 3 2 4
+```
+
+---
+
+# 1️⃣1️⃣ Applications of Topological Sort
+
+### Course Scheduling
+
+```text
+Course Prerequisites
+```
+
+---
+
+### Build Systems
+
+```text
+Compile Dependencies
+```
+
+---
+
+### Task Scheduling
+
+```text
+Execute Tasks
+```
+
+---
+
+### DAG Processing
+
+```text
+Dependency Resolution
+```
+
+---
+
+# 1️⃣2️⃣ Topological Sort using DFS
+
+## Idea
+
+Visit node completely.
+
+After processing all neighbors:
+
+```text
+Push node into stack
+```
+
+Finally:
+
+```text
+Reverse Stack Order
+```
+
+---
+
+## C++ Code
+
+```cpp
+void topoDFS(
+    int node,
+    vector<int> adj[],
+    vector<int>& vis,
+    stack<int>& st)
+{
+    vis[node] = 1;
+
+    for(int neighbor : adj[node])
+    {
+        if(!vis[neighbor])
+        {
+            topoDFS(
+                neighbor,
+                adj,
+                vis,
+                st
+            );
+        }
+    }
+
+    st.push(node);
+}
+```
+
+---
+
+### Driver
+
+```cpp
+vector<int> topoSort(
+    int V,
+    vector<int> adj[])
+{
+    vector<int> vis(V,0);
+
+    stack<int> st;
+
+    for(int i=0;i<V;i++)
+    {
+        if(!vis[i])
+        {
+            topoDFS(
+                i,
+                adj,
+                vis,
+                st
+            );
+        }
+    }
+
+    vector<int> answer;
+
+    while(!st.empty())
+    {
+        answer.push_back(
+            st.top()
+        );
+
+        st.pop();
+    }
+
+    return answer;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(V + E)
+
+Space: O(V)
+```
+
+---
+
+# 1️⃣3️⃣ Kahn's Algorithm
+
+Topological Sort using:
+
+```text
+BFS
+```
+
+---
+
+## Idea
+
+Compute:
+
+```text
+Indegree
+```
+
+Indegree:
+
+```text
+Number of incoming edges
+```
+
+---
+
+### Example
+
+```text
+1 → 2
+
+1 → 3
+
+2 → 4
+
+3 → 4
+```
+
+Indegree:
+
+```text
+1 → 0
+
+2 → 1
+
+3 → 1
+
+4 → 2
+```
+
+---
+
+# 1️⃣4️⃣ Kahn's Algorithm Steps
+
+### Step 1
+
+Calculate indegree.
+
+### Step 2
+
+Push all nodes having:
+
+```text
+Indegree = 0
+```
+
+into queue.
+
+### Step 3
+
+Remove node.
+
+### Step 4
+
+Decrease neighbors' indegree.
+
+### Step 5
+
+If indegree becomes 0:
+
+```text
+Push into queue.
+```
+
+---
+
+## C++ Code
+
+```cpp
+vector<int> kahnTopo(
+    int V,
+    vector<int> adj[])
+{
+    vector<int> indegree(
+        V,
+        0
+    );
+
+    for(int i=0;i<V;i++)
+    {
+        for(int neighbor :
+            adj[i])
+        {
+            indegree[
+                neighbor
+            ]++;
+        }
+    }
+
+    queue<int> q;
+
+    for(int i=0;i<V;i++)
+    {
+        if(indegree[i]==0)
+        {
+            q.push(i);
+        }
+    }
+
+    vector<int> topo;
+
+    while(!q.empty())
+    {
+        int node=q.front();
+
+        q.pop();
+
+        topo.push_back(node);
+
+        for(int neighbor :
+            adj[node])
+        {
+            indegree[
+                neighbor
+            ]--;
+
+            if(
+                indegree[
+                    neighbor
+                ] == 0
+            )
+            {
+                q.push(
+                    neighbor
+                );
+            }
+        }
+    }
+
+    return topo;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(V + E)
+
+Space: O(V)
+```
+
+---
+
+# 1️⃣5️⃣ BFS vs DFS Topological Sort
+
+| DFS Topo | Kahn's Algorithm |
+|-----------|------------------|
+| Stack Based | Queue Based |
+| DFS | BFS |
+| Easy to implement | Useful for cycle detection |
+| O(V+E) | O(V+E) |
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|----------|----------|
+| Cycle Detection BFS | O(V+E) | O(V) |
+| Cycle Detection DFS | O(V+E) | O(V) |
+| Bipartite BFS | O(V+E) | O(V) |
+| Bipartite DFS | O(V+E) | O(V) |
+| Topological Sort DFS | O(V+E) | O(V) |
+| Kahn's Algorithm | O(V+E) | O(V) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Bipartite Graph = 2 Coloring Problem.
+
+✅ Topological Sort works only for DAG.
+
+✅ Kahn's Algorithm uses Indegree.
+
+✅ Cycle Detection is one of the most asked graph topics.
+
+✅ Learn both BFS and DFS approaches.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Forgetting Parent Node in cycle detection.
+
+❌ Applying Topological Sort on cyclic graphs.
+
+❌ Not initializing color array with -1.
+
+❌ Incorrect indegree calculation.
+
+❌ Revisiting nodes repeatedly.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Cycle Detection
+→ BFS Parent
+→ DFS Parent
+```
+
+```text
+Bipartite Graph
+→ Two Coloring
+```
+
+```text
+Directed Graph
+→ Edge Direction Matters
+```
+
+```text
+DAG
+→ No Cycles
+```
+
+```text
+Topological Sort
+→ Dependency Order
+```
+
+```text
+Kahn's Algorithm
+→ BFS + Indegree
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Detect Cycle in Undirected Graph
+
+⭐ Is Graph Bipartite?
+
+⭐ Course Schedule
+
+⭐ Course Schedule II
+
+⭐ Topological Sort
+
+⭐ Kahn's Algorithm
+
+⭐ Alien Dictionary
+
+⭐ Eventual Safe States
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Graphs (Part 3)
+
+Topics:
+
+- Cycle Detection in Directed Graph
+- DFS Recursion Stack Method
+- Kahn's Cycle Detection
+- Shortest Path in DAG
+- Shortest Path in Unweighted Graph
+- Dijkstra Algorithm
+- Bellman Ford Algorithm
+- Important Interview Problems
