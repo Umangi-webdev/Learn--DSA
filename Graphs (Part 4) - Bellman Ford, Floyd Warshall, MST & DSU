@@ -1,0 +1,838 @@
+# 🔥 Graphs (Part 4) - Bellman Ford, Floyd Warshall, MST & DSU
+
+## 📌 Introduction
+
+In previous parts, we covered:
+
+✔ BFS
+
+✔ DFS
+
+✔ Topological Sort
+
+✔ Dijkstra
+
+✔ Shortest Path
+
+Now we move to one of the most important graph topics:
+
+```text
+Minimum Spanning Trees (MST)
+```
+
+and
+
+```text
+Disjoint Set Union (DSU)
+```
+
+These topics are extremely important for:
+
+- FAANG Interviews
+- Competitive Programming
+- Product-Based Companies
+
+---
+
+# 📋 Topics Covered
+
+- Bellman Ford Algorithm
+- Floyd Warshall Algorithm
+- Minimum Spanning Tree
+- Prim's Algorithm
+- Kruskal Algorithm
+- Disjoint Set Union (DSU)
+- Union by Rank
+- Union by Size
+- Path Compression
+
+---
+
+# 1️⃣ Bellman Ford Algorithm
+
+## Purpose
+
+Find shortest path from:
+
+```text
+Single Source
+```
+
+to:
+
+```text
+All Vertices
+```
+
+Works even when:
+
+```text
+Negative Edge Weights Exist
+```
+
+---
+
+### Example
+
+```text
+0 → 1 = 4
+
+0 → 2 = 5
+
+1 → 2 = -2
+```
+
+Bellman Ford works perfectly.
+
+---
+
+# 2️⃣ Core Idea
+
+Relax every edge:
+
+```text
+(V - 1) times
+```
+
+because shortest path can contain at most:
+
+```text
+(V - 1) edges
+```
+
+---
+
+# 3️⃣ Relaxation Formula
+
+```cpp
+if(
+dist[u] + wt
+<
+dist[v]
+)
+{
+    dist[v] =
+    dist[u] + wt;
+}
+```
+
+---
+
+# 4️⃣ Bellman Ford Code
+
+```cpp
+vector<int> bellmanFord(
+    int V,
+    vector<vector<int>>& edges,
+    int src)
+{
+    vector<int> dist(
+        V,
+        1e8
+    );
+
+    dist[src] = 0;
+
+    for(int i = 1;
+        i <= V - 1;
+        i++)
+    {
+        for(auto edge : edges)
+        {
+            int u = edge[0];
+            int v = edge[1];
+            int wt = edge[2];
+
+            if(
+                dist[u] != 1e8 &&
+                dist[u] + wt <
+                dist[v]
+            )
+            {
+                dist[v] =
+                    dist[u] + wt;
+            }
+        }
+    }
+
+    return dist;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(V × E)
+
+Space: O(V)
+```
+
+---
+
+# 5️⃣ Negative Cycle Detection
+
+After:
+
+```text
+V - 1
+```
+
+relaxations,
+
+perform:
+
+```text
+One More Relaxation
+```
+
+If distance still changes:
+
+```text
+Negative Cycle Exists
+```
+
+---
+
+# 6️⃣ Floyd Warshall Algorithm
+
+## Purpose
+
+Find:
+
+```text
+Shortest Path
+Between Every Pair
+Of Vertices
+```
+
+---
+
+### Example
+
+Find shortest path:
+
+```text
+1 → 2
+
+1 → 3
+
+2 → 4
+
+3 → 4
+
+for every pair.
+```
+
+---
+
+# 7️⃣ Floyd Warshall Idea
+
+Try every node as:
+
+```text
+Intermediate Node
+```
+
+---
+
+### Formula
+
+```cpp
+dist[i][j]
+=
+min(
+dist[i][j],
+dist[i][via] +
+dist[via][j]
+);
+```
+
+---
+
+# 8️⃣ Floyd Warshall Code
+
+```cpp
+for(int via=0;
+    via<n;
+    via++)
+{
+    for(int i=0;
+        i<n;
+        i++)
+    {
+        for(int j=0;
+            j<n;
+            j++)
+        {
+            dist[i][j] =
+            min(
+                dist[i][j],
+                dist[i][via]
+                +
+                dist[via][j]
+            );
+        }
+    }
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(V³)
+
+Space: O(V²)
+```
+
+---
+
+# 9️⃣ Minimum Spanning Tree (MST)
+
+## Definition
+
+A spanning tree:
+
+```text
+Connects all vertices
+```
+
+without cycles.
+
+---
+
+### MST
+
+Among all spanning trees:
+
+```text
+Minimum Total Edge Weight
+```
+
+---
+
+### Example
+
+```text
+1 --2-- 2
+
+|      /
+
+3    1
+
+|  /
+
+3
+```
+
+MST:
+
+```text
+Choose minimum edges
+that connect all nodes.
+```
+
+---
+
+# 🔟 Properties of MST
+
+For:
+
+```text
+V vertices
+```
+
+MST contains:
+
+```text
+V - 1 edges
+```
+
+and
+
+```text
+No Cycles
+```
+
+---
+
+# 1️⃣1️⃣ Prim's Algorithm
+
+## Idea
+
+Grow MST from one node.
+
+Always choose:
+
+```text
+Minimum Weight Edge
+```
+
+connecting MST to outside node.
+
+---
+
+### Uses
+
+```text
+Min Heap
+```
+
+---
+
+# 1️⃣2️⃣ Prim's Algorithm Code
+
+```cpp
+int spanningTree(
+    int V,
+    vector<vector<int>> adj[])
+{
+    priority_queue<
+        pair<int,int>,
+        vector<pair<int,int>>,
+        greater<pair<int,int>>
+    > pq;
+
+    vector<int> vis(
+        V,
+        0
+    );
+
+    pq.push({0,0});
+
+    int sum = 0;
+
+    while(!pq.empty())
+    {
+        auto current =
+            pq.top();
+
+        pq.pop();
+
+        int wt =
+            current.first;
+
+        int node =
+            current.second;
+
+        if(vis[node])
+            continue;
+
+        vis[node] = 1;
+
+        sum += wt;
+
+        for(auto edge :
+            adj[node])
+        {
+            int adjNode =
+                edge[0];
+
+            int edgeWt =
+                edge[1];
+
+            if(!vis[adjNode])
+            {
+                pq.push({
+                    edgeWt,
+                    adjNode
+                });
+            }
+        }
+    }
+
+    return sum;
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(E log V)
+
+Space: O(V)
+```
+
+---
+
+# 1️⃣3️⃣ Kruskal Algorithm
+
+## Idea
+
+Sort edges by:
+
+```text
+Weight
+```
+
+Take smallest edge first.
+
+Avoid cycles.
+
+---
+
+### Tools Needed
+
+```text
+Sorting
++
+DSU
+```
+
+---
+
+# 1️⃣4️⃣ Kruskal Steps
+
+### Step 1
+
+Sort edges.
+
+### Step 2
+
+Take smallest edge.
+
+### Step 3
+
+If cycle not formed:
+
+```text
+Include edge
+```
+
+Otherwise:
+
+```text
+Skip
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(E log E)
+
+Space: O(V)
+```
+
+---
+
+# 1️⃣5️⃣ Disjoint Set Union (DSU)
+
+Also called:
+
+```text
+Union Find
+```
+
+Used for:
+
+```text
+Cycle Detection
+Kruskal MST
+Dynamic Connectivity
+```
+
+---
+
+# 1️⃣6️⃣ DSU Operations
+
+### Find Parent
+
+```cpp
+int findParent(int node)
+{
+    if(node == parent[node])
+        return node;
+
+    return findParent(
+        parent[node]
+    );
+}
+```
+
+---
+
+### Union
+
+```cpp
+parent[u] = v;
+```
+
+Combine two sets.
+
+---
+
+# 1️⃣7️⃣ Path Compression
+
+## Problem
+
+Without optimization:
+
+```text
+Find Parent
+```
+
+can become:
+
+```text
+O(N)
+```
+
+---
+
+### Optimization
+
+```cpp
+int findParent(int node)
+{
+    if(node == parent[node])
+        return node;
+
+    return parent[node]
+        =
+    findParent(
+        parent[node]
+    );
+}
+```
+
+---
+
+### Benefit
+
+Almost:
+
+```text
+O(1)
+```
+
+per operation.
+
+---
+
+# 1️⃣8️⃣ Union By Rank
+
+Attach smaller tree below larger tree.
+
+Maintain:
+
+```cpp
+rank[]
+```
+
+---
+
+### Code
+
+```cpp
+void unionByRank(
+    int u,
+    int v)
+{
+    u = findParent(u);
+    v = findParent(v);
+
+    if(u == v)
+        return;
+
+    if(rank[u] < rank[v])
+    {
+        parent[u] = v;
+    }
+    else if(rank[v] < rank[u])
+    {
+        parent[v] = u;
+    }
+    else
+    {
+        parent[v] = u;
+
+        rank[u]++;
+    }
+}
+```
+
+---
+
+# 1️⃣9️⃣ Union By Size
+
+Maintain:
+
+```cpp
+size[]
+```
+
+Attach smaller set to larger set.
+
+---
+
+### Code
+
+```cpp
+void unionBySize(
+    int u,
+    int v)
+{
+    u = findParent(u);
+    v = findParent(v);
+
+    if(u == v)
+        return;
+
+    if(size[u] < size[v])
+    {
+        parent[u] = v;
+
+        size[v] += size[u];
+    }
+    else
+    {
+        parent[v] = u;
+
+        size[u] += size[v];
+    }
+}
+```
+
+---
+
+# 2️⃣0️⃣ DSU Complexity
+
+With:
+
+```text
+Path Compression
++
+Union By Rank
+```
+
+Complexity becomes:
+
+```text
+O(α(N))
+```
+
+Almost constant time.
+
+---
+
+# 📊 Complexity Summary
+
+| Algorithm | Time |
+|------------|---------|
+| Bellman Ford | O(VE) |
+| Floyd Warshall | O(V³) |
+| Prim's MST | O(E log V) |
+| Kruskal MST | O(E log E) |
+| DSU Find | O(α(N)) |
+| DSU Union | O(α(N)) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Dijkstra cannot handle negative edges.
+
+✅ Bellman Ford handles negative edges.
+
+✅ Floyd Warshall gives all-pairs shortest path.
+
+✅ MST always contains V−1 edges.
+
+✅ Kruskal uses DSU.
+
+✅ DSU is one of the most important interview topics.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Forgetting path compression.
+
+❌ Not sorting edges in Kruskal.
+
+❌ Using Dijkstra for negative edges.
+
+❌ Confusing MST with shortest path.
+
+❌ Forgetting negative cycle detection.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Bellman Ford
+→ Negative Edges
+```
+
+```text
+Floyd Warshall
+→ All Pair Shortest Path
+```
+
+```text
+Prim
+→ Heap + MST
+```
+
+```text
+Kruskal
+→ Sorting + DSU
+```
+
+```text
+DSU
+→ Find + Union
+```
+
+```text
+Path Compression
+→ Faster Find
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Bellman Ford
+
+⭐ Floyd Warshall
+
+⭐ Prim's Algorithm
+
+⭐ Kruskal Algorithm
+
+⭐ Number of Operations to Make Network Connected
+
+⭐ Accounts Merge
+
+⭐ Number of Provinces (DSU)
+
+⭐ Redundant Connection
+
+⭐ Connecting Cities With Minimum Cost
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Graphs (Part 5)
+
+Topics:
+
+- Number of Islands
+- Flood Fill
+- Rotten Oranges
+- Surrounded Regions
+- 01 Matrix
+- Distance of Nearest Cell Having 1
+- Multi Source BFS
+- Grid Based Graph Problems
+- Interview Questions
