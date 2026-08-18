@@ -1,0 +1,838 @@
+# 🔥 Graphs (Part 6) - Advanced BFS Problems & Shortest Path Variations
+
+## 📌 Introduction
+
+In previous parts, we covered:
+
+✔ BFS
+
+✔ DFS
+
+✔ Dijkstra
+
+✔ MST
+
+✔ Grid Problems
+
+Now we move to advanced graph interview questions.
+
+These problems combine:
+
+```text
+BFS
+Shortest Path
+Graph Transformation
+String Graphs
+Multi-Level Traversal
+```
+
+Frequently asked in:
+
+- Amazon
+- Google
+- Microsoft
+- Adobe
+- Atlassian
+- Uber
+
+---
+
+# 📋 Topics Covered
+
+- Number of Enclaves
+- Distinct Islands
+- Shortest Path in Binary Matrix
+- Word Ladder I
+- Word Ladder II
+- Cheapest Flights Within K Stops
+- Network Delay Time
+- Advanced BFS Patterns
+
+---
+
+# 1️⃣ Number of Enclaves
+
+## Problem
+
+Given:
+
+```text
+1 → Land
+
+0 → Water
+```
+
+Count land cells that:
+
+```text
+Cannot Reach Boundary
+```
+
+---
+
+### Example
+
+```text
+0 0 0 0
+
+1 0 1 0
+
+0 1 1 0
+
+0 0 0 0
+```
+
+Output:
+
+```text
+3
+```
+
+---
+
+# 2️⃣ Idea
+
+Boundary land cells:
+
+```text
+Can escape
+```
+
+Start:
+
+```text
+DFS/BFS
+```
+
+from boundary land cells.
+
+Mark all reachable cells.
+
+Remaining land cells:
+
+```text
+Answer
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N × M)
+
+Space: O(N × M)
+```
+
+---
+
+# 3️⃣ Number of Distinct Islands
+
+## Problem
+
+Count unique island shapes.
+
+---
+
+### Example
+
+```text
+Island A
+
+1 1
+1 0
+
+Island B
+
+1 1
+1 0
+```
+
+Both are same shape.
+
+Answer:
+
+```text
+1
+```
+
+---
+
+# 4️⃣ Key Observation
+
+Store island shape relative to:
+
+```text
+Starting Cell
+```
+
+Example:
+
+```text
+(0,0)
+
+(0,1)
+
+(1,0)
+```
+
+Use:
+
+```text
+Set
+```
+
+to store unique patterns.
+
+---
+
+### Complexity
+
+```text
+Time: O(N × M)
+
+Space: O(N × M)
+```
+
+---
+
+# 5️⃣ Shortest Path in Binary Matrix
+
+## Problem
+
+Find shortest path from:
+
+```text
+Top Left
+```
+
+to:
+
+```text
+Bottom Right
+```
+
+---
+
+### Allowed
+
+```text
+8 Directions
+```
+
+---
+
+### Example
+
+```text
+0 1
+
+1 0
+```
+
+Output:
+
+```text
+2
+```
+
+---
+
+# 6️⃣ BFS Solution
+
+Because:
+
+```text
+Every Move Cost = 1
+```
+
+Use:
+
+```text
+BFS
+```
+
+---
+
+### Directions
+
+```cpp
+int dr[] =
+{
+-1,-1,-1,
+ 0, 0,
+ 1, 1, 1
+};
+
+int dc[] =
+{
+-1,0,1,
+-1,1,
+-1,0,1
+};
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N²)
+
+Space: O(N²)
+```
+
+---
+
+# 7️⃣ Word Ladder I
+
+## Problem
+
+Transform:
+
+```text
+beginWord
+```
+
+into:
+
+```text
+endWord
+```
+
+Changing:
+
+```text
+One Character
+```
+
+at a time.
+
+Each transformed word must exist in dictionary.
+
+---
+
+### Example
+
+```text
+hit
+
+↓
+
+hot
+
+↓
+
+dot
+
+↓
+
+dog
+
+↓
+
+cog
+```
+
+Answer:
+
+```text
+5
+```
+
+---
+
+# 8️⃣ Graph Interpretation
+
+Every word:
+
+```text
+Node
+```
+
+One letter difference:
+
+```text
+Edge
+```
+
+---
+
+### Goal
+
+Find:
+
+```text
+Shortest Transformation
+```
+
+---
+
+# 9️⃣ BFS Solution
+
+Use:
+
+```text
+Queue
+```
+
+Store:
+
+```text
+Word
+Level
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N × L × 26)
+
+L = Word Length
+```
+
+---
+
+# 🔟 Word Ladder II
+
+## Problem
+
+Return:
+
+```text
+All Shortest Paths
+```
+
+instead of length only.
+
+---
+
+### Example
+
+```text
+hit
+
+hot
+
+dot
+
+dog
+
+cog
+```
+
+and
+
+```text
+hit
+
+hot
+
+lot
+
+log
+
+cog
+```
+
+Return both.
+
+---
+
+# 1️⃣1️⃣ Strategy
+
+### Step 1
+
+BFS:
+
+```text
+Find Minimum Distance
+```
+
+### Step 2
+
+Backtracking:
+
+```text
+Generate Paths
+```
+
+---
+
+### Complexity
+
+Higher than Word Ladder I.
+
+---
+
+# 1️⃣2️⃣ Cheapest Flights Within K Stops
+
+## Problem
+
+Find cheapest flight:
+
+```text
+src → dst
+```
+
+with:
+
+```text
+At Most K Stops
+```
+
+---
+
+### Example
+
+```text
+0 → 1 = 100
+
+1 → 2 = 100
+
+0 → 2 = 500
+```
+
+K:
+
+```text
+1
+```
+
+Answer:
+
+```text
+200
+```
+
+---
+
+# 1️⃣3️⃣ BFS + Cost Tracking
+
+Store:
+
+```text
+Node
+
+Cost
+
+Stops
+```
+
+inside queue.
+
+---
+
+### Complexity
+
+```text
+Time: O(E)
+
+Space: O(V)
+```
+
+---
+
+# 1️⃣4️⃣ Network Delay Time
+
+## Problem
+
+Signal starts from:
+
+```text
+Source Node
+```
+
+Find time needed for:
+
+```text
+All Nodes
+```
+
+to receive signal.
+
+---
+
+### Example
+
+```text
+2 → 1 = 1
+
+2 → 3 = 1
+
+3 → 4 = 1
+```
+
+Answer:
+
+```text
+2
+```
+
+---
+
+# 1️⃣5️⃣ Observation
+
+Weighted Graph.
+
+Need shortest distance.
+
+Use:
+
+```text
+Dijkstra Algorithm
+```
+
+---
+
+### Answer
+
+```text
+Maximum Distance
+```
+
+among all nodes.
+
+---
+
+# 1️⃣6️⃣ Important BFS Patterns
+
+### Pattern 1
+
+```text
+Shortest Path
++
+Equal Weight
+```
+
+Use:
+
+```text
+BFS
+```
+
+---
+
+### Pattern 2
+
+```text
+Shortest Path
++
+Positive Weights
+```
+
+Use:
+
+```text
+Dijkstra
+```
+
+---
+
+### Pattern 3
+
+```text
+Negative Weights
+```
+
+Use:
+
+```text
+Bellman Ford
+```
+
+---
+
+### Pattern 4
+
+```text
+Grid Distance
+```
+
+Use:
+
+```text
+Multi Source BFS
+```
+
+---
+
+# 1️⃣7️⃣ Common Interview Problems
+
+### BFS
+
+```text
+Word Ladder
+```
+
+```text
+Rotten Oranges
+```
+
+```text
+01 Matrix
+```
+
+```text
+Shortest Path Binary Matrix
+```
+
+---
+
+### Dijkstra
+
+```text
+Network Delay Time
+```
+
+```text
+Minimum Effort Path
+```
+
+```text
+Path With Maximum Probability
+```
+
+---
+
+### MST
+
+```text
+Connecting Cities
+```
+
+```text
+Min Cost To Connect Points
+```
+
+---
+
+### DSU
+
+```text
+Accounts Merge
+```
+
+```text
+Redundant Connection
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time |
+|----------|----------|
+| Enclaves | O(N×M) |
+| Distinct Islands | O(N×M) |
+| Binary Matrix | O(N²) |
+| Word Ladder I | O(N×L×26) |
+| Word Ladder II | Exponential Paths |
+| Cheapest Flights | O(E) |
+| Network Delay | O(E log V) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Word Ladder = BFS.
+
+✅ Binary Matrix = BFS.
+
+✅ Cheapest Flights = BFS + Cost.
+
+✅ Network Delay = Dijkstra.
+
+✅ Distinct Islands = Relative Coordinates.
+
+✅ Enclaves = Boundary DFS/BFS.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Using DFS for shortest path.
+
+❌ Forgetting 8 directions in Binary Matrix.
+
+❌ Revisiting words in Word Ladder.
+
+❌ Ignoring stop count in Flights problem.
+
+❌ Using BFS for weighted graph.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Enclaves
+→ Boundary DFS
+```
+
+```text
+Distinct Islands
+→ Relative Coordinates
+```
+
+```text
+Binary Matrix
+→ BFS
+```
+
+```text
+Word Ladder
+→ BFS
+```
+
+```text
+Flights
+→ BFS + Stops
+```
+
+```text
+Network Delay
+→ Dijkstra
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Number of Enclaves
+
+⭐ Number of Distinct Islands
+
+⭐ Shortest Path in Binary Matrix
+
+⭐ Word Ladder I
+
+⭐ Word Ladder II
+
+⭐ Cheapest Flights Within K Stops
+
+⭐ Network Delay Time
+
+⭐ Path With Minimum Effort
+
+⭐ Minimum Multiplications To Reach End
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Graphs (Part 7)
+
+Topics:
+
+- Path With Minimum Effort
+- Minimum Multiplications To Reach End
+- Find City With Smallest Number of Neighbors
+- Number of Ways to Arrive at Destination
+- Alien Dictionary
+- Kosaraju Algorithm (SCC)
+- Bridges in Graph
+- Articulation Points
+- Advanced Interview Problems
