@@ -1,0 +1,828 @@
+# 🔥 Dynamic Programming (Part 1) - Introduction, Memoization & Tabulation
+
+## 📌 Introduction
+
+Dynamic Programming (DP) is one of the most important topics in coding interviews.
+
+Many hard problems become easy when solved using DP.
+
+DP is used when:
+
+```text
+Problem has:
+
+1. Overlapping Subproblems
+
+2. Optimal Substructure
+```
+
+Companies asking DP frequently:
+
+- Google
+- Amazon
+- Microsoft
+- Adobe
+- Atlassian
+- Uber
+
+---
+
+# 📋 Topics Covered
+
+- What is Dynamic Programming?
+- Overlapping Subproblems
+- Memoization
+- Tabulation
+- Fibonacci DP
+- Climbing Stairs
+- Frog Jump
+- House Robber
+- Space Optimization
+
+---
+
+# 1️⃣ What is Dynamic Programming?
+
+Dynamic Programming means:
+
+```text
+Store already computed answers
+and reuse them.
+```
+
+Instead of solving the same problem repeatedly.
+
+---
+
+### Example
+
+Fibonacci:
+
+```text
+F(5)
+
+=
+F(4) + F(3)
+
+F(4)
+=
+F(3) + F(2)
+```
+
+Notice:
+
+```text
+F(3)
+```
+
+is computed multiple times.
+
+DP avoids this repetition.
+
+---
+
+# 2️⃣ Overlapping Subproblems
+
+A problem has overlapping subproblems if:
+
+```text
+Same subproblem
+appears multiple times.
+```
+
+Example:
+
+```text
+Fib(5)
+
+Fib(3)
+appears repeatedly.
+```
+
+---
+
+# 3️⃣ Optimal Substructure
+
+A problem has optimal substructure if:
+
+```text
+Optimal solution
+can be built from
+optimal solutions of
+smaller subproblems.
+```
+
+Example:
+
+```text
+Shortest Path
+
+Knapsack
+
+LCS
+```
+
+---
+
+# 4️⃣ Two Ways to Solve DP
+
+## Memoization
+
+```text
+Top Down
+```
+
+Uses:
+
+```text
+Recursion
++
+DP Array
+```
+
+---
+
+## Tabulation
+
+```text
+Bottom Up
+```
+
+Uses:
+
+```text
+Loops
+```
+
+No recursion.
+
+---
+
+# 5️⃣ Fibonacci Using Recursion
+
+```cpp
+int fib(int n)
+{
+    if(n <= 1)
+        return n;
+
+    return
+    fib(n-1)
+    +
+    fib(n-2);
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(2^N)
+
+Space: O(N)
+```
+
+Very slow.
+
+---
+
+# 6️⃣ Fibonacci Using Memoization
+
+## Idea
+
+Store answer once.
+
+Reuse later.
+
+---
+
+### Code
+
+```cpp
+int solve(
+    int n,
+    vector<int>& dp)
+{
+    if(n <= 1)
+        return n;
+
+    if(dp[n] != -1)
+        return dp[n];
+
+    return dp[n] =
+        solve(n-1, dp)
+        +
+        solve(n-2, dp);
+}
+```
+
+---
+
+### Driver
+
+```cpp
+vector<int> dp(
+    n + 1,
+    -1
+);
+
+cout <<
+solve(n, dp);
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N)
+
+Space: O(N)
+```
+
+---
+
+# 7️⃣ Fibonacci Using Tabulation
+
+## Idea
+
+Build answer from smaller states.
+
+---
+
+### Code
+
+```cpp
+vector<int> dp(
+    n + 1,
+    0
+);
+
+dp[0] = 0;
+dp[1] = 1;
+
+for(int i=2;i<=n;i++)
+{
+    dp[i] =
+    dp[i-1]
+    +
+    dp[i-2];
+}
+
+cout << dp[n];
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N)
+
+Space: O(N)
+```
+
+---
+
+# 8️⃣ Space Optimized Fibonacci
+
+Observe:
+
+```text
+Only previous
+two values needed.
+```
+
+---
+
+### Code
+
+```cpp
+int prev2 = 0;
+int prev1 = 1;
+
+for(int i=2;i<=n;i++)
+{
+    int current =
+        prev1 + prev2;
+
+    prev2 = prev1;
+
+    prev1 = current;
+}
+
+cout << prev1;
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N)
+
+Space: O(1)
+```
+
+---
+
+# 9️⃣ Climbing Stairs
+
+## Problem
+
+You can climb:
+
+```text
+1 step
+
+or
+
+2 steps
+```
+
+Find total ways.
+
+---
+
+### Example
+
+```text
+n = 3
+```
+
+Ways:
+
+```text
+1+1+1
+
+1+2
+
+2+1
+```
+
+Answer:
+
+```text
+3
+```
+
+---
+
+# 🔟 Recurrence Relation
+
+To reach:
+
+```text
+Nth Stair
+```
+
+You can come from:
+
+```text
+n-1
+
+or
+
+n-2
+```
+
+Therefore:
+
+```cpp
+dp[n]
+=
+dp[n-1]
++
+dp[n-2]
+```
+
+Exactly Fibonacci.
+
+---
+
+### Complexity
+
+```text
+Time: O(N)
+
+Space: O(N)
+```
+
+---
+
+# 1️⃣1️⃣ Frog Jump
+
+## Problem
+
+A frog can jump:
+
+```text
+1 step
+
+or
+
+2 steps
+```
+
+Energy cost:
+
+```text
+abs(
+height[i]
+-
+height[j]
+)
+```
+
+Minimize total energy.
+
+---
+
+### Example
+
+```text
+10 20 30 10
+```
+
+Answer:
+
+```text
+20
+```
+
+---
+
+# 1️⃣2️⃣ Recurrence
+
+```cpp
+dp[i]
+=
+min(
+dp[i-1]
++
+abs(
+h[i]
+-
+h[i-1]
+),
+
+dp[i-2]
++
+abs(
+h[i]
+-
+h[i-2]
+)
+)
+```
+
+---
+
+### Memoization Code
+
+```cpp
+int solve(
+    int index,
+    vector<int>& h,
+    vector<int>& dp)
+{
+    if(index == 0)
+        return 0;
+
+    if(dp[index] != -1)
+        return dp[index];
+
+    int left =
+        solve(
+            index-1,
+            h,
+            dp
+        )
+        +
+        abs(
+            h[index]
+            -
+            h[index-1]
+        );
+
+    int right = INT_MAX;
+
+    if(index > 1)
+    {
+        right =
+        solve(
+            index-2,
+            h,
+            dp
+        )
+        +
+        abs(
+            h[index]
+            -
+            h[index-2]
+        );
+    }
+
+    return dp[index] =
+        min(left,right);
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N)
+
+Space: O(N)
+```
+
+---
+
+# 1️⃣3️⃣ House Robber
+
+## Problem
+
+Rob houses.
+
+Cannot rob:
+
+```text
+Adjacent Houses
+```
+
+---
+
+### Example
+
+```text
+2 7 9 3 1
+```
+
+Answer:
+
+```text
+12
+```
+
+Choose:
+
+```text
+2 + 9 + 1
+```
+
+---
+
+# 1️⃣4️⃣ Recurrence
+
+At every house:
+
+### Option 1
+
+```text
+Pick Current House
+```
+
+Then:
+
+```text
+Skip Previous House
+```
+
+---
+
+### Option 2
+
+```text
+Do Not Pick
+```
+
+---
+
+Formula:
+
+```cpp
+dp[i]
+=
+max(
+arr[i]
++
+dp[i-2],
+
+dp[i-1]
+)
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N)
+
+Space: O(N)
+```
+
+---
+
+# 1️⃣5️⃣ DP Thinking Pattern
+
+For every DP problem:
+
+### Step 1
+
+Identify:
+
+```text
+State
+```
+
+---
+
+### Step 2
+
+Find:
+
+```text
+Recurrence Relation
+```
+
+---
+
+### Step 3
+
+Memoization
+
+---
+
+### Step 4
+
+Convert to Tabulation
+
+---
+
+### Step 5
+
+Space Optimization
+
+---
+
+# 1️⃣6️⃣ Memoization vs Tabulation
+
+| Memoization | Tabulation |
+|------------|------------|
+| Top Down | Bottom Up |
+| Recursion | Iteration |
+| Easy to Write | Faster |
+| Uses Stack Space | No Stack Space |
+| O(N) | O(N) |
+
+---
+
+# 1️⃣7️⃣ Common DP Patterns
+
+### Fibonacci Pattern
+
+```text
+Climbing Stairs
+
+House Robber
+
+Decode Ways
+```
+
+---
+
+### Min Cost Pattern
+
+```text
+Frog Jump
+
+Min Cost Climbing Stairs
+```
+
+---
+
+### Pick / Not Pick
+
+```text
+House Robber
+
+Knapsack
+
+Subset Sum
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|----------|----------|
+| Fibonacci Memoization | O(N) | O(N) |
+| Fibonacci Tabulation | O(N) | O(N) |
+| Fibonacci Optimized | O(N) | O(1) |
+| Climbing Stairs | O(N) | O(N) |
+| Frog Jump | O(N) | O(N) |
+| House Robber | O(N) | O(N) |
+
+---
+
+# 💡 Interview Tips
+
+✅ DP = Store & Reuse.
+
+✅ First write recursion.
+
+✅ Then add memoization.
+
+✅ Then convert to tabulation.
+
+✅ Finally optimize space.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Directly writing DP without recurrence.
+
+❌ Forgetting base cases.
+
+❌ Wrong state definition.
+
+❌ Not optimizing space.
+
+❌ Recomputing same states.
+
+---
+
+# 📝 Quick Revision
+
+```text
+DP
+→ Store Answers
+```
+
+```text
+Memoization
+→ Top Down
+```
+
+```text
+Tabulation
+→ Bottom Up
+```
+
+```text
+Fibonacci
+→ DP Basics
+```
+
+```text
+Frog Jump
+→ Min Cost DP
+```
+
+```text
+House Robber
+→ Pick / Not Pick
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Fibonacci Number
+
+⭐ Climbing Stairs
+
+⭐ Frog Jump
+
+⭐ Frog Jump K Distance
+
+⭐ House Robber
+
+⭐ House Robber II
+
+⭐ Min Cost Climbing Stairs
+
+⭐ Ninja Training
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Dynamic Programming (Part 2)
+
+Topics:
+
+- Frog Jump K Distance
+- Maximum Sum of Non Adjacent Elements
+- House Robber II
+- Ninja Training
+- Grid Unique Paths
+- Minimum Path Sum
+- Triangle DP
+- Grid DP Pattern
