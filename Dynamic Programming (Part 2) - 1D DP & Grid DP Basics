@@ -1,0 +1,802 @@
+# 🔥 Dynamic Programming (Part 2) - 1D DP & Grid DP Basics
+
+## 📌 Introduction
+
+In Part 1, we learned:
+
+✔ Fibonacci
+
+✔ Climbing Stairs
+
+✔ Frog Jump
+
+✔ House Robber
+
+Now we move towards:
+
+```text
+1D DP Advanced Problems
++
+Grid DP Problems
+```
+
+These are among the most frequently asked DP questions in interviews.
+
+---
+
+# 📋 Topics Covered
+
+- Frog Jump K Distance
+- Maximum Sum of Non Adjacent Elements
+- House Robber II
+- Ninja Training
+- Grid Unique Paths
+- Unique Paths II
+- Minimum Path Sum
+- Triangle DP
+
+---
+
+# 1️⃣ Frog Jump K Distance
+
+## Problem
+
+Frog can jump:
+
+```text
+1 to K steps
+```
+
+at a time.
+
+Energy Cost:
+
+```text
+abs(
+height[i]
+-
+height[j]
+)
+```
+
+Find minimum energy.
+
+---
+
+### Example
+
+```text
+10 30 40 50 20
+
+K = 3
+```
+
+---
+
+# 2️⃣ Recurrence
+
+For every position:
+
+```cpp
+dp[i]
+=
+min(
+all possible jumps
+)
+```
+
+Formula:
+
+```cpp
+dp[i] =
+min(
+dp[i-j]
++
+abs(
+h[i]
+-
+h[i-j]
+)
+)
+```
+
+where:
+
+```text
+1 ≤ j ≤ K
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N*K)
+
+Space: O(N)
+```
+
+---
+
+# 3️⃣ Maximum Sum of Non Adjacent Elements
+
+## Problem
+
+Find:
+
+```text
+Maximum Sum
+```
+
+without taking adjacent elements.
+
+---
+
+### Example
+
+```text
+2 1 4 9
+```
+
+Answer:
+
+```text
+11
+```
+
+Choose:
+
+```text
+2 + 9
+```
+
+---
+
+# 4️⃣ Recurrence
+
+### Pick
+
+```cpp
+arr[i]
++
+dp[i-2]
+```
+
+### Not Pick
+
+```cpp
+dp[i-1]
+```
+
+Formula:
+
+```cpp
+dp[i]
+=
+max(
+pick,
+notPick
+)
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N)
+
+Space: O(N)
+```
+
+---
+
+# 5️⃣ House Robber II
+
+## Problem
+
+Houses are arranged in:
+
+```text
+Circle
+```
+
+First and last house become adjacent.
+
+---
+
+### Example
+
+```text
+2 3 2
+```
+
+Answer:
+
+```text
+3
+```
+
+---
+
+# 6️⃣ Observation
+
+Cannot take:
+
+```text
+First House
+and
+Last House
+Together
+```
+
+Solve:
+
+### Case 1
+
+```text
+Exclude First House
+```
+
+### Case 2
+
+```text
+Exclude Last House
+```
+
+Apply:
+
+```text
+House Robber I
+```
+
+Take maximum.
+
+---
+
+### Complexity
+
+```text
+Time: O(N)
+
+Space: O(N)
+```
+
+---
+
+# 7️⃣ Ninja Training
+
+## Problem
+
+For each day:
+
+```text
+3 Activities
+```
+
+Cannot perform same activity on consecutive days.
+
+---
+
+### Example
+
+```text
+Day 1
+
+10 40 70
+
+Day 2
+
+20 50 80
+
+Day 3
+
+30 60 90
+```
+
+Output:
+
+```text
+210
+```
+
+---
+
+# 8️⃣ State Definition
+
+State:
+
+```cpp
+dp[day][last]
+```
+
+Meaning:
+
+```text
+Maximum points till day
+if last activity was "last"
+```
+
+---
+
+### Recurrence
+
+Try all activities except:
+
+```text
+last
+```
+
+Take maximum.
+
+---
+
+### Complexity
+
+```text
+Time: O(N × 4 × 3)
+
+Space: O(N × 4)
+```
+
+---
+
+# 9️⃣ Grid DP Introduction
+
+Most Grid DP Problems involve:
+
+```text
+Move Right
+
+Move Down
+```
+
+---
+
+### General State
+
+```cpp
+dp[row][col]
+```
+
+Meaning:
+
+```text
+Answer till cell
+(row,col)
+```
+
+---
+
+# 🔟 Unique Paths
+
+## Problem
+
+Robot starts:
+
+```text
+(0,0)
+```
+
+Reach:
+
+```text
+(n-1,m-1)
+```
+
+Allowed moves:
+
+```text
+Right
+
+Down
+```
+
+---
+
+### Example
+
+```text
+3 × 3 Grid
+```
+
+Answer:
+
+```text
+6
+```
+
+---
+
+# 1️⃣1️⃣ Recurrence
+
+To reach:
+
+```text
+(i,j)
+```
+
+You can come from:
+
+```text
+Top
+
+Left
+```
+
+Formula:
+
+```cpp
+dp[i][j]
+=
+dp[i-1][j]
++
+dp[i][j-1]
+```
+
+---
+
+### Base Case
+
+```cpp
+dp[0][0] = 1
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N*M)
+
+Space: O(N*M)
+```
+
+---
+
+# 1️⃣2️⃣ Unique Paths II
+
+## Problem
+
+Some cells contain:
+
+```text
+Obstacle
+```
+
+Cannot visit them.
+
+---
+
+### Example
+
+```text
+0 0 0
+
+0 1 0
+
+0 0 0
+```
+
+Answer:
+
+```text
+2
+```
+
+---
+
+### Change in Recurrence
+
+If obstacle:
+
+```cpp
+dp[i][j] = 0;
+```
+
+Otherwise:
+
+```cpp
+dp[i][j]
+=
+up + left
+```
+
+---
+
+### Complexity
+
+```text
+O(N*M)
+```
+
+---
+
+# 1️⃣3️⃣ Minimum Path Sum
+
+## Problem
+
+Find minimum cost path.
+
+Allowed:
+
+```text
+Right
+
+Down
+```
+
+---
+
+### Example
+
+```text
+1 3 1
+
+1 5 1
+
+4 2 1
+```
+
+Output:
+
+```text
+7
+```
+
+Path:
+
+```text
+1 → 3 → 1 → 1 → 1
+```
+
+---
+
+# 1️⃣4️⃣ Recurrence
+
+```cpp
+dp[i][j]
+=
+grid[i][j]
++
+min(
+dp[i-1][j],
+dp[i][j-1]
+)
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N*M)
+
+Space: O(N*M)
+```
+
+---
+
+# 1️⃣5️⃣ Triangle Problem
+
+## Problem
+
+Given:
+
+```text
+Triangle
+```
+
+Find minimum path sum.
+
+---
+
+### Example
+
+```text
+      2
+
+     3 4
+
+    6 5 7
+
+   4 1 8 3
+```
+
+Output:
+
+```text
+11
+```
+
+Path:
+
+```text
+2 → 3 → 5 → 1
+```
+
+---
+
+# 1️⃣6️⃣ Recurrence
+
+At each cell:
+
+```text
+Down
+
+Diagonal
+```
+
+Formula:
+
+```cpp
+dp[i][j]
+=
+triangle[i][j]
++
+min(
+dp[i+1][j],
+dp[i+1][j+1]
+)
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N²)
+
+Space: O(N²)
+```
+
+---
+
+# 1️⃣7️⃣ Common Grid DP Pattern
+
+### State
+
+```cpp
+dp[i][j]
+```
+
+---
+
+### Moves
+
+```text
+Top
+
+Left
+
+Diagonal
+```
+
+---
+
+### Formula
+
+```cpp
+Current Cell
++
+Best Previous State
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|----------|----------|
+| Frog Jump K | O(N*K) | O(N) |
+| Max Non Adjacent Sum | O(N) | O(N) |
+| House Robber II | O(N) | O(N) |
+| Ninja Training | O(N) | O(N) |
+| Unique Paths | O(N*M) | O(N*M) |
+| Unique Paths II | O(N*M) | O(N*M) |
+| Minimum Path Sum | O(N*M) | O(N*M) |
+| Triangle | O(N²) | O(N²) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Define state clearly.
+
+✅ Write recurrence before coding.
+
+✅ Grid DP mostly comes from Top/Left.
+
+✅ Ninja Training = Last Activity State.
+
+✅ House Robber II = Two Cases.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Wrong base cases.
+
+❌ Forgetting obstacle handling.
+
+❌ Incorrect state definition.
+
+❌ Missing diagonal transition in Triangle.
+
+❌ Ignoring circular condition in House Robber II.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Frog Jump K
+→ O(N*K)
+```
+
+```text
+Max Non Adjacent
+→ Pick / Not Pick
+```
+
+```text
+House Robber II
+→ Two Cases
+```
+
+```text
+Ninja Training
+→ DP[Day][Last]
+```
+
+```text
+Unique Paths
+→ Top + Left
+```
+
+```text
+Minimum Path Sum
+→ Min(Top, Left)
+```
+
+```text
+Triangle
+→ Down + Diagonal
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Frog Jump K Distance
+
+⭐ Maximum Sum of Non Adjacent Elements
+
+⭐ House Robber II
+
+⭐ Ninja Training
+
+⭐ Unique Paths
+
+⭐ Unique Paths II
+
+⭐ Minimum Path Sum
+
+⭐ Triangle
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Dynamic Programming (Part 3)
+
+Topics:
+
+- Maximum Falling Path Sum
+- Cherry Pickup II
+- Subset Sum Equal to K
+- Partition Equal Subset Sum
+- Count Subsets With Sum K
+- 0/1 Knapsack
+- DP on Subsequences
+- Pick / Not Pick Pattern
