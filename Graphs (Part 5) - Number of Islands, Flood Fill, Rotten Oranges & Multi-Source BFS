@@ -1,0 +1,765 @@
+# 🔥 Graphs (Part 5) - Number of Islands, Flood Fill, Rotten Oranges & Multi-Source BFS
+
+## 📌 Introduction
+
+In this part, we move to:
+
+```text
+Grid Based Graph Problems
+```
+
+These are among the most frequently asked graph questions in interviews.
+
+Most grid problems use:
+
+```text
+BFS
+DFS
+Multi Source BFS
+```
+
+---
+
+# 📋 Topics Covered
+
+- Number of Islands
+- Flood Fill
+- Rotten Oranges
+- 01 Matrix
+- Distance of Nearest Cell Having 1
+- Surrounded Regions
+- Multi Source BFS
+- Grid Traversal Pattern
+
+---
+
+# 1️⃣ Grid as a Graph
+
+A grid can be treated as a graph.
+
+Example:
+
+```text
+1 1 0
+
+0 1 0
+
+1 0 1
+```
+
+Each cell is:
+
+```text
+A Node
+```
+
+Neighbors:
+
+```text
+Up
+Down
+Left
+Right
+```
+
+---
+
+# 2️⃣ Direction Arrays
+
+Used in almost every grid problem.
+
+```cpp
+int dr[] =
+{
+   -1,
+    0,
+    1,
+    0
+};
+
+int dc[] =
+{
+    0,
+    1,
+    0,
+   -1
+};
+```
+
+Movement:
+
+```text
+Up
+Right
+Down
+Left
+```
+
+---
+
+# 3️⃣ Number of Islands
+
+## Problem
+
+Given:
+
+```text
+0 → Water
+
+1 → Land
+```
+
+Count total islands.
+
+---
+
+### Example
+
+```text
+1 1 0 0
+
+1 0 0 1
+
+0 0 1 1
+```
+
+Answer:
+
+```text
+3
+```
+
+---
+
+# 4️⃣ Idea
+
+Whenever:
+
+```text
+Unvisited Land Found
+```
+
+Start:
+
+```text
+DFS/BFS
+```
+
+Mark all connected land.
+
+Increase count.
+
+---
+
+# 5️⃣ DFS Code
+
+```cpp
+void dfs(
+    int row,
+    int col,
+    vector<vector<int>>& grid,
+    vector<vector<int>>& vis)
+{
+    int n = grid.size();
+    int m = grid[0].size();
+
+    vis[row][col] = 1;
+
+    int dr[] =
+    {-1,0,1,0};
+
+    int dc[] =
+    {0,1,0,-1};
+
+    for(int i=0;i<4;i++)
+    {
+        int nr =
+            row + dr[i];
+
+        int nc =
+            col + dc[i];
+
+        if(
+            nr>=0 &&
+            nc>=0 &&
+            nr<n &&
+            nc<m &&
+            !vis[nr][nc] &&
+            grid[nr][nc]==1
+        )
+        {
+            dfs(
+                nr,
+                nc,
+                grid,
+                vis
+            );
+        }
+    }
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N*M)
+
+Space: O(N*M)
+```
+
+---
+
+# 6️⃣ Flood Fill
+
+## Problem
+
+Replace connected cells having:
+
+```text
+Old Color
+```
+
+with:
+
+```text
+New Color
+```
+
+---
+
+### Example
+
+```text
+1 1 1
+
+1 1 0
+
+1 0 1
+```
+
+Change:
+
+```text
+1 → 2
+```
+
+Result:
+
+```text
+2 2 2
+
+2 2 0
+
+2 0 1
+```
+
+---
+
+# 7️⃣ DFS Solution
+
+```cpp
+void floodFill(
+    int row,
+    int col,
+    int initialColor,
+    int newColor,
+    vector<vector<int>>& image)
+{
+    image[row][col] =
+        newColor;
+
+    int dr[] =
+    {-1,0,1,0};
+
+    int dc[] =
+    {0,1,0,-1};
+
+    for(int i=0;i<4;i++)
+    {
+        int nr =
+            row + dr[i];
+
+        int nc =
+            col + dc[i];
+
+        if(
+            nr>=0 &&
+            nc>=0 &&
+            nr<image.size() &&
+            nc<image[0].size() &&
+            image[nr][nc]
+            ==
+            initialColor
+        )
+        {
+            floodFill(
+                nr,
+                nc,
+                initialColor,
+                newColor,
+                image
+            );
+        }
+    }
+}
+```
+
+---
+
+# 8️⃣ Rotten Oranges
+
+## Problem
+
+Cells:
+
+```text
+0 → Empty
+
+1 → Fresh Orange
+
+2 → Rotten Orange
+```
+
+Every minute:
+
+```text
+Rotten Orange
+infects adjacent Fresh Orange
+```
+
+Find:
+
+```text
+Minimum Time
+```
+
+to rot all oranges.
+
+---
+
+# 9️⃣ Key Observation
+
+All rotten oranges start spreading:
+
+```text
+At Same Time
+```
+
+Use:
+
+```text
+Multi Source BFS
+```
+
+---
+
+# 🔟 Multi Source BFS
+
+Instead of:
+
+```text
+One Source
+```
+
+Push:
+
+```text
+All Sources
+```
+
+into queue initially.
+
+---
+
+### Queue
+
+```cpp
+queue<
+pair<pair<int,int>,int>
+> q;
+```
+
+Store:
+
+```text
+Position
+Time
+```
+
+---
+
+# 1️⃣1️⃣ Rotten Oranges Code Idea
+
+```cpp
+Push all rotten oranges
+
+Run BFS
+
+Spread infection
+
+Track maximum time
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N*M)
+
+Space: O(N*M)
+```
+
+---
+
+# 1️⃣2️⃣ 01 Matrix
+
+## Problem
+
+Given matrix:
+
+```text
+0
+1
+```
+
+For every cell find:
+
+```text
+Distance to nearest 0
+```
+
+---
+
+### Example
+
+```text
+0 0 0
+
+0 1 0
+
+1 1 1
+```
+
+Output:
+
+```text
+0 0 0
+
+0 1 0
+
+1 2 1
+```
+
+---
+
+# 1️⃣3️⃣ Best Approach
+
+Start BFS from:
+
+```text
+All Zero Cells
+```
+
+simultaneously.
+
+---
+
+### Why?
+
+Nearest zero is discovered first.
+
+---
+
+### Complexity
+
+```text
+Time: O(N*M)
+
+Space: O(N*M)
+```
+
+---
+
+# 1️⃣4️⃣ Distance of Nearest Cell Having 1
+
+Same concept.
+
+Instead of:
+
+```text
+Starting from 0
+```
+
+Start from:
+
+```text
+All 1 Cells
+```
+
+---
+
+# 1️⃣5️⃣ Surrounded Regions
+
+## Problem
+
+Board contains:
+
+```text
+X
+O
+```
+
+Convert:
+
+```text
+Surrounded O
+```
+
+into:
+
+```text
+X
+```
+
+---
+
+### Example
+
+```text
+X X X X
+
+X O O X
+
+X X O X
+
+X O X X
+```
+
+Result:
+
+```text
+X X X X
+
+X X X X
+
+X X X X
+
+X O X X
+```
+
+---
+
+# 1️⃣6️⃣ Trick
+
+Boundary O's:
+
+```text
+Can Never Be Captured
+```
+
+---
+
+### Steps
+
+```text
+Start DFS/BFS from boundary O
+
+Mark Safe
+
+Convert remaining O to X
+```
+
+---
+
+# 1️⃣7️⃣ Grid DFS Template
+
+```cpp
+void dfs(
+    int row,
+    int col)
+{
+    vis[row][col]=1;
+
+    for(all directions)
+    {
+        if(valid)
+        {
+            dfs(
+                newRow,
+                newCol
+            );
+        }
+    }
+}
+```
+
+---
+
+# 1️⃣8️⃣ Grid BFS Template
+
+```cpp
+queue<pair<int,int>> q;
+
+q.push({row,col});
+
+while(!q.empty())
+{
+    auto current =
+        q.front();
+
+    q.pop();
+
+    for(all directions)
+    {
+        if(valid)
+        {
+            q.push(
+                neighbor
+            );
+        }
+    }
+}
+```
+
+---
+
+# 1️⃣9️⃣ Multi Source BFS Pattern
+
+Used when:
+
+```text
+Multiple Starting Points
+```
+
+exist.
+
+Examples:
+
+```text
+Rotten Oranges
+
+01 Matrix
+
+Nearest Cell
+
+Fire Spread
+
+Network Spread
+```
+
+---
+
+# 2️⃣0️⃣ Complexity Summary
+
+| Problem | Time | Space |
+|----------|----------|----------|
+| Number of Islands | O(N*M) | O(N*M) |
+| Flood Fill | O(N*M) | O(N*M) |
+| Rotten Oranges | O(N*M) | O(N*M) |
+| 01 Matrix | O(N*M) | O(N*M) |
+| Surrounded Regions | O(N*M) | O(N*M) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Grid = Graph.
+
+✅ Cells are nodes.
+
+✅ Use direction arrays.
+
+✅ Multi Source BFS is extremely important.
+
+✅ DFS and BFS both work for island problems.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Forgetting visited array.
+
+❌ Going outside matrix boundary.
+
+❌ Not pushing all sources in Multi Source BFS.
+
+❌ Revisiting cells repeatedly.
+
+❌ Incorrect row-column indexing.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Number of Islands
+→ DFS/BFS
+```
+
+```text
+Flood Fill
+→ DFS/BFS
+```
+
+```text
+Rotten Oranges
+→ Multi Source BFS
+```
+
+```text
+01 Matrix
+→ Multi Source BFS
+```
+
+```text
+Surrounded Regions
+→ Boundary DFS
+```
+
+```text
+Grid Problems
+→ Direction Arrays
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Number of Islands
+
+⭐ Flood Fill
+
+⭐ Rotten Oranges
+
+⭐ 01 Matrix
+
+⭐ Surrounded Regions
+
+⭐ Number of Enclaves
+
+⭐ Walls and Gates
+
+⭐ As Far from Land as Possible
+
+⭐ Pacific Atlantic Water Flow
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Graphs (Part 6)
+
+Topics:
+
+- Number of Enclaves
+- Distinct Islands
+- Word Ladder I
+- Word Ladder II
+- Alien Dictionary
+- Shortest Path in Binary Matrix
+- Minimum Effort Path
+- Advanced BFS Problems
+- FAANG Interview Questions
