@@ -1,0 +1,734 @@
+# 🔥 Dynamic Programming (Part 3) - DP on Subsequences & 0/1 Knapsack
+
+## 📌 Introduction
+
+In Part 2, we learned:
+
+✔ Frog Jump K
+
+✔ House Robber II
+
+✔ Ninja Training
+
+✔ Grid DP
+
+Now we move to one of the most important DP patterns:
+
+```text
+DP on Subsequences
+```
+
+This pattern is heavily asked in:
+
+- Amazon
+- Google
+- Microsoft
+- Adobe
+- Uber
+
+---
+
+# 📋 Topics Covered
+
+- Maximum Falling Path Sum
+- Subset Sum Equal to K
+- Partition Equal Subset Sum
+- Count Subsets With Sum K
+- 0/1 Knapsack
+- DP on Subsequences
+- Pick / Not Pick Pattern
+
+---
+
+# 1️⃣ DP on Subsequences
+
+## What is a Subsequence?
+
+A subsequence is formed by:
+
+```text
+Picking
+or
+Not Picking
+elements
+```
+
+without changing order.
+
+---
+
+### Example
+
+```text
+Array:
+
+1 2 3
+```
+
+Subsequences:
+
+```text
+{}
+
+{1}
+
+{2}
+
+{3}
+
+{1,2}
+
+{1,3}
+
+{2,3}
+
+{1,2,3}
+```
+
+---
+
+# 2️⃣ Pick / Not Pick Pattern
+
+At every index:
+
+### Option 1
+
+```text
+Pick Current Element
+```
+
+### Option 2
+
+```text
+Do Not Pick Current Element
+```
+
+This is the foundation of:
+
+```text
+Subset Sum
+
+Knapsack
+
+Partition Problems
+```
+
+---
+
+# 3️⃣ Maximum Falling Path Sum
+
+## Problem
+
+Start from any cell in first row.
+
+Reach last row.
+
+Allowed moves:
+
+```text
+Down
+
+Left Diagonal
+
+Right Diagonal
+```
+
+Find maximum sum.
+
+---
+
+### Example
+
+```text
+1 2 10 4
+
+100 3 2 1
+
+1 1 20 2
+
+1 2 2 1
+```
+
+Answer:
+
+```text
+105
+```
+
+---
+
+# 4️⃣ Recurrence
+
+```cpp
+dp[i][j]
+=
+matrix[i][j]
++
+max(
+up,
+leftDiagonal,
+rightDiagonal
+)
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N*M)
+
+Space: O(N*M)
+```
+
+---
+
+# 5️⃣ Subset Sum Equal To K
+
+## Problem
+
+Determine whether a subset exists whose sum equals:
+
+```text
+K
+```
+
+---
+
+### Example
+
+```text
+1 2 3 4
+
+K = 5
+```
+
+Answer:
+
+```text
+True
+```
+
+Because:
+
+```text
+1 + 4 = 5
+```
+
+---
+
+# 6️⃣ State Definition
+
+```cpp
+dp[index][target]
+```
+
+Meaning:
+
+```text
+Can we make target
+using elements
+0..index
+```
+
+---
+
+# 7️⃣ Recurrence
+
+### Not Pick
+
+```cpp
+dp[i-1][target]
+```
+
+### Pick
+
+```cpp
+dp[i-1][target-arr[i]]
+```
+
+Formula:
+
+```cpp
+pick || notPick
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N*K)
+
+Space: O(N*K)
+```
+
+---
+
+# 8️⃣ Partition Equal Subset Sum
+
+## Problem
+
+Can array be divided into:
+
+```text
+Two Equal Sum Parts
+```
+
+---
+
+### Example
+
+```text
+1 5 11 5
+```
+
+Answer:
+
+```text
+True
+```
+
+---
+
+# 9️⃣ Observation
+
+If total sum:
+
+```text
+22
+```
+
+Need subset:
+
+```text
+11
+```
+
+Problem becomes:
+
+```text
+Subset Sum = Total/2
+```
+
+---
+
+### Complexity
+
+```text
+O(N * Sum)
+```
+
+---
+
+# 🔟 Count Subsets With Sum K
+
+## Problem
+
+Count total subsets whose sum equals:
+
+```text
+K
+```
+
+---
+
+### Example
+
+```text
+1 2 2 3
+
+K = 3
+```
+
+Subsets:
+
+```text
+{1,2}
+
+{1,2}
+
+{3}
+```
+
+Answer:
+
+```text
+3
+```
+
+---
+
+# 1️⃣1️⃣ Recurrence
+
+Instead of:
+
+```text
+OR
+```
+
+Use:
+
+```text
+Addition
+```
+
+Formula:
+
+```cpp
+dp[i][target]
+=
+pick
++
+notPick
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N*K)
+
+Space: O(N*K)
+```
+
+---
+
+# 1️⃣2️⃣ 0/1 Knapsack
+
+## Problem
+
+Given:
+
+```text
+Weight[]
+
+Value[]
+
+Capacity W
+```
+
+Pick items to maximize value.
+
+---
+
+### Constraint
+
+Each item:
+
+```text
+Either Pick Once
+
+or
+
+Do Not Pick
+```
+
+---
+
+### Example
+
+```text
+Weight:
+
+1 2 4 5
+
+Value:
+
+5 4 8 6
+
+W = 5
+```
+
+Answer:
+
+```text
+13
+```
+
+Pick:
+
+```text
+1 + 4
+```
+
+---
+
+# 1️⃣3️⃣ State
+
+```cpp
+dp[index][capacity]
+```
+
+Meaning:
+
+```text
+Maximum value
+using first index items
+and remaining capacity
+```
+
+---
+
+# 1️⃣4️⃣ Recurrence
+
+### Not Pick
+
+```cpp
+dp[i-1][cap]
+```
+
+### Pick
+
+```cpp
+value[i]
++
+dp[i-1][cap-weight[i]]
+```
+
+Formula:
+
+```cpp
+max(
+pick,
+notPick
+)
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N*W)
+
+Space: O(N*W)
+```
+
+---
+
+# 1️⃣5️⃣ Memoization Template
+
+```cpp
+int solve(
+    int index,
+    int target,
+    vector<int>& arr,
+    vector<vector<int>>& dp)
+{
+    if(target == 0)
+        return 1;
+
+    if(index == 0)
+    {
+        return
+        arr[0] == target;
+    }
+
+    if(dp[index][target] != -1)
+        return dp[index][target];
+
+    int notPick =
+        solve(
+            index-1,
+            target,
+            arr,
+            dp
+        );
+
+    int pick = 0;
+
+    if(arr[index] <= target)
+    {
+        pick =
+        solve(
+            index-1,
+            target-arr[index],
+            arr,
+            dp
+        );
+    }
+
+    return dp[index][target] =
+        pick || notPick;
+}
+```
+
+---
+
+# 1️⃣6️⃣ Common DP on Subsequences Problems
+
+### Easy
+
+```text
+Subset Sum
+```
+
+```text
+Partition Equal Subset Sum
+```
+
+---
+
+### Medium
+
+```text
+Count Subsets Sum K
+```
+
+```text
+Target Sum
+```
+
+---
+
+### Hard
+
+```text
+0/1 Knapsack
+```
+
+```text
+Minimum Difference Partition
+```
+
+---
+
+# 1️⃣7️⃣ DP Conversion Trick
+
+### Recursion
+
+```text
+Exponential
+```
+
+↓
+
+### Memoization
+
+```text
+Store States
+```
+
+↓
+
+### Tabulation
+
+```text
+Bottom Up
+```
+
+↓
+
+### Space Optimization
+
+```text
+1D Array
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|----------|----------|
+| Falling Path Sum | O(N*M) | O(N*M) |
+| Subset Sum | O(N*K) | O(N*K) |
+| Partition Equal Sum | O(N*Sum) | O(N*Sum) |
+| Count Subsets | O(N*K) | O(N*K) |
+| 0/1 Knapsack | O(N*W) | O(N*W) |
+
+---
+
+# 💡 Interview Tips
+
+✅ DP on Subsequences = Pick / Not Pick.
+
+✅ Subset Sum is the base problem.
+
+✅ Partition Equal Sum reduces to Subset Sum.
+
+✅ Knapsack is one of the most important DP problems.
+
+✅ Learn state definition carefully.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Wrong base cases.
+
+❌ Forgetting target = 0 case.
+
+❌ Confusing Count and Boolean DP.
+
+❌ Wrong state dimensions.
+
+❌ Not checking weight <= capacity.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Subset Sum
+→ Pick / Not Pick
+```
+
+```text
+Partition Equal Sum
+→ Sum/2
+```
+
+```text
+Count Subsets
+→ Addition
+```
+
+```text
+0/1 Knapsack
+→ Max(Pick, Not Pick)
+```
+
+```text
+Falling Path
+→ Up + Diagonals
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Subset Sum Equal To K
+
+⭐ Partition Equal Subset Sum
+
+⭐ Count Subsets With Sum K
+
+⭐ Target Sum
+
+⭐ 0/1 Knapsack
+
+⭐ Minimum Subset Sum Difference
+
+⭐ Maximum Falling Path Sum
+
+⭐ Partition With Given Difference
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Dynamic Programming (Part 4)
+
+Topics:
+
+- Unbounded Knapsack
+- Rod Cutting Problem
+- Coin Change I
+- Coin Change II
+- Minimum Coins
+- Target Sum
+- Partition With Given Difference
+- DP on Subsequences Advanced
