@@ -1,0 +1,746 @@
+# 🔥 Dynamic Programming (Part 6) - DP on Stocks & String Matching
+
+## 📌 Introduction
+
+In Part 5, we learned:
+
+✔ LCS
+
+✔ Longest Common Substring
+
+✔ Edit Distance
+
+✔ Palindromic DP
+
+Now we move to:
+
+```text
+Advanced String DP
++
+DP on Stocks
+```
+
+These are among the most frequently asked interview questions.
+
+---
+
+# 📋 Topics Covered
+
+- Distinct Subsequences
+- Wildcard Matching
+- Best Time to Buy & Sell Stock I
+- Stock II
+- Stock III
+- Stock IV
+- Stock With Cooldown
+- DP on Stocks Pattern
+
+---
+
+# 1️⃣ Distinct Subsequences
+
+## Problem
+
+Count how many times:
+
+```text
+String T
+```
+
+appears as a subsequence in:
+
+```text
+String S
+```
+
+---
+
+### Example
+
+```text
+S = rabbbit
+
+T = rabbit
+```
+
+Answer:
+
+```text
+3
+```
+
+---
+
+# 2️⃣ State Definition
+
+```cpp
+dp[i][j]
+```
+
+Meaning:
+
+```text
+Ways to form
+
+T[0...j]
+
+from
+
+S[0...i]
+```
+
+---
+
+# 3️⃣ Base Cases
+
+If target finished:
+
+```cpp
+j < 0
+```
+
+Answer:
+
+```text
+1
+```
+
+---
+
+If source finished:
+
+```cpp
+i < 0
+```
+
+Answer:
+
+```text
+0
+```
+
+---
+
+# 4️⃣ Recurrence
+
+If characters match:
+
+```cpp
+take
++
+notTake
+```
+
+Formula:
+
+```cpp
+dp[i][j]
+=
+dp[i-1][j-1]
++
+dp[i-1][j]
+```
+
+---
+
+If mismatch:
+
+```cpp
+dp[i][j]
+=
+dp[i-1][j]
+```
+
+---
+
+### Complexity
+
+```text
+O(N*M)
+```
+
+---
+
+# 5️⃣ Wildcard Matching
+
+## Symbols
+
+```text
+? → Single Character
+
+* → Any Sequence
+```
+
+---
+
+### Example
+
+```text
+Pattern:
+
+a*b?c
+
+String:
+
+axybxc
+```
+
+Answer:
+
+```text
+True
+```
+
+---
+
+# 6️⃣ State
+
+```cpp
+dp[i][j]
+```
+
+Meaning:
+
+```text
+Pattern[0..i]
+
+matches
+
+String[0..j]
+```
+
+---
+
+# 7️⃣ Recurrence
+
+### Exact Match
+
+```cpp
+dp[i-1][j-1]
+```
+
+---
+
+### '?'
+
+```cpp
+dp[i-1][j-1]
+```
+
+---
+
+### '*'
+
+Two Choices:
+
+```cpp
+Match Empty
+```
+
+or
+
+```cpp
+Match Characters
+```
+
+Formula:
+
+```cpp
+dp[i-1][j]
+||
+dp[i][j-1]
+```
+
+---
+
+### Complexity
+
+```text
+O(N*M)
+```
+
+---
+
+# 8️⃣ Best Time To Buy & Sell Stock I
+
+## Problem
+
+One Buy
+
+One Sell
+
+Maximum Profit.
+
+---
+
+### Example
+
+```text
+7 1 5 3 6 4
+```
+
+Answer:
+
+```text
+5
+```
+
+Buy:
+
+```text
+1
+```
+
+Sell:
+
+```text
+6
+```
+
+---
+
+# 9️⃣ Observation
+
+Maintain:
+
+```cpp
+Minimum Price
+```
+
+seen so far.
+
+Profit:
+
+```cpp
+price[i]
+-
+minimumPrice
+```
+
+---
+
+### Complexity
+
+```text
+O(N)
+```
+
+---
+
+# 🔟 Best Time To Buy & Sell Stock II
+
+## Problem
+
+Unlimited Transactions.
+
+---
+
+### Example
+
+```text
+7 1 5 3 6 4
+```
+
+Profit:
+
+```text
+7
+```
+
+---
+
+# 1️⃣1️⃣ DP State
+
+```cpp
+dp[index][buy]
+```
+
+Meaning:
+
+```text
+Current Day
+
+Can Buy?
+```
+
+---
+
+### Choices
+
+If buy:
+
+```text
+Buy
+
+Skip
+```
+
+If sell:
+
+```text
+Sell
+
+Skip
+```
+
+---
+
+### Complexity
+
+```text
+O(N*2)
+```
+
+---
+
+# 1️⃣2️⃣ Stock III
+
+## Problem
+
+At most:
+
+```text
+2 Transactions
+```
+
+allowed.
+
+---
+
+### State
+
+```cpp
+dp[index][buy][cap]
+```
+
+where:
+
+```text
+cap = transactions left
+```
+
+---
+
+### Complexity
+
+```text
+O(N*2*3)
+```
+
+---
+
+# 1️⃣3️⃣ Stock IV
+
+## Problem
+
+At most:
+
+```text
+K Transactions
+```
+
+allowed.
+
+---
+
+### State
+
+```cpp
+dp[index][buy][k]
+```
+
+---
+
+### Complexity
+
+```text
+O(N*2*K)
+```
+
+---
+
+# 1️⃣4️⃣ Stock With Cooldown
+
+## Problem
+
+After selling:
+
+```text
+Must Skip
+One Day
+```
+
+---
+
+### Example
+
+```text
+1 2 3 0 2
+```
+
+Answer:
+
+```text
+3
+```
+
+---
+
+### Recurrence
+
+After sell:
+
+```cpp
+index + 2
+```
+
+instead of:
+
+```cpp
+index + 1
+```
+
+---
+
+### Complexity
+
+```text
+O(N)
+```
+
+---
+
+# 1️⃣5️⃣ Stock With Transaction Fee
+
+## Problem
+
+Every sell operation has fee.
+
+---
+
+### Example
+
+```text
+Fee = 2
+```
+
+---
+
+### Formula
+
+When selling:
+
+```cpp
+profit
+=
+price
+-
+fee
+```
+
+---
+
+### Complexity
+
+```text
+O(N)
+```
+
+---
+
+# 1️⃣6️⃣ Universal Stock DP Pattern
+
+## State
+
+```cpp
+dp[index][buy]
+```
+
+---
+
+### Buy State
+
+```cpp
+max(
+-buyPrice
++
+nextDay,
+
+skip
+)
+```
+
+---
+
+### Sell State
+
+```cpp
+max(
+sellProfit
++
+nextDay,
+
+skip
+)
+```
+
+---
+
+# 1️⃣7️⃣ Generic Recurrence
+
+### Buy State
+
+```cpp
+max(
+-price[index]
++
+solve(index+1,0),
+
+solve(index+1,1)
+)
+```
+
+---
+
+### Sell State
+
+```cpp
+max(
+price[index]
++
+solve(index+1,1),
+
+solve(index+1,0)
+)
+```
+
+---
+
+# 1️⃣8️⃣ Stock Variants
+
+| Problem | Extra State |
+|----------|-------------|
+| Stock I | Min Price |
+| Stock II | Buy/Sell |
+| Stock III | Transactions |
+| Stock IV | K Transactions |
+| Cooldown | Skip Day |
+| Transaction Fee | Fee |
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|----------|----------|
+| Distinct Subsequences | O(N*M) | O(N*M) |
+| Wildcard Matching | O(N*M) | O(N*M) |
+| Stock I | O(N) | O(1) |
+| Stock II | O(N) | O(N) |
+| Stock III | O(N) | O(N) |
+| Stock IV | O(N*K) | O(N*K) |
+| Cooldown | O(N) | O(N) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Distinct Subsequences = Take + Not Take.
+
+✅ Wildcard '*' has two choices.
+
+✅ Stock DP always revolves around Buy/Sell state.
+
+✅ Cooldown changes next index.
+
+✅ Transaction limit adds one more DP dimension.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Wrong base cases in Distinct Subsequences.
+
+❌ Mishandling '*' in Wildcard Matching.
+
+❌ Forgetting cooldown day.
+
+❌ Wrong transaction count updates.
+
+❌ Not distinguishing Buy and Sell states.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Distinct Subsequences
+→ Take + Not Take
+```
+
+```text
+Wildcard
+→ ?, *
+```
+
+```text
+Stock I
+→ Min Price
+```
+
+```text
+Stock II
+→ Unlimited Transactions
+```
+
+```text
+Stock III
+→ 2 Transactions
+```
+
+```text
+Stock IV
+→ K Transactions
+```
+
+```text
+Cooldown
+→ index + 2
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Distinct Subsequences
+
+⭐ Wildcard Matching
+
+⭐ Best Time To Buy & Sell Stock I
+
+⭐ Stock II
+
+⭐ Stock III
+
+⭐ Stock IV
+
+⭐ Stock With Cooldown
+
+⭐ Stock With Transaction Fee
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Dynamic Programming (Part 7)
+
+Topics:
+
+- Longest Increasing Subsequence (LIS)
+- Printing LIS
+- Largest Divisible Subset
+- Longest String Chain
+- Bitonic Subsequence
+- Number of LIS
+- DP on Subsequences Advanced
+- Interview Questions
