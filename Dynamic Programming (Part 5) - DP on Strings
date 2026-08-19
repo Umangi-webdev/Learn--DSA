@@ -1,0 +1,768 @@
+# 🔥 Dynamic Programming (Part 5) - DP on Strings
+
+## 📌 Introduction
+
+In previous parts, we covered:
+
+✔ Fibonacci DP
+
+✔ Grid DP
+
+✔ Knapsack
+
+✔ Coin Change
+
+Now we move to one of the most important DP topics:
+
+```text
+DP on Strings
+```
+
+These questions are frequently asked in:
+
+- Google
+- Amazon
+- Microsoft
+- Adobe
+- Atlassian
+
+---
+
+# 📋 Topics Covered
+
+- Longest Common Subsequence (LCS)
+- Print LCS
+- Longest Common Substring
+- Longest Palindromic Subsequence
+- Minimum Insertions To Make Palindrome
+- Edit Distance
+- Shortest Common Supersequence
+
+---
+
+# 1️⃣ Longest Common Subsequence (LCS)
+
+## Problem
+
+Find longest sequence present in:
+
+```text
+Both Strings
+```
+
+Order must remain same.
+
+---
+
+### Example
+
+```text
+s1 = abcde
+
+s2 = ace
+```
+
+Answer:
+
+```text
+ace
+```
+
+Length:
+
+```text
+3
+```
+
+---
+
+# 2️⃣ State Definition
+
+```cpp
+dp[i][j]
+```
+
+Meaning:
+
+```text
+LCS length
+between
+
+s1[0...i]
+
+and
+
+s2[0...j]
+```
+
+---
+
+# 3️⃣ Recurrence
+
+If characters match:
+
+```cpp
+1 +
+dp[i-1][j-1]
+```
+
+---
+
+Otherwise:
+
+```cpp
+max(
+dp[i-1][j],
+dp[i][j-1]
+)
+```
+
+---
+
+### Formula
+
+```cpp
+if(s1[i]==s2[j])
+
+dp[i][j]
+=
+1+dp[i-1][j-1];
+
+else
+
+dp[i][j]
+=
+max(
+dp[i-1][j],
+dp[i][j-1]
+);
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N*M)
+
+Space: O(N*M)
+```
+
+---
+
+# 4️⃣ LCS Tabulation
+
+```cpp
+for(int i=1;i<=n;i++)
+{
+    for(int j=1;j<=m;j++)
+    {
+        if(
+            s1[i-1]
+            ==
+            s2[j-1]
+        )
+        {
+            dp[i][j]
+            =
+            1 +
+            dp[i-1][j-1];
+        }
+        else
+        {
+            dp[i][j]
+            =
+            max(
+                dp[i-1][j],
+                dp[i][j-1]
+            );
+        }
+    }
+}
+```
+
+---
+
+# 5️⃣ Print LCS
+
+After building DP table:
+
+Start from:
+
+```text
+dp[n][m]
+```
+
+Move backwards.
+
+---
+
+### If Match
+
+```text
+Take Character
+```
+
+Move diagonally.
+
+---
+
+### Else
+
+Move towards larger value.
+
+---
+
+### Complexity
+
+```text
+O(N+M)
+```
+
+---
+
+# 6️⃣ Longest Common Substring
+
+## Difference
+
+LCS:
+
+```text
+Can Skip Characters
+```
+
+---
+
+Substring:
+
+```text
+Continuous Characters
+```
+
+---
+
+### Example
+
+```text
+ABCDGH
+
+ACDGHR
+```
+
+Answer:
+
+```text
+CDGH
+```
+
+Length:
+
+```text
+4
+```
+
+---
+
+# 7️⃣ Recurrence
+
+If match:
+
+```cpp
+dp[i][j]
+=
+1 +
+dp[i-1][j-1];
+```
+
+---
+
+Else:
+
+```cpp
+dp[i][j]
+=
+0;
+```
+
+---
+
+### Keep Track Of
+
+```cpp
+Maximum Length
+```
+
+---
+
+### Complexity
+
+```text
+O(N*M)
+```
+
+---
+
+# 8️⃣ Longest Palindromic Subsequence
+
+## Problem
+
+Find longest subsequence that is palindrome.
+
+---
+
+### Example
+
+```text
+bbbab
+```
+
+Answer:
+
+```text
+bbbb
+```
+
+Length:
+
+```text
+4
+```
+
+---
+
+# 9️⃣ Trick
+
+Reverse string.
+
+Example:
+
+```text
+bbbab
+
+↓
+
+babbb
+```
+
+Now find:
+
+```text
+LCS(
+original,
+reverse
+)
+```
+
+---
+
+### Formula
+
+```text
+LPS
+=
+LCS(
+S,
+Reverse(S)
+)
+```
+
+---
+
+### Complexity
+
+```text
+O(N²)
+```
+
+---
+
+# 🔟 Minimum Insertions To Make Palindrome
+
+## Problem
+
+Minimum insertions required.
+
+---
+
+### Example
+
+```text
+abcaa
+```
+
+Answer:
+
+```text
+2
+```
+
+---
+
+# 1️⃣1️⃣ Observation
+
+Keep longest palindromic subsequence.
+
+Insert remaining characters.
+
+Formula:
+
+```text
+Answer
+=
+N - LPS
+```
+
+---
+
+### Complexity
+
+```text
+O(N²)
+```
+
+---
+
+# 1️⃣2️⃣ Minimum Deletions To Make Palindrome
+
+Similar idea.
+
+Formula:
+
+```text
+Answer
+=
+N - LPS
+```
+
+---
+
+### Complexity
+
+```text
+O(N²)
+```
+
+---
+
+# 1️⃣3️⃣ Edit Distance
+
+## Problem
+
+Convert:
+
+```text
+Word1
+```
+
+into:
+
+```text
+Word2
+```
+
+Operations:
+
+```text
+Insert
+
+Delete
+
+Replace
+```
+
+---
+
+### Example
+
+```text
+horse
+
+↓
+
+ros
+```
+
+Answer:
+
+```text
+3
+```
+
+---
+
+# 1️⃣4️⃣ State
+
+```cpp
+dp[i][j]
+```
+
+Meaning:
+
+```text
+Minimum Operations
+to convert
+
+word1[0..i]
+
+to
+
+word2[0..j]
+```
+
+---
+
+# 1️⃣5️⃣ Recurrence
+
+If match:
+
+```cpp
+dp[i-1][j-1]
+```
+
+---
+
+Else:
+
+Take minimum of:
+
+### Insert
+
+```cpp
+dp[i][j-1]
+```
+
+### Delete
+
+```cpp
+dp[i-1][j]
+```
+
+### Replace
+
+```cpp
+dp[i-1][j-1]
+```
+
+Formula:
+
+```cpp
+1 +
+min(
+insert,
+delete,
+replace
+)
+```
+
+---
+
+### Complexity
+
+```text
+O(N*M)
+```
+
+---
+
+# 1️⃣6️⃣ Shortest Common Supersequence
+
+## Problem
+
+Smallest string containing:
+
+```text
+Both Strings
+```
+
+as subsequences.
+
+---
+
+### Example
+
+```text
+abac
+
+cab
+```
+
+Answer:
+
+```text
+cabac
+```
+
+---
+
+# 1️⃣7️⃣ Formula
+
+First find:
+
+```text
+LCS
+```
+
+Then build answer.
+
+Length:
+
+```text
+n + m - LCS
+```
+
+---
+
+### Complexity
+
+```text
+O(N*M)
+```
+
+---
+
+# 1️⃣8️⃣ DP on Strings Pattern
+
+### State
+
+```cpp
+dp[i][j]
+```
+
+---
+
+### Compare
+
+```cpp
+s1[i]
+
+s2[j]
+```
+
+---
+
+### Match
+
+```text
+Diagonal Move
+```
+
+---
+
+### Mismatch
+
+```text
+Left / Up
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|----------|----------|
+| LCS | O(N*M) | O(N*M) |
+| Print LCS | O(N*M) | O(N*M) |
+| LCSubstring | O(N*M) | O(N*M) |
+| LPS | O(N²) | O(N²) |
+| Min Insertions | O(N²) | O(N²) |
+| Edit Distance | O(N*M) | O(N*M) |
+| SCS | O(N*M) | O(N*M) |
+
+---
+
+# 💡 Interview Tips
+
+✅ LPS = LCS(String, Reverse).
+
+✅ Minimum Insertions = N - LPS.
+
+✅ Minimum Deletions = N - LPS.
+
+✅ Edit Distance has 3 operations.
+
+✅ LCS is foundation of String DP.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Confusing substring and subsequence.
+
+❌ Wrong base cases.
+
+❌ Forgetting diagonal move.
+
+❌ Not reversing string for LPS.
+
+❌ Wrong reconstruction while printing LCS.
+
+---
+
+# 📝 Quick Revision
+
+```text
+LCS
+→ Match = Diagonal
+```
+
+```text
+LCSubstring
+→ Mismatch = 0
+```
+
+```text
+LPS
+→ LCS(Original, Reverse)
+```
+
+```text
+Min Insertions
+→ N - LPS
+```
+
+```text
+Edit Distance
+→ Insert/Delete/Replace
+```
+
+```text
+SCS
+→ n + m - LCS
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Longest Common Subsequence
+
+⭐ Print LCS
+
+⭐ Longest Common Substring
+
+⭐ Longest Palindromic Subsequence
+
+⭐ Minimum Insertions To Make Palindrome
+
+⭐ Edit Distance
+
+⭐ Shortest Common Supersequence
+
+⭐ Delete Operation for Two Strings
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Dynamic Programming (Part 6)
+
+Topics:
+
+- Distinct Subsequences
+- Wildcard Matching
+- Best Time to Buy and Sell Stock I
+- Stock II
+- Stock III
+- Stock IV
+- Stock With Cooldown
+- DP on Stocks Pattern
