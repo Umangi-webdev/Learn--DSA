@@ -1,0 +1,710 @@
+# 🔥 Dynamic Programming (Part 4) - Unbounded Knapsack & Coin Change
+
+## 📌 Introduction
+
+In Part 3, we learned:
+
+✔ Subset Sum
+
+✔ Partition Equal Subset Sum
+
+✔ Count Subsets
+
+✔ 0/1 Knapsack
+
+Now we move to:
+
+```text
+Unbounded DP Problems
+```
+
+In these problems:
+
+```text
+One Element
+Can Be Used
+Multiple Times
+```
+
+This is one of the most important DP interview patterns.
+
+---
+
+# 📋 Topics Covered
+
+- Unbounded Knapsack
+- Rod Cutting Problem
+- Coin Change I
+- Coin Change II
+- Minimum Coins
+- Target Sum
+- Partition With Given Difference
+
+---
+
+# 1️⃣ 0/1 vs Unbounded Knapsack
+
+### 0/1 Knapsack
+
+```text
+Take Item Once
+```
+
+---
+
+### Unbounded Knapsack
+
+```text
+Take Item Infinite Times
+```
+
+---
+
+### Example
+
+```text
+Weight:
+
+2 4 6
+
+Value:
+
+5 11 13
+```
+
+Capacity:
+
+```text
+10
+```
+
+Can use same item multiple times.
+
+---
+
+# 2️⃣ Unbounded Knapsack
+
+## Problem
+
+Maximize value.
+
+Each item can be chosen:
+
+```text
+Unlimited Times
+```
+
+---
+
+# 3️⃣ State
+
+```cpp
+dp[index][capacity]
+```
+
+Meaning:
+
+```text
+Maximum Value
+Using Items
+0...index
+```
+
+---
+
+# 4️⃣ Recurrence
+
+### Not Pick
+
+```cpp
+dp[index-1][cap]
+```
+
+---
+
+### Pick
+
+Stay at same index.
+
+```cpp
+value[index]
++
+dp[index]
+[
+cap-weight[index]
+]
+```
+
+---
+
+### Formula
+
+```cpp
+max(
+pick,
+notPick
+)
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N*W)
+
+Space: O(N*W)
+```
+
+---
+
+# 5️⃣ Rod Cutting Problem
+
+## Problem
+
+Given:
+
+```text
+Rod Length = N
+```
+
+Cut rod to maximize profit.
+
+---
+
+### Example
+
+```text
+Length:
+
+1 2 3 4
+
+Price:
+
+2 5 7 8
+```
+
+Rod Length:
+
+```text
+4
+```
+
+Answer:
+
+```text
+10
+```
+
+---
+
+# 6️⃣ Observation
+
+Length piece can be reused.
+
+Therefore:
+
+```text
+Rod Cutting
+=
+Unbounded Knapsack
+```
+
+---
+
+### Mapping
+
+```text
+Weight → Length
+
+Value → Price
+```
+
+---
+
+### Complexity
+
+```text
+O(N²)
+```
+
+---
+
+# 7️⃣ Coin Change I
+
+## Problem
+
+Find:
+
+```text
+Minimum Coins
+```
+
+required to make target.
+
+---
+
+### Example
+
+```text
+Coins:
+
+1 2 5
+
+Target:
+
+11
+```
+
+Answer:
+
+```text
+3
+```
+
+Because:
+
+```text
+5 + 5 + 1
+```
+
+---
+
+# 8️⃣ State
+
+```cpp
+dp[index][target]
+```
+
+Meaning:
+
+```text
+Minimum Coins
+Required
+```
+
+---
+
+# 9️⃣ Recurrence
+
+### Not Take
+
+```cpp
+dp[index-1][target]
+```
+
+---
+
+### Take
+
+Stay at same index.
+
+```cpp
+1
++
+dp[index]
+[
+target-coins[index]
+]
+```
+
+---
+
+### Formula
+
+```cpp
+min(
+take,
+notTake
+)
+```
+
+---
+
+### Complexity
+
+```text
+O(N*Target)
+```
+
+---
+
+# 🔟 Coin Change II
+
+## Problem
+
+Count total ways.
+
+---
+
+### Example
+
+```text
+Coins:
+
+1 2 5
+
+Target:
+
+5
+```
+
+Ways:
+
+```text
+1+1+1+1+1
+
+1+1+1+2
+
+1+2+2
+
+5
+```
+
+Answer:
+
+```text
+4
+```
+
+---
+
+# 1️⃣1️⃣ Recurrence
+
+### Not Take
+
+```cpp
+dp[index-1][target]
+```
+
+---
+
+### Take
+
+```cpp
+dp[index]
+[
+target-coins[index]
+]
+```
+
+---
+
+### Formula
+
+```cpp
+take
++
+notTake
+```
+
+---
+
+### Complexity
+
+```text
+O(N*Target)
+```
+
+---
+
+# 1️⃣2️⃣ Target Sum
+
+## Problem
+
+Assign:
+
+```text
++
+or
+-
+```
+
+to each element.
+
+Find number of ways to achieve target.
+
+---
+
+### Example
+
+```text
+1 1 1 1 1
+
+Target = 3
+```
+
+Answer:
+
+```text
+5
+```
+
+---
+
+# 1️⃣3️⃣ Observation
+
+Convert into:
+
+```text
+Count Partitions
+With Difference
+```
+
+Formula:
+
+```text
+S1 - S2 = D
+```
+
+and
+
+```text
+S1 + S2 = TotalSum
+```
+
+---
+
+### Result
+
+Need subset sum:
+
+```text
+(TotalSum - D)/2
+```
+
+---
+
+# 1️⃣4️⃣ Partition With Given Difference
+
+## Problem
+
+Count partitions where:
+
+```text
+Difference = D
+```
+
+---
+
+### Example
+
+```text
+1 1 2 3
+
+D = 1
+```
+
+Answer:
+
+```text
+3
+```
+
+---
+
+# 1️⃣5️⃣ Reduction
+
+Convert to:
+
+```text
+Count Subsets
+With Sum
+=
+(Total-D)/2
+```
+
+---
+
+### Complexity
+
+```text
+O(N*Sum)
+```
+
+---
+
+# 1️⃣6️⃣ Difference Between DP Problems
+
+| Problem | Operation |
+|----------|-----------|
+| Subset Sum | OR |
+| Count Subsets | + |
+| Knapsack | MAX |
+| Coin Change I | MIN |
+| Coin Change II | + |
+| Unbounded Knapsack | MAX |
+
+---
+
+# 1️⃣7️⃣ Unbounded DP Pattern
+
+### 0/1 Knapsack
+
+```cpp
+pick =
+arr[i]
++
+dp[i-1][...]
+```
+
+---
+
+### Unbounded Knapsack
+
+```cpp
+pick =
+arr[i]
++
+dp[i][...]
+```
+
+Notice:
+
+```text
+Same Row
+```
+
+because item can be reused.
+
+---
+
+# 1️⃣8️⃣ Space Optimization
+
+Most problems can be optimized:
+
+```cpp
+vector<int> prev;
+vector<int> curr;
+```
+
+or
+
+```cpp
+vector<int> dp;
+```
+
+---
+
+### Benefit
+
+```text
+Space:
+O(N*Target)
+
+↓
+
+O(Target)
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|----------|----------|
+| Unbounded Knapsack | O(N*W) | O(N*W) |
+| Rod Cutting | O(N²) | O(N²) |
+| Coin Change I | O(N*T) | O(N*T) |
+| Coin Change II | O(N*T) | O(N*T) |
+| Target Sum | O(N*Sum) | O(N*Sum) |
+| Partition Difference | O(N*Sum) | O(N*Sum) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Rod Cutting = Unbounded Knapsack.
+
+✅ Coin Change I = Minimum Coins.
+
+✅ Coin Change II = Count Ways.
+
+✅ Target Sum reduces to Subset Sum.
+
+✅ Partition Difference reduces to Count Subsets.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Using 0/1 recurrence for Unbounded problems.
+
+❌ Wrong Target Sum conversion.
+
+❌ Confusing Coin Change I and II.
+
+❌ Not handling impossible cases.
+
+❌ Forgetting base cases.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Unbounded Knapsack
+→ Reuse Items
+```
+
+```text
+Rod Cutting
+→ Unbounded Knapsack
+```
+
+```text
+Coin Change I
+→ Minimum Coins
+```
+
+```text
+Coin Change II
+→ Count Ways
+```
+
+```text
+Target Sum
+→ Partition Difference
+```
+
+```text
+Partition Difference
+→ Count Subsets
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Unbounded Knapsack
+
+⭐ Rod Cutting Problem
+
+⭐ Coin Change I
+
+⭐ Coin Change II
+
+⭐ Minimum Coins
+
+⭐ Target Sum
+
+⭐ Partition With Given Difference
+
+⭐ Perfect Sum Problem
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Dynamic Programming (Part 5)
+
+Topics:
+
+- Longest Common Subsequence (LCS)
+- Print LCS
+- Longest Common Substring
+- Longest Palindromic Subsequence
+- Minimum Insertions to Make Palindrome
+- Edit Distance
+- DP on Strings
+- String DP Pattern
