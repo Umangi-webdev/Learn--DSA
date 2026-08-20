@@ -1,0 +1,815 @@
+# 🔥 Dynamic Programming (Part 9) - Advanced Dynamic Programming
+
+## 📌 Introduction
+
+In previous parts, we learned:
+
+✔ 1D DP
+
+✔ Grid DP
+
+✔ Knapsack DP
+
+✔ String DP
+
+✔ Stock DP
+
+✔ LIS DP
+
+✔ Partition DP
+
+Now we move to:
+
+```text
+Advanced Dynamic Programming
+```
+
+These topics are often asked in:
+
+- Google
+- Amazon
+- Microsoft
+- Uber
+- Atlassian
+- Codeforces Div 1
+
+---
+
+# 📋 Topics Covered
+
+- Digit DP
+- Bitmask DP
+- Tree DP
+- Rerooting DP
+- State Compression DP
+- DP Optimization Techniques
+
+---
+
+# 1️⃣ What is Advanced DP?
+
+Advanced DP means:
+
+```text
+Complex State Design
+```
+
+Instead of:
+
+```text
+dp[i]
+```
+
+or
+
+```text
+dp[i][j]
+```
+
+we use:
+
+```text
+dp[pos][tight][sum]
+
+dp[node][mask]
+
+dp[node][state]
+```
+
+---
+
+# 2️⃣ Digit DP
+
+## Problem Type
+
+Questions like:
+
+```text
+Count numbers
+
+from L to R
+
+having some property
+```
+
+---
+
+### Example
+
+Count numbers:
+
+```text
+1 → 1000
+```
+
+whose digit sum equals:
+
+```text
+5
+```
+
+---
+
+# 3️⃣ Digit DP State
+
+```cpp
+dp[pos][tight][sum]
+```
+
+Meaning:
+
+```text
+Current Position
+
+Restricted?
+
+Current Digit Sum
+```
+
+---
+
+### Tight Variable
+
+```text
+tight = 1
+```
+
+Current digit cannot exceed original number.
+
+---
+
+```text
+tight = 0
+```
+
+Can use digits:
+
+```text
+0 → 9
+```
+
+---
+
+# 4️⃣ Digit DP Complexity
+
+Generally:
+
+```text
+O(
+Position
+× Sum
+× 10
+)
+```
+
+Very efficient.
+
+---
+
+# 5️⃣ Bitmask DP
+
+## Idea
+
+Represent states using bits.
+
+---
+
+### Example
+
+```text
+N = 4
+```
+
+Mask:
+
+```text
+0000
+
+0001
+
+0010
+
+0011
+
+...
+1111
+```
+
+---
+
+### Meaning
+
+```text
+Bit = 1
+
+Element Selected
+```
+
+---
+
+# 6️⃣ Traveling Salesman Problem (TSP)
+
+## Problem
+
+Visit every city once.
+
+Return to source.
+
+Minimum Cost.
+
+---
+
+### State
+
+```cpp
+dp[node][mask]
+```
+
+Meaning:
+
+```text
+Current City
+
+Visited Cities
+```
+
+---
+
+### Recurrence
+
+Try all unvisited cities.
+
+---
+
+### Complexity
+
+```text
+O(N² × 2ᴺ)
+```
+
+---
+
+# 7️⃣ State Compression DP
+
+Store:
+
+```text
+Large State
+```
+
+inside:
+
+```text
+Integer Mask
+```
+
+---
+
+### Example
+
+```text
+Visited Students
+
+Visited Cities
+
+Chosen Elements
+```
+
+---
+
+### Benefit
+
+Huge memory reduction.
+
+---
+
+# 8️⃣ Tree DP
+
+## Problem Type
+
+Questions on:
+
+```text
+Trees
+```
+
+where answer depends on children.
+
+---
+
+### State
+
+```cpp
+dp[node]
+```
+
+Meaning:
+
+```text
+Answer For Subtree
+```
+
+---
+
+# 9️⃣ Example
+
+Maximum subtree sum.
+
+---
+
+### DFS
+
+```cpp
+dfs(node,parent)
+{
+    for(child)
+    {
+        dfs(child,node);
+
+        dp[node]
+        +=
+        dp[child];
+    }
+}
+```
+
+---
+
+# 🔟 Tree Diameter DP
+
+## Diameter
+
+Longest path in tree.
+
+---
+
+### Idea
+
+For every node:
+
+Store:
+
+```text
+Largest Height
+
+Second Largest Height
+```
+
+---
+
+### Formula
+
+```text
+height1
++
+height2
+```
+
+---
+
+### Complexity
+
+```text
+O(N)
+```
+
+---
+
+# 1️⃣1️⃣ DP On Trees Example
+
+House Robber III
+
+---
+
+### State
+
+```cpp
+dp[node][0]
+
+dp[node][1]
+```
+
+Meaning:
+
+```text
+Take Node
+
+Do Not Take Node
+```
+
+---
+
+### Recurrence
+
+Take:
+
+```cpp
+nodeValue
++
+notTake(children)
+```
+
+---
+
+Not Take:
+
+```cpp
+max(childTake,
+childNotTake)
+```
+
+---
+
+# 1️⃣2️⃣ Rerooting DP
+
+## Problem
+
+Find answer for:
+
+```text
+Every Node
+As Root
+```
+
+---
+
+### Naive
+
+```text
+O(N²)
+```
+
+---
+
+### Rerooting
+
+```text
+O(N)
+```
+
+or
+
+```text
+O(N log N)
+```
+
+---
+
+# 1️⃣3️⃣ Idea
+
+Compute:
+
+```text
+Answer At Root
+```
+
+Then move root.
+
+Reuse previous computations.
+
+---
+
+### Common Questions
+
+```text
+Tree Distances
+
+Subtree Sums
+
+Tree DP
+```
+
+---
+
+# 1️⃣4️⃣ DP Optimization
+
+## Space Optimization
+
+Example:
+
+```cpp
+dp[i]
+depends only on
+
+dp[i-1]
+```
+
+---
+
+Then:
+
+```text
+Use Variables
+```
+
+instead of array.
+
+---
+
+### Example
+
+Fibonacci
+
+```text
+O(N)
+
+↓
+
+O(1)
+```
+
+---
+
+# 1️⃣5️⃣ State Reduction
+
+Bad State:
+
+```cpp
+dp[i][j][k]
+```
+
+---
+
+Try reducing.
+
+Example:
+
+```cpp
+dp[i][j]
+```
+
+---
+
+Improves:
+
+```text
+Memory
+
+Runtime
+```
+
+---
+
+# 1️⃣6️⃣ Advanced DP Patterns
+
+### Digit DP
+
+```text
+Numbers
+```
+
+---
+
+### Bitmask DP
+
+```text
+Subset Problems
+```
+
+---
+
+### Tree DP
+
+```text
+Trees
+```
+
+---
+
+### Rerooting
+
+```text
+Every Node As Root
+```
+
+---
+
+### State Compression
+
+```text
+Bit Representation
+```
+
+---
+
+# 1️⃣7️⃣ Interview Recognition
+
+If question says:
+
+```text
+Count Numbers
+```
+
+Think:
+
+```text
+Digit DP
+```
+
+---
+
+If question says:
+
+```text
+Visit All Cities
+```
+
+Think:
+
+```text
+Bitmask DP
+```
+
+---
+
+If question says:
+
+```text
+Tree Answer
+```
+
+Think:
+
+```text
+Tree DP
+```
+
+---
+
+If question says:
+
+```text
+All Nodes As Root
+```
+
+Think:
+
+```text
+Rerooting
+```
+
+---
+
+# 1️⃣8️⃣ Most Important Advanced DP Problems
+
+### Digit DP
+
+⭐ Count Digit Sum
+
+⭐ Numbers Without Repeated Digits
+
+---
+
+### Bitmask DP
+
+⭐ Traveling Salesman
+
+⭐ Assignment Problem
+
+⭐ Hamiltonian Path
+
+---
+
+### Tree DP
+
+⭐ House Robber III
+
+⭐ Diameter Of Tree
+
+⭐ Maximum Path Sum
+
+---
+
+### Rerooting
+
+⭐ Sum Of Distances In Tree
+
+⭐ Tree Distances II
+
+---
+
+# 📊 Complexity Summary
+
+| Topic | Complexity |
+|---------|------------|
+| Digit DP | O(Pos × Sum × 10) |
+| TSP Bitmask | O(N² × 2ᴺ) |
+| Tree DP | O(N) |
+| Diameter DP | O(N) |
+| Rerooting DP | O(N) |
+| State Compression | Depends on State |
+
+---
+
+# 💡 Interview Tips
+
+✅ Digit DP = Numbers Problem.
+
+✅ Bitmask DP = Subset State.
+
+✅ Tree DP = DFS + DP.
+
+✅ Rerooting = Multiple Roots.
+
+✅ Learn TSP thoroughly.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Wrong mask transitions.
+
+❌ Forgetting tight condition.
+
+❌ Revisiting nodes in Tree DP.
+
+❌ Large DP states causing TLE.
+
+❌ Not memoizing Digit DP.
+
+---
+
+# 📝 Complete DP Revision Sheet
+
+```text
+1. Fibonacci
+2. Climbing Stairs
+3. Frog Jump
+4. House Robber
+5. Grid DP
+6. Knapsack
+7. Coin Change
+8. LCS
+9. Edit Distance
+10. Stocks
+11. LIS
+12. MCM
+13. Digit DP
+14. Bitmask DP
+15. Tree DP
+16. Rerooting DP
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Fibonacci
+
+⭐ House Robber
+
+⭐ Ninja Training
+
+⭐ 0/1 Knapsack
+
+⭐ Coin Change
+
+⭐ LCS
+
+⭐ Edit Distance
+
+⭐ Stock III
+
+⭐ LIS
+
+⭐ Matrix Chain Multiplication
+
+⭐ Traveling Salesman Problem
+
+⭐ House Robber III
+
+⭐ Sum Of Distances In Tree
+
+---
+
+# 🏆 Dynamic Programming Completed
+
+You have now covered:
+
+✅ Beginner DP
+
+✅ Intermediate DP
+
+✅ Advanced DP
+
+✅ Interview DP Patterns
+
+✅ DP Optimization Techniques
+
+✅ Digit DP
+
+✅ Bitmask DP
+
+✅ Tree DP
+
+✅ Rerooting DP
+
+---
+
+# 🚀 What's Next?
+
+## Graphs Advanced Revision Sheet
+OR
+## Greedy Algorithms Complete Notes
+OR
+## Trie + String Algorithms (KMP, Z Algorithm, Rabin Karp)
