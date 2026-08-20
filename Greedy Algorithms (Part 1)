@@ -1,0 +1,499 @@
+# 🔥 Greedy Algorithms (Part 1)
+
+## 📌 Introduction
+
+Greedy Algorithm means:
+
+```text
+Take the Best Choice
+At Current Step
+```
+
+without worrying about future decisions.
+
+The goal is:
+
+```text
+Local Optimum
+→
+Global Optimum
+```
+
+---
+
+# 📋 Topics Covered
+
+- What is Greedy?
+- Activity Selection
+- Fractional Knapsack
+- Minimum Coins
+- Lemonade Change
+- Assign Cookies
+
+---
+
+# 1️⃣ What is Greedy?
+
+Greedy algorithms make:
+
+```text
+Best Possible Choice
+At Every Step
+```
+
+---
+
+### Example
+
+Suppose you need:
+
+```text
+₹70
+```
+
+Coins:
+
+```text
+50 20 10
+```
+
+Greedy:
+
+```text
+Take Largest Coin First
+```
+
+Result:
+
+```text
+50 + 20
+```
+
+---
+
+# 2️⃣ When Greedy Works?
+
+Greedy works when problem satisfies:
+
+### Greedy Choice Property
+
+```text
+Local Best Choice
+Leads To
+Global Best Answer
+```
+
+---
+
+### Optimal Substructure
+
+```text
+Optimal Solution
+Contains
+Optimal Sub-solutions
+```
+
+---
+
+# 3️⃣ Activity Selection Problem
+
+## Problem
+
+Given:
+
+```text
+Start Time
+
+End Time
+```
+
+Select maximum activities.
+
+---
+
+### Example
+
+```text
+Start
+
+1 3 0 5 8 5
+
+Finish
+
+2 4 6 7 9 9
+```
+
+Answer:
+
+```text
+4 Activities
+```
+
+---
+
+# 4️⃣ Greedy Idea
+
+Sort by:
+
+```text
+Ending Time
+```
+
+Choose activity with:
+
+```text
+Smallest End Time
+```
+
+---
+
+### Why?
+
+Leaves maximum time for future activities.
+
+---
+
+### Complexity
+
+```text
+O(N log N)
+```
+
+---
+
+# 5️⃣ Fractional Knapsack
+
+## Problem
+
+Given:
+
+```text
+Weight
+
+Profit
+```
+
+Can take:
+
+```text
+Fraction Of Item
+```
+
+---
+
+### Example
+
+```text
+Value
+
+60 100 120
+
+Weight
+
+10 20 30
+
+Capacity
+
+50
+```
+
+Answer:
+
+```text
+240
+```
+
+---
+
+# 6️⃣ Greedy Idea
+
+Sort by:
+
+```text
+Value / Weight
+```
+
+ratio.
+
+---
+
+Take highest ratio first.
+
+---
+
+### Complexity
+
+```text
+O(N log N)
+```
+
+---
+
+# 7️⃣ Minimum Coins
+
+## Problem
+
+Find minimum coins needed.
+
+---
+
+### Example
+
+```text
+Coins:
+
+1 2 5 10 20 50 100
+
+Value:
+
+93
+```
+
+---
+
+### Greedy
+
+Take largest possible coin.
+
+```text
+50
+
+20
+
+20
+
+2
+
+1
+```
+
+Total:
+
+```text
+5 Coins
+```
+
+---
+
+### Complexity
+
+```text
+O(Number Of Coins)
+```
+
+---
+
+# 8️⃣ Lemonade Change
+
+## Problem
+
+Each lemonade costs:
+
+```text
+$5
+```
+
+Customers pay:
+
+```text
+5
+
+10
+
+20
+```
+
+Return correct change.
+
+---
+
+### Example
+
+```text
+5 5 5 10 20
+```
+
+Answer:
+
+```text
+True
+```
+
+---
+
+# 9️⃣ Greedy Idea
+
+Always prefer:
+
+```text
+10 + 5
+```
+
+instead of:
+
+```text
+5 + 5 + 5
+```
+
+for change.
+
+---
+
+### Complexity
+
+```text
+O(N)
+```
+
+---
+
+# 🔟 Assign Cookies
+
+## Problem
+
+Each child has:
+
+```text
+Greed Factor
+```
+
+Each cookie has:
+
+```text
+Size
+```
+
+Assign maximum children.
+
+---
+
+### Example
+
+```text
+Greed
+
+1 2 3
+
+Cookies
+
+1 1
+```
+
+Answer:
+
+```text
+1
+```
+
+---
+
+# 1️⃣1️⃣ Greedy Idea
+
+Sort both arrays.
+
+Assign:
+
+```text
+Smallest Valid Cookie
+```
+
+to current child.
+
+---
+
+### Complexity
+
+```text
+O(N log N)
+```
+
+---
+
+# 1️⃣2️⃣ Greedy Pattern Recognition
+
+If question says:
+
+```text
+Maximum Activities
+
+Minimum Coins
+
+Minimum Cost
+
+Maximum Profit
+```
+
+Think:
+
+```text
+Greedy
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time |
+|----------|---------|
+| Activity Selection | O(N log N) |
+| Fractional Knapsack | O(N log N) |
+| Minimum Coins | O(N) |
+| Lemonade Change | O(N) |
+| Assign Cookies | O(N log N) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Activity Selection → Sort by End Time.
+
+✅ Fractional Knapsack → Sort by Value/Weight.
+
+✅ Minimum Coins → Largest Coin First.
+
+✅ Assign Cookies → Sort Both Arrays.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Sorting by start time in Activity Selection.
+
+❌ Using weight instead of ratio in Knapsack.
+
+❌ Wrong change strategy in Lemonade.
+
+❌ Forgetting to sort arrays.
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Activity Selection
+
+⭐ Fractional Knapsack
+
+⭐ Lemonade Change
+
+⭐ Assign Cookies
+
+⭐ Minimum Number Of Coins
+
+⭐ Maximum Meetings In One Room
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Greedy Algorithms (Part 2)
+
+Topics:
+
+- Job Sequencing Problem
+- N Meetings In One Room
+- Insert Interval
+- Merge Intervals
+- Non Overlapping Intervals
+- Minimum Platforms
+- Jump Game
+- Jump Game II
