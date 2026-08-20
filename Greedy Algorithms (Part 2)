@@ -1,0 +1,704 @@
+# 🔥 Greedy Algorithms (Part 2)
+
+## 📌 Introduction
+
+In Part 1, we learned:
+
+✔ Activity Selection
+
+✔ Fractional Knapsack
+
+✔ Minimum Coins
+
+✔ Lemonade Change
+
+✔ Assign Cookies
+
+Now we move to:
+
+```text
+Interval Problems
++
+Scheduling Problems
++
+Jump Game Pattern
+```
+
+These are among the most frequently asked Greedy interview questions.
+
+---
+
+# 📋 Topics Covered
+
+- N Meetings In One Room
+- Job Sequencing Problem
+- Insert Interval
+- Merge Intervals
+- Non Overlapping Intervals
+- Minimum Platforms
+- Jump Game
+- Jump Game II
+
+---
+
+# 1️⃣ N Meetings In One Room
+
+## Problem
+
+Given:
+
+```text
+Start Time
+
+End Time
+```
+
+Find maximum meetings.
+
+---
+
+### Example
+
+```text
+Start
+
+1 3 0 5 8 5
+
+End
+
+2 4 6 7 9 9
+```
+
+Answer:
+
+```text
+4
+```
+
+---
+
+# 2️⃣ Greedy Idea
+
+Sort meetings by:
+
+```text
+Ending Time
+```
+
+Choose meeting with:
+
+```text
+Earliest Finish
+```
+
+---
+
+### Complexity
+
+```text
+O(N log N)
+```
+
+---
+
+# 3️⃣ Job Sequencing Problem
+
+## Problem
+
+Each job contains:
+
+```text
+Deadline
+
+Profit
+```
+
+Complete maximum profit jobs.
+
+Each job takes:
+
+```text
+1 Unit Time
+```
+
+---
+
+### Example
+
+```text
+Job
+
+A B C D
+
+Deadline
+
+4 1 1 1
+
+Profit
+
+20 10 40 30
+```
+
+Answer:
+
+```text
+Profit = 60
+```
+
+---
+
+# 4️⃣ Greedy Idea
+
+Sort jobs by:
+
+```text
+Profit Descending
+```
+
+Try placing each job:
+
+```text
+Latest Possible Slot
+```
+
+before deadline.
+
+---
+
+### Complexity
+
+```text
+O(N²)
+```
+
+---
+
+# 5️⃣ Insert Interval
+
+## Problem
+
+Insert interval into existing intervals.
+
+---
+
+### Example
+
+```text
+[1,3]
+
+[6,9]
+
+Insert:
+
+[2,5]
+```
+
+Answer:
+
+```text
+[1,5]
+
+[6,9]
+```
+
+---
+
+# 6️⃣ Greedy Idea
+
+Three Cases:
+
+### Before New Interval
+
+```text
+Add Directly
+```
+
+---
+
+### Overlapping
+
+```text
+Merge
+```
+
+---
+
+### After Merge
+
+```text
+Add Remaining
+```
+
+---
+
+### Complexity
+
+```text
+O(N)
+```
+
+---
+
+# 7️⃣ Merge Intervals
+
+## Problem
+
+Merge overlapping intervals.
+
+---
+
+### Example
+
+```text
+[1,3]
+
+[2,6]
+
+[8,10]
+
+[15,18]
+```
+
+Output:
+
+```text
+[1,6]
+
+[8,10]
+
+[15,18]
+```
+
+---
+
+# 8️⃣ Greedy Idea
+
+Sort intervals by:
+
+```text
+Starting Point
+```
+
+Merge if:
+
+```cpp
+currentStart
+<=
+previousEnd
+```
+
+---
+
+### Complexity
+
+```text
+O(N log N)
+```
+
+---
+
+# 9️⃣ Non Overlapping Intervals
+
+## Problem
+
+Remove minimum intervals.
+
+So remaining intervals become:
+
+```text
+Non Overlapping
+```
+
+---
+
+### Example
+
+```text
+[1,2]
+
+[2,3]
+
+[3,4]
+
+[1,3]
+```
+
+Answer:
+
+```text
+1
+```
+
+---
+
+# 🔟 Greedy Idea
+
+Sort by:
+
+```text
+Ending Time
+```
+
+Keep intervals with earliest finish.
+
+Remove others.
+
+---
+
+### Complexity
+
+```text
+O(N log N)
+```
+
+---
+
+# 1️⃣1️⃣ Minimum Platforms
+
+## Problem
+
+Find minimum railway platforms needed.
+
+---
+
+### Example
+
+```text
+Arrival
+
+900 940 950 1100 1500 1800
+
+Departure
+
+910 1200 1120 1130 1900 2000
+```
+
+Answer:
+
+```text
+3
+```
+
+---
+
+# 1️⃣2️⃣ Greedy Idea
+
+Sort:
+
+```text
+Arrival
+
+Departure
+```
+
+Use:
+
+```text
+Two Pointers
+```
+
+---
+
+### Rules
+
+If train arrives:
+
+```text
+Need Platform
+```
+
+If train departs:
+
+```text
+Free Platform
+```
+
+---
+
+### Complexity
+
+```text
+O(N log N)
+```
+
+---
+
+# 1️⃣3️⃣ Jump Game
+
+## Problem
+
+Can reach last index?
+
+---
+
+### Example
+
+```text
+2 3 1 1 4
+```
+
+Answer:
+
+```text
+True
+```
+
+---
+
+### Example
+
+```text
+3 2 1 0 4
+```
+
+Answer:
+
+```text
+False
+```
+
+---
+
+# 1️⃣4️⃣ Greedy Idea
+
+Maintain:
+
+```cpp
+maxReach
+```
+
+At each index:
+
+```cpp
+maxReach
+=
+max(
+maxReach,
+i + nums[i]
+)
+```
+
+---
+
+If:
+
+```cpp
+i > maxReach
+```
+
+Cannot proceed.
+
+---
+
+### Complexity
+
+```text
+O(N)
+```
+
+---
+
+# 1️⃣5️⃣ Jump Game II
+
+## Problem
+
+Find:
+
+```text
+Minimum Jumps
+```
+
+to reach end.
+
+---
+
+### Example
+
+```text
+2 3 1 1 4
+```
+
+Answer:
+
+```text
+2
+```
+
+---
+
+# 1️⃣6️⃣ Greedy Idea
+
+Maintain:
+
+```cpp
+currentEnd
+
+farthest
+```
+
+Whenever:
+
+```cpp
+i == currentEnd
+```
+
+Increase jump count.
+
+---
+
+### Complexity
+
+```text
+O(N)
+```
+
+---
+
+# 1️⃣7️⃣ Greedy Pattern Recognition
+
+If question asks:
+
+```text
+Maximum Meetings
+
+Minimum Platforms
+
+Interval Merge
+
+Minimum Removals
+
+Jump Reachability
+```
+
+Think:
+
+```text
+Greedy
+```
+
+---
+
+# 1️⃣8️⃣ Common Sorting Criteria
+
+| Problem | Sort By |
+|----------|---------|
+| Activity Selection | End Time |
+| Meetings | End Time |
+| Job Sequencing | Profit |
+| Merge Intervals | Start Time |
+| Non Overlapping | End Time |
+| Platforms | Arrival & Departure |
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time |
+|----------|----------|
+| Meetings In Room | O(N log N) |
+| Job Sequencing | O(N²) |
+| Insert Interval | O(N) |
+| Merge Intervals | O(N log N) |
+| Non Overlapping Intervals | O(N log N) |
+| Minimum Platforms | O(N log N) |
+| Jump Game | O(N) |
+| Jump Game II | O(N) |
+
+---
+
+# 💡 Interview Tips
+
+✅ Sort by End Time in scheduling problems.
+
+✅ Merge Intervals requires sorting first.
+
+✅ Platforms use Two Pointers.
+
+✅ Jump Game uses Max Reach.
+
+✅ Jump Game II uses Range Expansion.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Sorting meetings by start time.
+
+❌ Forgetting interval sorting.
+
+❌ Using DP for Jump Game.
+
+❌ Wrong platform counting.
+
+❌ Not merging fully overlapping intervals.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Meetings
+→ End Time Sort
+```
+
+```text
+Job Sequencing
+→ Profit Sort
+```
+
+```text
+Merge Intervals
+→ Start Time Sort
+```
+
+```text
+Platforms
+→ Two Pointers
+```
+
+```text
+Jump Game
+→ Max Reach
+```
+
+```text
+Jump Game II
+→ Farthest Reach
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ N Meetings In One Room
+
+⭐ Job Sequencing Problem
+
+⭐ Merge Intervals
+
+⭐ Insert Interval
+
+⭐ Non Overlapping Intervals
+
+⭐ Minimum Platforms
+
+⭐ Jump Game
+
+⭐ Jump Game II
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Greedy Algorithms (Part 3)
+
+Topics:
+
+- Candy Distribution
+- Gas Station
+- Valid Parenthesis String
+- Shortest Job First (SJF)
+- Page Faults (LRU)
+- Huffman Coding
+- Connect Ropes
+- Greedy Interview Sheet
