@@ -1,0 +1,773 @@
+# 🔥 Greedy Algorithms (Part 3)
+
+## 📌 Introduction
+
+In Part 2, we learned:
+
+✔ Job Sequencing
+
+✔ Merge Intervals
+
+✔ Minimum Platforms
+
+✔ Jump Game
+
+Now we move to:
+
+```text
+Advanced Greedy Problems
+```
+
+Frequently asked in:
+
+- Amazon
+- Google
+- Microsoft
+- Adobe
+- Atlassian
+
+---
+
+# 📋 Topics Covered
+
+- Candy Distribution
+- Gas Station
+- Valid Parenthesis String
+- Shortest Job First (SJF)
+- Huffman Coding
+- Connect Ropes
+- LRU Page Replacement
+
+---
+
+# 1️⃣ Candy Distribution
+
+## Problem
+
+Each child has rating.
+
+Rules:
+
+```text
+At least 1 candy.
+
+Higher rating
+than neighbor
+must get more candies.
+```
+
+---
+
+### Example
+
+```text
+Ratings
+
+1 0 2
+```
+
+Answer:
+
+```text
+5
+```
+
+Distribution:
+
+```text
+2 1 2
+```
+
+---
+
+# 2️⃣ Greedy Idea
+
+### Left → Right
+
+If:
+
+```cpp
+rating[i]
+>
+rating[i-1]
+```
+
+Then:
+
+```cpp
+candies[i]
+=
+candies[i-1] + 1
+```
+
+---
+
+### Right → Left
+
+If:
+
+```cpp
+rating[i]
+>
+rating[i+1]
+```
+
+Then:
+
+```cpp
+candies[i]
+=
+max(
+candies[i],
+candies[i+1]+1
+)
+```
+
+---
+
+### Complexity
+
+```text
+O(N)
+```
+
+---
+
+# 3️⃣ Gas Station
+
+## Problem
+
+Given:
+
+```text
+gas[]
+
+cost[]
+```
+
+Find starting station.
+
+Complete full circle.
+
+---
+
+### Example
+
+```text
+gas
+
+1 2 3 4 5
+
+cost
+
+3 4 5 1 2
+```
+
+Answer:
+
+```text
+3
+```
+
+---
+
+# 4️⃣ Greedy Idea
+
+Maintain:
+
+```cpp
+tank
+```
+
+---
+
+If:
+
+```cpp
+tank < 0
+```
+
+Then:
+
+```text
+Current Start
+Impossible
+```
+
+Move start ahead.
+
+---
+
+### Complexity
+
+```text
+O(N)
+```
+
+---
+
+# 5️⃣ Valid Parenthesis String
+
+## Problem
+
+Characters:
+
+```text
+(
+
+)
+
+*
+```
+
+Where:
+
+```text
+* can be
+
+(
+
+)
+
+empty
+```
+
+---
+
+### Example
+
+```text
+(*)
+```
+
+Answer:
+
+```text
+True
+```
+
+---
+
+# 6️⃣ Greedy Idea
+
+Maintain:
+
+```cpp
+low
+high
+```
+
+Possible range of open brackets.
+
+---
+
+### Rules
+
+```text
+( → low++, high++
+
+) → low--, high--
+
+* → low--, high++
+```
+
+---
+
+If:
+
+```cpp
+high < 0
+```
+
+Invalid.
+
+---
+
+### Complexity
+
+```text
+O(N)
+```
+
+---
+
+# 7️⃣ Shortest Job First (SJF)
+
+## Problem
+
+CPU Scheduling.
+
+Choose process with:
+
+```text
+Smallest Burst Time
+```
+
+first.
+
+---
+
+### Example
+
+```text
+Burst
+
+6 8 7 3
+```
+
+Order:
+
+```text
+3 6 7 8
+```
+
+---
+
+### Goal
+
+Minimize:
+
+```text
+Average Waiting Time
+```
+
+---
+
+### Complexity
+
+```text
+O(N log N)
+```
+
+---
+
+# 8️⃣ Connect Ropes
+
+## Problem
+
+Connect ropes with:
+
+```text
+Minimum Cost
+```
+
+---
+
+### Example
+
+```text
+4 3 2 6
+```
+
+Answer:
+
+```text
+29
+```
+
+---
+
+# 9️⃣ Greedy Idea
+
+Always connect:
+
+```text
+Two Smallest Ropes
+```
+
+first.
+
+---
+
+### Data Structure
+
+```cpp
+Min Heap
+```
+
+---
+
+### Steps
+
+```text
+2 + 3 = 5
+
+5 + 4 = 9
+
+9 + 6 = 15
+```
+
+Cost:
+
+```text
+5+9+15
+=
+29
+```
+
+---
+
+### Complexity
+
+```text
+O(N log N)
+```
+
+---
+
+# 🔟 Huffman Coding
+
+## Problem
+
+Generate:
+
+```text
+Minimum Length
+Prefix Codes
+```
+
+---
+
+### Example Frequencies
+
+```text
+a → 5
+
+b → 9
+
+c → 12
+
+d → 13
+
+e → 16
+
+f → 45
+```
+
+---
+
+# 1️⃣1️⃣ Greedy Idea
+
+Always merge:
+
+```text
+Two Lowest Frequencies
+```
+
+---
+
+### Use
+
+```cpp
+Priority Queue
+(Min Heap)
+```
+
+---
+
+### Complexity
+
+```text
+O(N log N)
+```
+
+---
+
+# 1️⃣2️⃣ Why Huffman Works?
+
+Lowest frequencies:
+
+```text
+Get Largest Depth
+```
+
+High frequencies:
+
+```text
+Stay Near Root
+```
+
+Result:
+
+```text
+Minimum Encoding Cost
+```
+
+---
+
+# 1️⃣3️⃣ LRU Page Replacement
+
+## Problem
+
+Memory Pages.
+
+Remove:
+
+```text
+Least Recently Used
+```
+
+page first.
+
+---
+
+### Example
+
+```text
+Pages
+
+7 0 1 2 0 3 0
+```
+
+---
+
+### Data Structure
+
+```cpp
+HashMap
+
++
+Doubly Linked List
+```
+
+---
+
+### Complexity
+
+```text
+O(1)
+```
+
+per operation.
+
+---
+
+# 1️⃣4️⃣ Greedy Pattern Recognition
+
+If problem asks:
+
+```text
+Minimum Cost
+
+Maximum Profit
+
+Earliest Finish
+
+Shortest Time
+
+Smallest Resource Usage
+```
+
+Think:
+
+```text
+Greedy
+```
+
+---
+
+# 1️⃣5️⃣ Heap + Greedy Pattern
+
+### Connect Ropes
+
+```text
+Smallest First
+```
+
+---
+
+### Huffman
+
+```text
+Lowest Frequency First
+```
+
+---
+
+### Priority Queue
+
+Most common structure.
+
+---
+
+# 1️⃣6️⃣ Scheduling Pattern
+
+### Activity Selection
+
+```text
+Earliest Finish
+```
+
+---
+
+### SJF
+
+```text
+Shortest Job
+```
+
+---
+
+### Job Sequencing
+
+```text
+Highest Profit
+```
+
+---
+
+# 1️⃣7️⃣ Common Greedy Data Structures
+
+| Problem | Data Structure |
+|----------|---------------|
+| Activity Selection | Sorting |
+| Meetings | Sorting |
+| Platforms | Two Pointers |
+| Connect Ropes | Min Heap |
+| Huffman | Min Heap |
+| LRU | HashMap + DLL |
+| Jump Game | Variables |
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time |
+|----------|----------|
+| Candy | O(N) |
+| Gas Station | O(N) |
+| Valid Parenthesis String | O(N) |
+| SJF | O(N log N) |
+| Connect Ropes | O(N log N) |
+| Huffman Coding | O(N log N) |
+| LRU | O(1) per operation |
+
+---
+
+# 💡 Interview Tips
+
+✅ Candy → Two Pass Solution.
+
+✅ Gas Station → Tank Concept.
+
+✅ Parenthesis String → Low & High Count.
+
+✅ Huffman → Min Heap.
+
+✅ Connect Ropes → Always Merge Smallest.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ One pass for Candy problem.
+
+❌ Trying every start in Gas Station.
+
+❌ Using stack for Valid Parenthesis String.
+
+❌ Connecting largest ropes first.
+
+❌ Not using Min Heap in Huffman.
+
+---
+
+# 📝 Quick Revision
+
+```text
+Candy
+→ Left + Right Pass
+```
+
+```text
+Gas Station
+→ Tank
+```
+
+```text
+Valid Parenthesis
+→ Low/High
+```
+
+```text
+SJF
+→ Smallest Burst First
+```
+
+```text
+Connect Ropes
+→ Min Heap
+```
+
+```text
+Huffman
+→ Min Heap
+```
+
+```text
+LRU
+→ HashMap + DLL
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Candy
+
+⭐ Gas Station
+
+⭐ Valid Parenthesis String
+
+⭐ Connect Ropes
+
+⭐ Huffman Coding
+
+⭐ LRU Cache
+
+⭐ SJF Scheduling
+
+⭐ Merge Intervals
+
+---
+
+# 🏆 Greedy Algorithms Completed
+
+You have now covered:
+
+✅ Activity Selection
+
+✅ Fractional Knapsack
+
+✅ Job Sequencing
+
+✅ Interval Problems
+
+✅ Platforms
+
+✅ Jump Game
+
+✅ Candy Distribution
+
+✅ Gas Station
+
+✅ Huffman Coding
+
+✅ Connect Ropes
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Trie (Part 1)
+
+Topics:
+
+- Introduction to Trie
+- Trie Implementation
+- Insert Operation
+- Search Operation
+- Prefix Search
+- Count Words
+- Complete String
+- Longest Word With All Prefixes
