@@ -1,0 +1,677 @@
+# 🔥 Dynamic Programming (Part 8) - DP on Partitions
+
+## 📌 Introduction
+
+In previous parts, we learned:
+
+✔ Knapsack DP
+
+✔ String DP
+
+✔ Stock DP
+
+✔ LIS Pattern
+
+Now we move to:
+
+```text
+Partition DP
+```
+
+One of the toughest and most important DP patterns.
+
+Asked in:
+
+- Google
+- Amazon
+- Microsoft
+- Uber
+- Adobe
+
+---
+
+# 📋 Topics Covered
+
+- Matrix Chain Multiplication (MCM)
+- Minimum Cost To Cut A Stick
+- Burst Balloons
+- Palindrome Partitioning II
+- Boolean Parenthesization
+- Partition DP Pattern
+
+---
+
+# 1️⃣ What is Partition DP?
+
+Partition DP means:
+
+```text
+Divide Problem
+
+Into Smaller Parts
+
+Solve Each Part
+
+Combine Results
+```
+
+---
+
+### Generic Pattern
+
+```cpp
+for(k=i;k<j;k++)
+{
+    answer =
+    min/max(
+        leftPart
+        +
+        rightPart
+    );
+}
+```
+
+---
+
+# 2️⃣ Matrix Chain Multiplication (MCM)
+
+## Problem
+
+Given matrices:
+
+```text
+A1 A2 A3 A4
+```
+
+Find minimum multiplication cost.
+
+---
+
+### Example
+
+```text
+10 20 30 40
+```
+
+Meaning:
+
+```text
+10×20
+
+20×30
+
+30×40
+```
+
+---
+
+# 3️⃣ State Definition
+
+```cpp
+dp[i][j]
+```
+
+Meaning:
+
+```text
+Minimum Cost
+
+To Multiply
+
+Matrices i...j
+```
+
+---
+
+# 4️⃣ Recurrence
+
+Try every partition.
+
+```cpp
+dp[i][j]
+=
+min(
+dp[i][k]
++
+dp[k+1][j]
++
+arr[i-1]
+*
+arr[k]
+*
+arr[j]
+)
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N³)
+
+Space: O(N²)
+```
+
+---
+
+# 5️⃣ MCM Template
+
+```cpp
+for(int k=i;k<j;k++)
+{
+    cost =
+    solve(i,k)
+    +
+    solve(k+1,j)
+    +
+    arr[i-1]
+    *
+    arr[k]
+    *
+    arr[j];
+
+    ans=min(ans,cost);
+}
+```
+
+---
+
+# 6️⃣ Minimum Cost To Cut A Stick
+
+## Problem
+
+Stick Length:
+
+```text
+N
+```
+
+Cut positions:
+
+```text
+cuts[]
+```
+
+Find minimum cost.
+
+---
+
+### Cost
+
+Every cut costs:
+
+```text
+Current Length
+```
+
+---
+
+# 7️⃣ Observation
+
+Each cut divides stick.
+
+Looks exactly like:
+
+```text
+MCM
+```
+
+---
+
+### State
+
+```cpp
+dp[i][j]
+```
+
+Meaning:
+
+```text
+Minimum Cost
+
+Between
+
+Cut i and Cut j
+```
+
+---
+
+### Complexity
+
+```text
+O(N³)
+```
+
+---
+
+# 8️⃣ Burst Balloons
+
+## Problem
+
+Given balloons.
+
+Burst all.
+
+Gain:
+
+```cpp
+left
+*
+current
+*
+right
+```
+
+coins.
+
+---
+
+### Example
+
+```text
+3 1 5 8
+```
+
+Answer:
+
+```text
+167
+```
+
+---
+
+# 9️⃣ Trick
+
+Think:
+
+```text
+Which Balloon
+
+Will Burst Last?
+```
+
+Not first.
+
+---
+
+### Recurrence
+
+```cpp
+coins
+=
+leftPart
++
+rightPart
++
+nums[i-1]
+*
+nums[k]
+*
+nums[j+1]
+```
+
+---
+
+### Complexity
+
+```text
+O(N³)
+```
+
+---
+
+# 🔟 Palindrome Partitioning II
+
+## Problem
+
+Partition string into:
+
+```text
+Palindromes
+```
+
+Minimum cuts required.
+
+---
+
+### Example
+
+```text
+aab
+```
+
+Answer:
+
+```text
+1
+```
+
+Partition:
+
+```text
+aa | b
+```
+
+---
+
+# 1️⃣1️⃣ State
+
+```cpp
+dp[i]
+```
+
+Meaning:
+
+```text
+Minimum Cuts
+
+Needed From Index i
+```
+
+---
+
+### Recurrence
+
+Try every partition.
+
+```cpp
+if(
+substring
+isPalindrome
+)
+{
+    cuts =
+    1
+    +
+    solve(next);
+}
+```
+
+---
+
+### Complexity
+
+```text
+O(N²)
+```
+
+(optimized)
+
+---
+
+# 1️⃣2️⃣ Boolean Parenthesization
+
+## Problem
+
+Expression:
+
+```text
+T|F&T
+```
+
+Find:
+
+```text
+Number Of Ways
+
+To Make
+
+Expression True
+```
+
+---
+
+# 1️⃣3️⃣ State
+
+```cpp
+dp[i][j][isTrue]
+```
+
+Meaning:
+
+```text
+Ways To Evaluate
+
+Substring i...j
+
+To True/False
+```
+
+---
+
+# 1️⃣4️⃣ Operators
+
+### AND (&)
+
+```text
+T & T
+```
+
+---
+
+### OR (|)
+
+```text
+T | F
+
+F | T
+
+T | T
+```
+
+---
+
+### XOR (^)
+
+```text
+T ^ F
+
+F ^ T
+```
+
+---
+
+# 1️⃣5️⃣ Recurrence
+
+Try every operator:
+
+```cpp
+for(k=i+1;k<j;k+=2)
+```
+
+Combine:
+
+```text
+Left True
+
+Left False
+
+Right True
+
+Right False
+```
+
+According to operator.
+
+---
+
+### Complexity
+
+```text
+O(N³)
+```
+
+---
+
+# 1️⃣6️⃣ Partition DP Recognition
+
+If problem says:
+
+```text
+Split
+
+Partition
+
+Cut
+
+Break
+
+Divide
+```
+
+Think:
+
+```text
+Partition DP
+```
+
+---
+
+# 1️⃣7️⃣ Generic Partition DP Template
+
+```cpp
+int solve(i,j)
+{
+    if(baseCase)
+        return value;
+
+    int ans;
+
+    for(int k=i;k<j;k++)
+    {
+        ans =
+        min/max(
+            solve(i,k)
+            +
+            solve(k+1,j)
+        );
+    }
+
+    return ans;
+}
+```
+
+---
+
+# 1️⃣8️⃣ Difference Between DP Patterns
+
+| Pattern | Example |
+|----------|----------|
+| Grid DP | Unique Paths |
+| String DP | LCS |
+| Knapsack DP | Subset Sum |
+| Stock DP | Buy/Sell |
+| LIS DP | Increasing Sequence |
+| Partition DP | MCM |
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|----------|----------|
+| MCM | O(N³) | O(N²) |
+| Stick Cutting | O(N³) | O(N²) |
+| Burst Balloons | O(N³) | O(N²) |
+| Palindrome Partitioning | O(N²) | O(N²) |
+| Boolean Parenthesization | O(N³) | O(N²) |
+
+---
+
+# 💡 Interview Tips
+
+✅ MCM is the foundation of Partition DP.
+
+✅ Burst Balloons → Think Last Balloon.
+
+✅ Stick Cutting → Same pattern as MCM.
+
+✅ Boolean Parenthesization needs True/False states.
+
+✅ Palindrome Partitioning uses string + partition DP.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Thinking Burst Balloon as first burst.
+
+❌ Wrong partition index.
+
+❌ Missing operator combinations.
+
+❌ Forgetting palindrome precomputation.
+
+❌ Incorrect base cases.
+
+---
+
+# 📝 Quick Revision
+
+```text
+MCM
+→ Partition at K
+```
+
+```text
+Stick Cutting
+→ MCM Pattern
+```
+
+```text
+Burst Balloons
+→ Burst Last
+```
+
+```text
+Palindrome Partition
+→ Minimum Cuts
+```
+
+```text
+Boolean Parenthesization
+→ True / False State
+```
+
+```text
+Partition DP
+→ Split Problem
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Matrix Chain Multiplication
+
+⭐ Minimum Cost To Cut A Stick
+
+⭐ Burst Balloons
+
+⭐ Palindrome Partitioning II
+
+⭐ Boolean Parenthesization
+
+⭐ Scramble String
+
+⭐ Egg Dropping Problem
+
+⭐ Optimal BST
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Dynamic Programming (Part 9) - Advanced DP & Interview DP Sheet
+
+Topics:
+
+- DP Optimization
+- Digit DP
+- Bitmask DP
+- Tree DP
+- Rerooting DP
+- State Compression DP
+- Advanced Interview Problems
+- Complete DP Revision Sheet
