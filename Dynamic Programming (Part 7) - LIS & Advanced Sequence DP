@@ -1,0 +1,736 @@
+# 🔥 Dynamic Programming (Part 7) - LIS & Advanced Sequence DP
+
+## 📌 Introduction
+
+In previous parts, we covered:
+
+✔ Knapsack
+
+✔ LCS
+
+✔ Edit Distance
+
+✔ Stock DP
+
+Now we move to:
+
+```text
+Longest Increasing Subsequence Pattern
+```
+
+This is one of the most important DP patterns for interviews.
+
+Asked in:
+
+- Google
+- Amazon
+- Microsoft
+- Adobe
+- Uber
+- Atlassian
+
+---
+
+# 📋 Topics Covered
+
+- Longest Increasing Subsequence (LIS)
+- Print LIS
+- Largest Divisible Subset
+- Longest String Chain
+- Longest Bitonic Subsequence
+- Number of LIS
+
+---
+
+# 1️⃣ Longest Increasing Subsequence (LIS)
+
+## Problem
+
+Find longest subsequence such that:
+
+```text
+arr[i]
+<
+arr[j]
+```
+
+for every next element.
+
+---
+
+### Example
+
+```text
+10 9 2 5 3 7 101 18
+```
+
+LIS:
+
+```text
+2 3 7 101
+```
+
+Length:
+
+```text
+4
+```
+
+---
+
+# 2️⃣ DP State
+
+```cpp
+dp[i]
+```
+
+Meaning:
+
+```text
+Length of LIS
+ending at i
+```
+
+---
+
+# 3️⃣ Recurrence
+
+For every previous element:
+
+```cpp
+if(arr[prev] < arr[i])
+{
+    dp[i]
+    =
+    max(
+        dp[i],
+        1 + dp[prev]
+    );
+}
+```
+
+---
+
+### Code
+
+```cpp
+vector<int> dp(n,1);
+
+for(int i=0;i<n;i++)
+{
+    for(int prev=0;
+        prev<i;
+        prev++)
+    {
+        if(arr[prev] < arr[i])
+        {
+            dp[i]
+            =
+            max(
+                dp[i],
+                1 + dp[prev]
+            );
+        }
+    }
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N²)
+
+Space: O(N)
+```
+
+---
+
+# 4️⃣ LIS Using Binary Search
+
+Optimized Solution.
+
+Maintain:
+
+```text
+temp[]
+```
+
+---
+
+### Idea
+
+Store smallest possible tail.
+
+---
+
+### Code
+
+```cpp
+vector<int> temp;
+
+temp.push_back(arr[0]);
+
+for(int i=1;i<n;i++)
+{
+    if(arr[i] > temp.back())
+    {
+        temp.push_back(arr[i]);
+    }
+    else
+    {
+        int index =
+        lower_bound(
+            temp.begin(),
+            temp.end(),
+            arr[i]
+        )
+        -
+        temp.begin();
+
+        temp[index] = arr[i];
+    }
+}
+```
+
+---
+
+### Complexity
+
+```text
+Time: O(N log N)
+
+Space: O(N)
+```
+
+---
+
+# 5️⃣ Print LIS
+
+## Idea
+
+Store parent array.
+
+---
+
+### Parent Array
+
+```cpp
+parent[i]
+```
+
+stores:
+
+```text
+Previous element
+used in LIS
+```
+
+---
+
+### Backtrack
+
+Start from:
+
+```text
+Last Index
+```
+
+Follow parent links.
+
+---
+
+### Complexity
+
+```text
+O(N²)
+```
+
+---
+
+# 6️⃣ Largest Divisible Subset
+
+## Problem
+
+Find largest subset where:
+
+```cpp
+a % b == 0
+
+or
+
+b % a == 0
+```
+
+---
+
+### Example
+
+```text
+1 2 4 8
+```
+
+Answer:
+
+```text
+1 2 4 8
+```
+
+---
+
+# 7️⃣ Observation
+
+Sort array.
+
+Apply:
+
+```text
+LIS Logic
+```
+
+Condition becomes:
+
+```cpp
+arr[i] % arr[prev] == 0
+```
+
+---
+
+### Complexity
+
+```text
+O(N²)
+```
+
+---
+
+# 8️⃣ Longest String Chain
+
+## Problem
+
+Find longest chain.
+
+Each next string:
+
+```text
+Add One Character
+```
+
+---
+
+### Example
+
+```text
+a
+
+ba
+
+bca
+
+bdca
+```
+
+Answer:
+
+```text
+4
+```
+
+---
+
+# 9️⃣ Observation
+
+Sort strings by length.
+
+Apply:
+
+```text
+LIS Pattern
+```
+
+---
+
+### Check
+
+Whether one string can be formed by:
+
+```text
+Adding One Character
+```
+
+---
+
+### Complexity
+
+```text
+O(N² * Length)
+```
+
+---
+
+# 🔟 Longest Bitonic Subsequence
+
+## Definition
+
+First:
+
+```text
+Increasing
+```
+
+Then:
+
+```text
+Decreasing
+```
+
+---
+
+### Example
+
+```text
+1 4 3 2
+```
+
+Bitonic Length:
+
+```text
+4
+```
+
+---
+
+# 1️⃣1️⃣ Idea
+
+Compute:
+
+### LIS from Left
+
+```cpp
+lis[i]
+```
+
+---
+
+### LIS from Right
+
+```cpp
+lds[i]
+```
+
+(Longest Decreasing Subsequence)
+
+---
+
+### Formula
+
+```cpp
+answer
+=
+lis[i]
++
+lds[i]
+-
+1
+```
+
+Take maximum.
+
+---
+
+### Complexity
+
+```text
+O(N²)
+```
+
+---
+
+# 1️⃣2️⃣ Number of LIS
+
+## Problem
+
+Count total LIS.
+
+---
+
+### Example
+
+```text
+1 3 5 4 7
+```
+
+LIS Length:
+
+```text
+4
+```
+
+Count:
+
+```text
+2
+```
+
+---
+
+# 1️⃣3️⃣ Additional Array
+
+Maintain:
+
+```cpp
+length[i]
+```
+
+and
+
+```cpp
+count[i]
+```
+
+---
+
+### If Longer Found
+
+```cpp
+length[i]
+=
+1 + length[prev];
+
+count[i]
+=
+count[prev];
+```
+
+---
+
+### If Same Length Found
+
+```cpp
+count[i]
++=
+count[prev];
+```
+
+---
+
+### Complexity
+
+```text
+O(N²)
+```
+
+---
+
+# 1️⃣4️⃣ LIS Pattern Recognition
+
+If problem says:
+
+```text
+Longest Increasing
+
+Longest Valid Chain
+
+Largest Subset
+
+Maximum Sequence
+```
+
+Think:
+
+```text
+LIS Pattern
+```
+
+---
+
+# 1️⃣5️⃣ DP State Summary
+
+### LIS
+
+```cpp
+dp[i]
+```
+
+---
+
+### Bitonic
+
+```cpp
+lis[i]
+
+lds[i]
+```
+
+---
+
+### Number of LIS
+
+```cpp
+length[i]
+
+count[i]
+```
+
+---
+
+### String Chain
+
+```cpp
+dp[i]
+```
+
+---
+
+# 1️⃣6️⃣ Important Variations
+
+### LIS
+
+```text
+Length
+```
+
+---
+
+### Print LIS
+
+```text
+Sequence
+```
+
+---
+
+### Count LIS
+
+```text
+Total Ways
+```
+
+---
+
+### Bitonic
+
+```text
+Increase + Decrease
+```
+
+---
+
+### Divisible Subset
+
+```text
+Divisibility Condition
+```
+
+---
+
+# 📊 Complexity Summary
+
+| Problem | Time | Space |
+|----------|----------|----------|
+| LIS | O(N²) | O(N) |
+| LIS Binary Search | O(N log N) | O(N) |
+| Print LIS | O(N²) | O(N) |
+| Largest Divisible Subset | O(N²) | O(N) |
+| Longest String Chain | O(N²×L) | O(N) |
+| Bitonic Subsequence | O(N²) | O(N) |
+| Number of LIS | O(N²) | O(N) |
+
+---
+
+# 💡 Interview Tips
+
+✅ LIS is one of the most important DP topics.
+
+✅ Learn O(N²) and O(N log N) versions.
+
+✅ Bitonic = LIS + LDS.
+
+✅ Divisible Subset = Modified LIS.
+
+✅ String Chain = LIS on Strings.
+
+---
+
+# ⚠️ Common Mistakes
+
+❌ Using Binary Search version when sequence reconstruction is needed.
+
+❌ Forgetting sorting in Divisible Subset.
+
+❌ Wrong Bitonic formula.
+
+❌ Missing count updates in Number of LIS.
+
+❌ Confusing subsequence with subarray.
+
+---
+
+# 📝 Quick Revision
+
+```text
+LIS
+→ Increasing Sequence
+```
+
+```text
+LIS Optimized
+→ Binary Search
+```
+
+```text
+Print LIS
+→ Parent Array
+```
+
+```text
+Bitonic
+→ LIS + LDS
+```
+
+```text
+Divisible Subset
+→ Modified LIS
+```
+
+```text
+Number of LIS
+→ Length + Count
+```
+
+---
+
+# 🎯 Must Solve Problems
+
+⭐ Longest Increasing Subsequence
+
+⭐ Print LIS
+
+⭐ Number of LIS
+
+⭐ Largest Divisible Subset
+
+⭐ Longest String Chain
+
+⭐ Longest Bitonic Subsequence
+
+⭐ Russian Doll Envelopes
+
+⭐ Maximum Length Pair Chain
+
+---
+
+# 🚀 What's Next?
+
+## 🔥 Dynamic Programming (Part 8) - DP on Partitions
+
+Topics:
+
+- Matrix Chain Multiplication (MCM)
+- Minimum Cost to Cut a Stick
+- Burst Balloons
+- Palindrome Partitioning II
+- Boolean Parenthesization
+- Partition DP Pattern
+- Advanced Interview Problems
